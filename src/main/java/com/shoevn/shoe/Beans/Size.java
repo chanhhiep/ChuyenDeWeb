@@ -1,4 +1,4 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
 
@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Size implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "size_id",length = 20,nullable = false)
     private String sizeId;
     @Column(name = "size_num",nullable = false)
@@ -17,7 +18,6 @@ public class Size implements Serializable {
             foreignKey = @ForeignKey(name = "SIZE_PROD_FK"))
     private Product product;
     public Size(){}
-
     public String getSizeId() {
         return sizeId;
     }

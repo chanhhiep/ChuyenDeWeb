@@ -1,4 +1,4 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 
 import jakarta.persistence.*;
@@ -30,6 +30,17 @@ public class Product implements Serializable {
     private Date dateproduct;
 
     public Product(){}
+
+    public Product(long id, Category category, String name, double price, double sellPrice, String img, Date dateproduct) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.sellPrice = sellPrice;
+        this.img = img;
+        this.dateproduct = dateproduct;
+    }
+
     public long getId() {
         return id;
     }

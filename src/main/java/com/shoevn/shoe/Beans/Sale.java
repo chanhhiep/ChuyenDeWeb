@@ -1,9 +1,6 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
@@ -12,6 +9,7 @@ import java.io.Serializable;
 public class Sale implements Serializable {
     private static final long serialVersionUID = -2576670215015463100L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", length = 50)
     private String id;
     @Column(name = "numSale")

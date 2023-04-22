@@ -1,4 +1,4 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
 
@@ -11,6 +11,7 @@ import java.util.Date;
 public class Order implements Serializable {
     private static final long serialVersionUID = -2576670215015463100L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", length = 50)
     private String id;
     @Column(name = "Amount", nullable = false)
