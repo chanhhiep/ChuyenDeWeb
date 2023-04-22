@@ -1,4 +1,4 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 
 import jakarta.persistence.*;
@@ -28,9 +28,17 @@ public class Account implements Serializable {
     private boolean active;
     @Column(name = "user_role",length = 20,nullable = false)
     private String user_role;
-
-    public  Account(){
-
+    public Account(int id, String username, String password, String name, String email, String phone, boolean active, String user_role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.active = active;
+        this.user_role = user_role;
+    }
+    public Account(){
     }
     public int getId() {
         return id;

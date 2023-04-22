@@ -1,4 +1,4 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
 
@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class Review implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", length = 50, nullable = false)
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,7 +34,6 @@ public class Review implements Serializable {
     public void setAccount(Account account) {
         this.account = account;
     }
-
     public String getCmt() {
         return cmt;
     }
