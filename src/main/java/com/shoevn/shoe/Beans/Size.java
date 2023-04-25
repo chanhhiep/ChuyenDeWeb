@@ -1,6 +1,7 @@
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 @Entity
@@ -9,8 +10,8 @@ public class Size implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "size_id",length = 20,nullable = false)
-    private String sizeId;
+    @Column(name = "size_id", nullable = false)
+    private Long sizeId;
     @Column(name = "size_num",nullable = false)
     private int size_num;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -18,8 +19,19 @@ public class Size implements Serializable {
             foreignKey = @ForeignKey(name = "SIZE_PROD_FK"))
     private Product product;
     public Size(){}
-    public String getSizeId() {
+
+    public Size(Long sizeId, int size_num, Product product) {
+        this.sizeId = sizeId;
+        this.size_num = size_num;
+        this.product = product;
+    }
+
+    public Long getSizeId() {
         return sizeId;
+    }
+
+    public void setSizeId(Long sizeId) {
+        this.sizeId = sizeId;
     }
 
     public int getSize_num() {
@@ -28,10 +40,6 @@ public class Size implements Serializable {
 
     public Product getProduct() {
         return product;
-    }
-
-    public void setSizeId(String sizeId) {
-        this.sizeId = sizeId;
     }
 
     public void setSize_num(int size_num) {

@@ -10,8 +10,8 @@ public class OrderDetail implements Serializable {
     private static final long serialVersionUID = 7550745928843183535L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", length = 50, nullable = false)
-    private int id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID", nullable = false, //
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_ORD_FK"))
@@ -33,11 +33,12 @@ public class OrderDetail implements Serializable {
     public OrderDetail(){
 
     }
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

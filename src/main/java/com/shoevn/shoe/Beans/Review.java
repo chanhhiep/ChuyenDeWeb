@@ -9,8 +9,8 @@ public class Review implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", length = 50, nullable = false)
-    private int id;
+    @Column(name = "ID", nullable = false)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "username", nullable = false, //
             foreignKey = @ForeignKey(name = "Acc_PROD_FK"))
@@ -19,11 +19,11 @@ public class Review implements Serializable {
     @Column(name = "cmt", length = 255)
     private String cmt;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
