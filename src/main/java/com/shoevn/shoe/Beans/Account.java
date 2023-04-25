@@ -12,8 +12,9 @@ public class Account implements Serializable {
     public static final String ROLE_MANAGER = "MANAGER";
     public static final String ROLE_EMPLOYEE = "EMPLOYEE";
     @Id
-    @Column(name = "user_id",length = 20,nullable = false)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
+    private Long id;
     @Column(name = "username", length = 20,nullable = false)
     private String username;
     @Column(name = "password",length = 128,nullable = false)
@@ -28,7 +29,8 @@ public class Account implements Serializable {
     private boolean active;
     @Column(name = "user_role",length = 20,nullable = false)
     private String user_role;
-    public Account(int id, String username, String password, String name, String email, String phone, boolean active, String user_role) {
+
+    public Account(Long id, String username, String password, String name, String email, String phone, boolean active, String user_role) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -38,13 +40,15 @@ public class Account implements Serializable {
         this.active = active;
         this.user_role = user_role;
     }
+
     public Account(){
     }
-    public int getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

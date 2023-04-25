@@ -1,6 +1,7 @@
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 
@@ -10,8 +11,8 @@ public class Sale implements Serializable {
     private static final long serialVersionUID = -2576670215015463100L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", length = 50)
-    private String id;
+    @Column(name = "ID")
+    private Long id;
     @Column(name = "numSale")
     private double numSale;
     @Column(name = "name")
@@ -20,9 +21,6 @@ public class Sale implements Serializable {
 
     }
 
-    public String getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -36,7 +34,7 @@ public class Sale implements Serializable {
         this.name = name;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

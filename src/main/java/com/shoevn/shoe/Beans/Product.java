@@ -11,8 +11,9 @@ import java.util.Date;
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "product_id",length = 20,nullable = false)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id", nullable = false)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, //
             foreignKey = @ForeignKey(name = "Category_PROD_FK"))
