@@ -1,7 +1,6 @@
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 
