@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class PromotionController {
     @GetMapping("/promotion")
     public String listProduct(ModelMap model){
-        return "/admin/interfaces/promotion";
+        return "/admin/promotion";
     }
 }

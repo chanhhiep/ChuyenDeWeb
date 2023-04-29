@@ -9,6 +9,6 @@ public class DashboardController {
     @RequestMapping("dashboard")
     //@ResponseBody
     public String index(){
-        return "dashboard";
+        return "/admindashboard";
     }
 }
