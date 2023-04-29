@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ProductController {
     @GetMapping("product")
     public String listProduct(ModelMap model){
-        return "/admin/interfaces/product";
+        return "/admin/product";
     }
 }
