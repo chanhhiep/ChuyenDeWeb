@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -23,93 +24,28 @@ public class Product implements Serializable {
     @Column(name = "price",nullable = false)
     private double price;
     @Column(name = "sell_price",nullable = false)
-    private double sellPrice;
-    @Column(name = "img",nullable = false)
-    private String img;
+    private double discountRate;
+    @OneToMany
+    @JoinColumn(name = "image_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "image_PROD_FK"))
+    @Column(name = "image",nullable = false)
+    private List<Image> images;
+    @Column(name = "description",nullable = false)
+    private String description;
+    @OneToOne
+    @JoinColumn(name = "brand_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "brand_PROD_FK"))
+    @Column(name = "brand",nullable = false)
+    private Brand brand;
+    @Column(name = "quantity",nullable = false)
+    private String quantity;
     @Temporal(TemporalType.DATE)
     @Column(name = "create_product",nullable = false)
-    private Date dateproduct;
+    private Date createDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "update_product",nullable = false)
+    private Date updateDate;
 
     public Product(){}
 
-    public Product(long id, Category category, String name, double price, double sellPrice, String img, Date dateproduct) {
-        this.id = id;
-        this.category = category;
-        this.name = name;
-        this.price = price;
-        this.sellPrice = sellPrice;
-        this.img = img;
-        this.dateproduct = dateproduct;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-
-    public double getSellPrice() {
-        return sellPrice;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public void setSellPrice(double sellPrice) {
-        this.sellPrice = sellPrice;
-    }
-
-    public Date getDateproduct() {
-        return dateproduct;
-    }
-
-    public void setDateproduct(Date dateproduct) {
-        this.dateproduct = dateproduct;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id='" + id + '\'' +
-                ", category=" + category +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", sellPrice=" + sellPrice +
-                ", img='" + img + '\'' +
-                ", dateproduct=" + dateproduct +
-                '}';
-    }
 }
