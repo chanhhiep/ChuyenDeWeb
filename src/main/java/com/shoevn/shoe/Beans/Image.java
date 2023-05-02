@@ -1,5 +1,6 @@
 package com.shoevn.shoe.Beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -13,10 +14,13 @@ public class Image {
     private Long id;
     @Column(name = "name",length = 255,nullable = false)
     private String name;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "create_product",nullable = false)
-    private Date createDate;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "update_product",nullable = false)
-    private Date updateDate;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_id", nullable = false, //
+//            foreignKey = @ForeignKey(name = "IMAGE_PROD_FK"))
+//    private Product product;
+@ManyToOne
+@JoinColumn(name = "product_id")
+@JsonBackReference
+private Product product;
+
 }

@@ -1,5 +1,6 @@
 package com.shoevn.shoe.Beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,6 +21,10 @@ public class Size implements Serializable {
 //    @JoinColumn(name = "product_id", nullable = false, //
 //            foreignKey = @ForeignKey(name = "SIZE_PROD_FK"))
 //    private Product product;
+@ManyToOne
+@JoinColumn(name = "product_id")
+@JsonBackReference
+private Product product;
     public Size(){}
 
     public Size(Long sizeId, int size_num, int size_description) {

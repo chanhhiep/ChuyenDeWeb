@@ -1,7 +1,6 @@
 package com.shoevn.shoe.Beans;
 
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -26,8 +25,8 @@ public class Product implements Serializable {
     private double price;
     @Column(name = "discount_rate",nullable = false)
     private double discountRate;
-    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    @Column(name = "image",nullable = false)
     private List<Image> images;
     @Column(name = "description",nullable = false)
     private String description;
@@ -35,8 +34,8 @@ public class Product implements Serializable {
     @JoinColumn(name = "brand_id", nullable = false, //
             foreignKey = @ForeignKey(name = "brand_PROD_FK"))
     private Brand brand;
-    @OneToMany(mappedBy = "size", cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "product")
+    @Column(name = "Size",nullable = false)
     private List<Size> sizes;
     @Column(name = "quantity",nullable = false)
     private String quantity;
