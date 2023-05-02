@@ -1,5 +1,6 @@
 package com.shoevn.shoe.Beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -14,16 +15,22 @@ public class Size implements Serializable {
     private Long sizeId;
     @Column(name = "size_num",nullable = false)
     private int size_num;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "SIZE_PROD_FK"))
-    private Product product;
+    @Column(name = "size_description",nullable = false)
+    private int size_description;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_id", nullable = false, //
+//            foreignKey = @ForeignKey(name = "SIZE_PROD_FK"))
+//    private Product product;
+@ManyToOne
+@JoinColumn(name = "product_id")
+@JsonBackReference
+private Product product;
     public Size(){}
 
-    public Size(Long sizeId, int size_num, Product product) {
+    public Size(Long sizeId, int size_num, int size_description) {
         this.sizeId = sizeId;
         this.size_num = size_num;
-        this.product = product;
+        this.size_description = size_description;
     }
 
     public Long getSizeId() {
@@ -38,24 +45,24 @@ public class Size implements Serializable {
         return size_num;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
     public void setSize_num(int size_num) {
         this.size_num = size_num;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public int getSize_description() {
+        return size_description;
+    }
+
+    public void setSize_description(int size_description) {
+        this.size_description = size_description;
     }
 
     @Override
     public String toString() {
         return "Size{" +
-                "sizeId='" + sizeId + '\'' +
+                "sizeId=" + sizeId +
                 ", size_num=" + size_num +
-                ", product=" + product +
+                ", size_description=" + size_description +
                 '}';
     }
 }
