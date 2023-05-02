@@ -38,7 +38,7 @@ public class Product implements Serializable {
     @Column(name = "Size",nullable = false)
     private List<Size> sizes;
     @Column(name = "quantity",nullable = false)
-    private String quantity;
+    private int quantity;
     @Temporal(TemporalType.DATE)
     @Column(name = "create_product",nullable = false)
     private Date createDate;
@@ -48,7 +48,7 @@ public class Product implements Serializable {
 
     public Product(){}
 
-    public Product(Long id, Category category, String name, double price, double discountRate, List<Image> images, String description, Brand brand, List<Size> sizes, String quantity, Date createDate, Date updateDate) {
+    public Product(Long id, Category category, String name, double price, double discountRate, List<Image> images, String description, Brand brand, List<Size> sizes, int quantity, Date createDate, Date updateDate) {
         this.id = id;
         this.category = category;
         this.name = name;
@@ -135,11 +135,11 @@ public class Product implements Serializable {
         this.sizes = sizes;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
