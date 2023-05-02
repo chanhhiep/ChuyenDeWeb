@@ -5,27 +5,29 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "brand")
-public class Brand {
+@Table(name = "payment")
+public class PaymentMethod {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "brand_id", nullable = false)
+    @Column(name = "payment_id", nullable = false)
     private Long id;
-    @Column(name = "name",length = 255,nullable = false)
+    @Column(name = "payment_name", nullable = false)
     private String name;
+    @Column(name = "description", nullable = false)
+    private String description;
     @Temporal(TemporalType.DATE)
-    @Column(name = "create_brand",nullable = false)
+    @Column(name = "create_payment",nullable = false)
     private Date createDate;
     @Temporal(TemporalType.DATE)
-    @Column(name = "update_brand",nullable = false)
+    @Column(name = "update_payment",nullable = false)
     private Date updateDate;
 
-    public Brand(){
-
+    public PaymentMethod(){
     }
-    public Brand(Long id, String name, Date createDate, Date updateDate) {
+    public PaymentMethod(Long id, String name, String description, Date createDate, Date updateDate) {
         this.id = id;
         this.name = name;
+        this.description = description;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
@@ -46,6 +48,14 @@ public class Brand {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Date getCreateDate() {
         return createDate;
     }
@@ -64,9 +74,10 @@ public class Brand {
 
     @Override
     public String toString() {
-        return "Brand{" +
+        return "PaymentMethod{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", createDate=" + createDate +
                 ", updateDate=" + updateDate +
                 '}';

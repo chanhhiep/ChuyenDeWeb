@@ -1,6 +1,7 @@
 package com.shoevn.shoe.Beans;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -23,20 +24,20 @@ public class Product implements Serializable {
     private String name;
     @Column(name = "price",nullable = false)
     private double price;
-    @Column(name = "sell_price",nullable = false)
+    @Column(name = "discount_rate",nullable = false)
     private double discountRate;
-    @OneToMany
-    @JoinColumn(name = "image_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "image_PROD_FK"))
-    @Column(name = "image",nullable = false)
+    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Image> images;
     @Column(name = "description",nullable = false)
     private String description;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "brand_id", nullable = false, //
             foreignKey = @ForeignKey(name = "brand_PROD_FK"))
-    @Column(name = "brand",nullable = false)
     private Brand brand;
+    @OneToMany(mappedBy = "size", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private List<Size> sizes;
     @Column(name = "quantity",nullable = false)
     private String quantity;
     @Temporal(TemporalType.DATE)
@@ -48,4 +49,114 @@ public class Product implements Serializable {
 
     public Product(){}
 
+    public Product(Long id, Category category, String name, double price, double discountRate, List<Image> images, String description, Brand brand, List<Size> sizes, String quantity, Date createDate, Date updateDate) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.images = images;
+        this.description = description;
+        this.brand = brand;
+        this.sizes = sizes;
+        this.quantity = quantity;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public double getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(double discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public List<Size> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<Size> sizes) {
+        this.sizes = sizes;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 }
