@@ -1,18 +1,20 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 
 import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "product_id",length = 20,nullable = false)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id", nullable = false)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, //
             foreignKey = @ForeignKey(name = "Category_PROD_FK"))
@@ -21,23 +23,61 @@ public class Product implements Serializable {
     private String name;
     @Column(name = "price",nullable = false)
     private double price;
-    @Column(name = "sell_price",nullable = false)
-    private double sellPrice;
-    @Column(name = "img",nullable = false)
-    private String img;
+    @Column(name = "discount_rate",nullable = false)
+    private double discountRate;
+    @OneToMany(mappedBy = "product")
+    @Column(name = "image",nullable = false)
+    private List<Image> images;
+    @Column(name = "description",nullable = false)
+    private String description;
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "brand_PROD_FK"))
+    private Brand brand;
+    @OneToMany(mappedBy = "product")
+    @Column(name = "Size",nullable = false)
+    private List<Size> sizes;
+    @Column(name = "quantity",nullable = false)
+    private String quantity;
     @Temporal(TemporalType.DATE)
     @Column(name = "create_product",nullable = false)
-    private Date dateproduct;
+    private Date createDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "update_product",nullable = false)
+    private Date updateDate;
 
     public Product(){}
-    public long getId() {
+
+    public Product(Long id, Category category, String name, double price, double discountRate, List<Image> images, String description, Brand brand, List<Size> sizes, String quantity, Date createDate, Date updateDate) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.images = images;
+        this.description = description;
+        this.brand = brand;
+        this.sizes = sizes;
+        this.quantity = quantity;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public String getName() {
         return name;
@@ -51,53 +91,71 @@ public class Product implements Serializable {
         return price;
     }
 
-
-    public double getSellPrice() {
-        return sellPrice;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setSellPrice(double sellPrice) {
-        this.sellPrice = sellPrice;
+    public double getDiscountRate() {
+        return discountRate;
     }
 
-    public Date getDateproduct() {
-        return dateproduct;
+    public void setDiscountRate(double discountRate) {
+        this.discountRate = discountRate;
     }
 
-    public void setDateproduct(Date dateproduct) {
-        this.dateproduct = dateproduct;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public Category getCategory() {
-        return category;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public String getDescription() {
+        return description;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id='" + id + '\'' +
-                ", category=" + category +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", sellPrice=" + sellPrice +
-                ", img='" + img + '\'' +
-                ", dateproduct=" + dateproduct +
-                '}';
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public List<Size> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<Size> sizes) {
+        this.sizes = sizes;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

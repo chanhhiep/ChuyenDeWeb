@@ -1,6 +1,7 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 
 import java.io.Serializable;
@@ -11,49 +12,48 @@ import java.util.Date;
 public class Order implements Serializable {
     private static final long serialVersionUID = -2576670215015463100L;
     @Id
-    @Column(name = "ID", length = 50)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shipping_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "Ship_DETAIL_ORD_FK"))
+    private ShippingInfo shippingInfo;
     @Column(name = "Amount", nullable = false)
     private double amount;
-    @Column(name = "Customer_Address", length = 255, nullable = false)
-    private String customerAddress;
-    @Column(name = "Customer_Email", length = 128, nullable = false)
-    private String customerEmail;
-    @Column(name = "Customer_Name", length = 255, nullable = false)
-    private String customerName;
-    @Column(name = "Customer_Phone", length = 128, nullable = false)
-    private String  customerPhone;
     @Column(name = "note", length = 128, nullable = false)
     private String note;
+    @Column(name = "state", length = 128, nullable = false)
+    private String state;
     @Temporal(TemporalType.DATE)
-    @Column(name = "Create_Date", nullable = false)
-    private Date orderDate;
-
+    @Column(name = "create_order",nullable = false)
+    private Date createDate;
     public Order(){
-
     }
-    public String getId() {
+
+    public Order(Long id, ShippingInfo shippingInfo, double amount, String note, String state, Date createDate) {
+        this.id = id;
+        this.shippingInfo = shippingInfo;
+        this.amount = amount;
+        this.note = note;
+        this.state = state;
+        this.createDate = createDate;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
+    public ShippingInfo getShippingInfo() {
+        return shippingInfo;
     }
 
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
+    public void setShippingInfo(ShippingInfo shippingInfo) {
+        this.shippingInfo = shippingInfo;
     }
 
     public double getAmount() {
@@ -64,49 +64,39 @@ public class Order implements Serializable {
         this.amount = amount;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public String getNote() {
+        return note;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    public String getCustomerAddress() {
-        return customerAddress;
+    public String getState() {
+        return state;
     }
 
-    public void setCustomerAddress(String customerAddress) {
-        this.customerAddress = customerAddress;
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public String getCustomerEmail() {
-        return customerEmail;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCustomerEmail(String customerEmail) {
-        this.customerEmail = customerEmail;
-    }
-
-    public String getCustomerPhone() {
-        return customerPhone;
-    }
-
-    public void setCustomerPhone(String customerPhone) {
-        this.customerPhone = customerPhone;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id='" + id + '\'' +
+                "id=" + id +
+                ", shippingInfo=" + shippingInfo +
                 ", amount=" + amount +
-                ", customerAddress='" + customerAddress + '\'' +
-                ", customerEmail='" + customerEmail + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", customerPhone='" + customerPhone + '\'' +
                 ", note='" + note + '\'' +
-                ", orderDate=" + orderDate +
+                ", state='" + state + '\'' +
+                ", createDate=" + createDate +
                 '}';
     }
 }

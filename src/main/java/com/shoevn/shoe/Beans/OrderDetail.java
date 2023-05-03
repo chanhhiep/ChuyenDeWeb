@@ -1,4 +1,4 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
 
@@ -9,8 +9,9 @@ import java.util.Date;
 public class OrderDetail implements Serializable {
     private static final long serialVersionUID = 7550745928843183535L;
     @Id
-    @Column(name = "ID", length = 50, nullable = false)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID", nullable = false, //
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_ORD_FK"))
@@ -23,20 +24,30 @@ public class OrderDetail implements Serializable {
     private int quanity;
     @Column(name = "Price", nullable = false)
     private double price;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "size_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "SIZE_DETAIL_PROD_FK"))
+    private Size size;
     @Column(name = "note", length = 128, nullable = false)
     private String note;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "Create_Date", nullable = false)
-    private Date orderDatedetail;
-
     public OrderDetail(){
-
     }
-    public int getId() {
+
+    public OrderDetail(Long id, Order order, Product product, int quanity, double price, Size size, String note) {
+        this.id = id;
+        this.order = order;
+        this.product = product;
+        this.quanity = quanity;
+        this.price = price;
+        this.size = size;
+        this.note = note;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -72,6 +83,14 @@ public class OrderDetail implements Serializable {
         this.price = price;
     }
 
+    public Size getSize() {
+        return size;
+    }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
     public String getNote() {
         return note;
     }
@@ -80,24 +99,16 @@ public class OrderDetail implements Serializable {
         this.note = note;
     }
 
-    public Date getOrderDatedetail() {
-        return orderDatedetail;
-    }
-
-    public void setOrderDatedetail(Date orderDatedetail) {
-        this.orderDatedetail = orderDatedetail;
-    }
-
     @Override
     public String toString() {
         return "OrderDetail{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", order=" + order +
                 ", product=" + product +
                 ", quanity=" + quanity +
                 ", price=" + price +
+                ", size=" + size +
                 ", note='" + note + '\'' +
-                ", orderDatedetail=" + orderDatedetail +
                 '}';
     }
 }

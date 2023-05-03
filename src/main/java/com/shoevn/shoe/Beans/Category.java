@@ -1,4 +1,4 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
 
@@ -10,8 +10,9 @@ import java.io.Serializable;
 public class Category implements Serializable {
     private static final long serialVersionUID = -2054386655979281969L;
     @Id
-    @Column(name = "id_category", length = 20, nullable = false)
-    private int id_category;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_category", nullable = false)
+    private Long id_category;
     @Column(name = "name", length = 255, nullable = false)
     private String name;
     @Column(name = "img", length = 255)
@@ -23,16 +24,23 @@ public class Category implements Serializable {
 
     }
 
+    public Category(Long id_category, String name, String img, int parent_id) {
+        this.id_category = id_category;
+        this.name = name;
+        this.img = img;
+        this.parent_id = parent_id;
+    }
+
     public void setImg(String img) {
         this.img = img;
     }
 
-    public void setId_category(int id_category) {
-        this.id_category = id_category;
+    public Long getId_category() {
+        return id_category;
     }
 
-    public int getId_category() {
-        return id_category;
+    public void setId_category(Long id_category) {
+        this.id_category = id_category;
     }
 
     public void setName(String name) {

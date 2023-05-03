@@ -1,4 +1,4 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
 
 import jakarta.persistence.*;
@@ -9,11 +9,12 @@ import java.io.Serializable;
 @Table(name = "accounts")
 public class Account implements Serializable {
     private static final long serialVersionUID = -2054386655979281969L;
-    public static final String ROLE_MANAGER = "MANAGER";
-    public static final String ROLE_EMPLOYEE = "EMPLOYEE";
+    public static final String ROLE_ADMIN = "ADMIN";
+    public static final String ROLE_USER = "USER";
     @Id
-    @Column(name = "user_id",length = 20,nullable = false)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", nullable = false)
+    private Long id;
     @Column(name = "username", length = 20,nullable = false)
     private String username;
     @Column(name = "password",length = 128,nullable = false)
@@ -28,15 +29,30 @@ public class Account implements Serializable {
     private boolean active;
     @Column(name = "user_role",length = 20,nullable = false)
     private String user_role;
-
-    public  Account(){
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "shipping_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "SHIPPING_PROD_FK"))
+    private ShippingInfo shippingInfo;
+    public Account(){
     }
-    public int getId() {
+
+    public Account(Long id, String username, String password, String name, String email, String phone, boolean active, String user_role, ShippingInfo shippingInfo) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.active = active;
+        this.user_role = user_role;
+        this.shippingInfo = shippingInfo;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,6 +72,14 @@ public class Account implements Serializable {
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -72,28 +96,28 @@ public class Account implements Serializable {
         this.phone = phone;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public boolean isActive() {
         return active;
-    }
-
-    public String getUser_role() {
-        return user_role;
     }
 
     public void setActive(boolean active) {
         this.active = active;
     }
 
+    public String getUser_role() {
+        return user_role;
+    }
+
     public void setUser_role(String user_role) {
         this.user_role = user_role;
+    }
+
+    public ShippingInfo getShippingInfo() {
+        return shippingInfo;
+    }
+
+    public void setShippingInfo(ShippingInfo shippingInfo) {
+        this.shippingInfo = shippingInfo;
     }
 
     @Override
@@ -107,6 +131,7 @@ public class Account implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", active=" + active +
                 ", user_role='" + user_role + '\'' +
+                ", shippingInfo=" + shippingInfo +
                 '}';
     }
 }

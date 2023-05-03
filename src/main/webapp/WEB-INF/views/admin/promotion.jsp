@@ -1,17 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-
-<!-- =========================================================
-* Sneat - Bootstrap 5 HTML Admin Template - Pro | v1.0.0
-==============================================================
-
-* Product Page: https://themeselection.com/products/sneat-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
 <html
   lang="en"
   class="light-style layout-menu-fixed"
@@ -20,70 +8,67 @@
   data-assets-path="../assets/"
   data-template="vertical-menu-template-free"
 >
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+  />
 
-    <title>Tables - Basic Tables | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+  <title>Product Manager</title>
 
-    <meta name="description" content="" />
+  <meta name="description" content="" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+          href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+          rel="stylesheet"
+  />
 
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+  <!-- Icons-->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="assets/vendor/css/core.css" class="template-customizer-core-css" />
+  <link rel="stylesheet" href="assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+  <link rel="stylesheet" href="assets/css/demo.css" />
 
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+  <!-- Vendors CSS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js" integrity="sha512-ec1IDrAZxPSKIe2wZpNhxoFIDjmqJ+Z5SGhbuXZrw+VheJu2MqqJfnYsCD8rf71sQfKYMF4JxNSnKCjDCZ/Hlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <!-- Page CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!--! Config-->
+  <script src="assets/js/config.js"></script>
+  <!-- Helpers -->
+  <script src="assets/vendor/js/helpers.js"></script>
+  <style>
+    #product_edit{
+      visibility: hidden;
 
-    <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    }
+    #product_edit.active{
+      visibility: visible;
 
-    <!-- Page CSS -->
+    }
+    #create-product{
+      visibility: hidden;
 
-    <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
+    }
+    #create-product.active{
+      visibility: visible;
 
-    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
-    <style>
-      #product_edit{
-        visibility: hidden;
-      }
-      #product_edit.active{
-        visibility: visible;
-        transform: 0.5s;
-      }
-      #create-product{
-        visibility: hidden;
-        transition: 0.01s;
-      }
-      #create-product.active{
-        visibility: visible;
-        transform: 0.5s;
-      }
-      #blur-action.active{
-        filter: blur(4px);
-        pointer-events: none;
-        user-select: none;
-      }
-    </style>
-  </head>
+    }
+    #blur-action.active{
+      filter: blur(4px);
+      pointer-events: none;
+      user-select: none;
+    }
+  </style>
+</head>
 
   <body>
     <!-- Layout wrapper -->
@@ -184,7 +169,7 @@
               </a>
             </li>
             <!-- Product -->
-            <li class="menu-item active">
+            <li class="menu-item">
               <a href="product.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-atom"></i>
                 <div data-i18n="Product">Product</div>
@@ -220,7 +205,7 @@
                 <div data-i18n="Receipt">Receipt</div>
               </a>
             </li>
-            <li class="menu-item">
+            <li class="menu-item active">
               <a href="promotion.html" class="menu-link">
                 <i class="menu-icon tf-icons bx bxs-discount"></i>
                 <div data-i18n="Receipt">Promotion</div>
@@ -275,7 +260,7 @@
             </div>
 
             <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-              <h4 class="navbar-nav align-items-center"><span class="text-muted fw-light">Tables /</span>Product</h4>
+              <h4 class="navbar-nav align-items-center"><span class="text-muted fw-light">Management /</span>Promotion</h4>
               <ul class="navbar-nav flex-row align-items-center ms-auto">
                 <!-- Place this tag where you want the button to render. -->
                 <!-- User -->
@@ -360,62 +345,22 @@
                   <table class="table">
                     <thead>
                       <tr>
-                        <th>Product Id</th>
-                        <th>Product Name</th>
-                        <th>Image</th>
-                        <th>brand</th>
-                        <th>price</th>
-                        <th>category</th>
-                        <th>quantity</th>
+                        <th>Promotion ID</th>
+                        <th>Promotion Name</th>
+                        <th>Promotion Rate</th>
+                        <th>Promotion Details</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
                       <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong></td>
-                        <td>Albert Cook</td>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Promotion ID</strong></td>
+                        <td>Promotion Name</td>
                         <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Lilian Fuller"
-                            >
-                              <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Sophia Wilkerson"
-                            >
-                              <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                            <li
-                              data-bs-toggle="tooltip"
-                              data-popup="tooltip-custom"
-                              data-bs-placement="top"
-                              class="avatar avatar-xs pull-up"
-                              title="Christina Parker"
-                            >
-                              <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                            </li>
-                          </ul>
+                            Promotion Rate
                         </td>
-                        <td>
-                          Adidas
-                        </td>
-                        <td>price</td>
-                        <td>
-                          Sport
-                        </td>
-                        <td>
-                          10000
-                        </td>
+                        <td>Promotion Details</td>
                         <td><span class="badge bg-label-primary me-1">Active</span></td>
                         <td>
                           <div class="dropdown">
@@ -444,12 +389,12 @@
               <div class="d-flex aligns-items-center justify-content-center card text-left w-50 position-absolute top-50 start-50 translate-middle-x" id="product_edit" style="margin-left: 100px;margin-top: -15%;;" aria-hidden="true">
                 <div class="card mb-4">
                   <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ;">
-                    <h5 class="card-header">Edit Produt</h5>
-                    <button id="addBtn" type="button" class="btn btn-danger" style="margin-right: 20px;" onclick="clickEditToggle()">Cancel</button>
+                    <h5 class="card-header">Edit Promotion</h5>
+                    <button id="EditBtn" type="button" class="btn btn-danger" style="margin-right: 20px;" onclick="clickEditToggle()">Cancel</button>
                   </div>
                   <div class="card-body" style="margin-top: -3%;">
                     <div class="mb-3">
-                      <label for="exampleFormControlReadOnlyInput1" class="form-label">Product Id</label>
+                      <label for="exampleFormControlReadOnlyInput1" class="form-label">Promotion ID</label>
                       <input
                         class="form-control"
                         type="text"
@@ -459,69 +404,39 @@
                       />
                     </div>
                     <div class="mb-3">
-                      <label for="defaultFormControlInput" class="form-label">Name Product</label>
+                      <label for="" class="form-label">Promotion Name</label>
                       <input
                         type="text"
                         class="form-control"
-                        id="defaultFormControlInput"
                         placeholder="product name"
                         aria-describedby="defaultFormControlHelp" required="required"
                       />
                     </div>
+
                     <div class="mb-3">
-                      <label for="exampleFormControlSelect1" class="form-label">category</label>
-                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
-                        <option selected>chose category</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="defaultFormControlInput" class="form-label">Price</label>
+                      <label for="" class="form-label">Promotion Rate</label>
                       <input
                         type="number"
                         min="0" max="10000"
                         class="form-control"
-                        id="defaultFormControlInput"
-                        placeholder="price"
-                        aria-describedby="defaultFormControlHelp"
-                        required="required"
-                      />
-                    </div>
-                    
-                    <div class="mb-3">
-                      <label for="exampleFormControlSelect1" class="form-label">promotion</label>
-                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
-                        <option selected>chose promotion</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleFormControlSelect1" class="form-label">brand</label>
-                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
-                        <option selected>chose brand</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="defaultFormControlInput" class="form-label">quantity</label>
-                      <input
-                        type="number" min="0" max="100000"
-                        class="form-control"
-                        id="defaultFormControlInput"
-                        placeholder="quantity"
+                        id=""
+                        placeholder="Promotion Rate"
                         aria-describedby="defaultFormControlHelp"
                         required="required"
                       />
                     </div>
                     <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label">description</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required="required"></textarea>
+                        <label for="" class="form-label">Promotion Details</label>
+                        <textarea class="form-control" rows="3" required="required"></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleFormControlSelect1" class="form-label">Status</label>
+                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
+                        <option selected>chose status</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
                     </div>
                     <div class="row mt-3">
                       <div class="d-grid gap-2 col-lg-6 mx-auto">
@@ -539,77 +454,35 @@
               <div class="d-flex aligns-items-center justify-content-center card text-left w-50 position-absolute top-50 start-50 translate-middle-x" id="create-product" style="margin-left: 100px;margin-top: -15%;;" aria-hidden="true">
                 <div class="card mb-4">
                   <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ;">
-                    <h5 class="card-header">Create Produt</h5>
-                    <button id="addBtn" type="button" class="btn btn-danger" style="margin-right: 20px;" onclick="clickCreateToggle()">Cancel</button>
+                    <h5 class="card-header">Create Promotion</h5>
+                    <button id="CreateBtn" type="button" class="btn btn-danger" style="margin-right: 20px;" onclick="clickCreateToggle()">Cancel</button>
                   </div>
                   <div class="card-body" style="margin-top: -3%;">
                     <div class="mb-3">
-                      <label for="defaultFormControlInput" class="form-label">Name Product</label>
+                      <label for="" class="form-label">Promotion Name</label>
                       <input
                         type="text"
                         class="form-control"
-                        id="defaultFormControlInput"
                         placeholder="product name"
                         aria-describedby="defaultFormControlHelp" required="required"
                       />
                     </div>
+                    
                     <div class="mb-3">
-                      <label for="exampleFormControlSelect1" class="form-label">category</label>
-                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
-                        <option selected>chose category</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="formFileMultiple" class="form-label">Upload Image</label>
-                      <input class="form-control" type="file" id="formFileMultiple" multiple />
-                    </div>
-                    <div class="mb-3">
-                      <label for="defaultFormControlInput" class="form-label">Price</label>
+                      <label for="" class="form-label">Promotion Rate</label>
                       <input
                         type="number"
                         min="0" max="10000"
                         class="form-control"
-                        id="defaultFormControlInput"
                         placeholder="price"
                         aria-describedby="defaultFormControlHelp"
                         required="required"
                       />
                     </div>
+                    
                     <div class="mb-3">
-                      <label for="exampleFormControlSelect1" class="form-label">promotion</label>
-                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
-                        <option selected>chose promotion</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleFormControlSelect1" class="form-label">brand</label>
-                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
-                        <option selected>chose brand</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="defaultFormControlInput" class="form-label">quantity</label>
-                      <input
-                        type="number" min="0" max="100000"
-                        class="form-control"
-                        id="defaultFormControlInput"
-                        placeholder="quantity"
-                        aria-describedby="defaultFormControlHelp"
-                        required="required"
-                      />
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleFormControlTextarea1" class="form-label">description</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required="required"></textarea>
+                      <label for="" class="form-label">Promotion Details</label>
+                      <textarea class="form-control" rows="3" required="required"></textarea>
                     </div>
                     <div class="row mt-3">
                       <div class="d-grid gap-2 col-lg-6 mx-auto">
@@ -640,24 +513,18 @@
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
-    <!-- Core JS -->
-    <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js" integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="../assets/vendor/js/menu.js"></script>
-    <!-- endbuild -->
-
-    <!-- Vendors JS -->
-
+    <script src="assets/vendor/js/menu.js"></script>
     <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
+    <script src="assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="../js/hidden.js"></script>
-    <!-- Place this tag in your head or just before your close body tag. -->
+    <script src="js/hidden.js"></script>
+
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>

@@ -1,6 +1,8 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 @Entity
@@ -8,46 +10,59 @@ import java.io.Serializable;
 public class Size implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "size_id",length = 20,nullable = false)
-    private String sizeId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "size_id", nullable = false)
+    private Long sizeId;
     @Column(name = "size_num",nullable = false)
     private int size_num;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "SIZE_PROD_FK"))
-    private Product product;
+    @Column(name = "size_description",nullable = false)
+    private int size_description;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_id", nullable = false, //
+//            foreignKey = @ForeignKey(name = "SIZE_PROD_FK"))
+//    private Product product;
+@ManyToOne
+@JoinColumn(name = "product_id")
+@JsonBackReference
+private Product product;
     public Size(){}
 
-    public String getSizeId() {
+    public Size(Long sizeId, int size_num, int size_description) {
+        this.sizeId = sizeId;
+        this.size_num = size_num;
+        this.size_description = size_description;
+    }
+
+    public Long getSizeId() {
         return sizeId;
+    }
+
+    public void setSizeId(Long sizeId) {
+        this.sizeId = sizeId;
     }
 
     public int getSize_num() {
         return size_num;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setSizeId(String sizeId) {
-        this.sizeId = sizeId;
-    }
-
     public void setSize_num(int size_num) {
         this.size_num = size_num;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public int getSize_description() {
+        return size_description;
+    }
+
+    public void setSize_description(int size_description) {
+        this.size_description = size_description;
     }
 
     @Override
     public String toString() {
         return "Size{" +
-                "sizeId='" + sizeId + '\'' +
+                "sizeId=" + sizeId +
                 ", size_num=" + size_num +
-                ", product=" + product +
+                ", size_description=" + size_description +
                 '}';
     }
 }

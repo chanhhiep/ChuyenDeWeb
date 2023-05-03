@@ -1,9 +1,6 @@
-package com.example.shoes.Beans;
+package com.shoevn.shoe.Beans;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 
@@ -12,8 +9,9 @@ import java.io.Serializable;
 public class Sale implements Serializable {
     private static final long serialVersionUID = -2576670215015463100L;
     @Id
-    @Column(name = "ID", length = 50)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
+    private Long id;
     @Column(name = "numSale")
     private double numSale;
     @Column(name = "name")
@@ -22,9 +20,6 @@ public class Sale implements Serializable {
 
     }
 
-    public String getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -38,7 +33,7 @@ public class Sale implements Serializable {
         this.name = name;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
