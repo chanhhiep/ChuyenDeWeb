@@ -48,22 +48,20 @@ public class ProductController {
         return "/admin/product";
     }
     @PostMapping("/product/saveProduct")
-    public String tourRegister(@ModelAttribute("dataForm") ProductDto dataForm, Model model) {
-        System.out.println(dataForm.toString());
+    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm, Model model) throws IOException {
+        /*System.out.println(dataForm.toString());
         long category_id = Long.parseLong(dataForm.getCategory_id());
         Category category = categoryService.getCategoryById(category_id);
-        byte[] bytes = new byte[50000];
-        Image image = new Image(dataForm.getImages(),"",bytes);
-        List<Image> imageList =new ArrayList<>();
-        imageList.add(image);
+        List<Image> imageList = uploadImage(dataForm.getImages());
         Brand brand = new Brand();
         List< Size > sizes = new ArrayList<>();
         Product product = new Product(category, dataForm.getName(), Double.parseDouble(dataForm.getPrice()),Double.parseDouble(dataForm.getDiscountRate()),imageList,dataForm.getDescription(), brand,sizes, Integer.parseInt(dataForm.getQuantity()));
-        productService.saveProduct(product);
+        productService.saveProduct(product);*/
+        productService.uploadProduct(dataForm);
         return "/admin/product";
     }
-    public Set<Image> uploadImage(MultipartFile[] multipartFiles) throws IOException {
-        Set<Image> imageModels = new HashSet<>();
+    public List<Image> uploadImage(MultipartFile[] multipartFiles) throws IOException {
+        List<Image> imageModels = new ArrayList<>();
         for (MultipartFile file : multipartFiles) {
             Image imageModel = new Image(
                     file.getOriginalFilename(),
