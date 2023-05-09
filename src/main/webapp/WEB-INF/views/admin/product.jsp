@@ -364,6 +364,7 @@ data-template="vertical-menu-template-free"
     <th>price</th>
     <th>category</th>
     <th>quantity</th>
+    <th>Discount Rate</th>
     <th>Status</th>
     <th>Actions</th>
 </tr>
@@ -378,10 +379,7 @@ data-template="vertical-menu-template-free"
     <c:forEach var="product" items="${productList}">
         <tr>
             <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${product.id}</strong></td>
-            <td>${product.id}</td>
-            <td>
-                 ${product.name}
-            </td>
+            <td>${product.name}</td>
             <td>
                 <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
                     <li
@@ -413,14 +411,18 @@ data-template="vertical-menu-template-free"
                     </li>
                 </ul>
             </td>
+            <td>
+                 ${product.brand}
+            </td>
+            <td>
+                 ${product.price}
+            </td>
             <td>${product.category.name}</td>
+            <td>${product.quantity}</td>
             <td>
-                ${product.price}
+                ${product.discountRate}
             </td>
-            <td>
-                ${product.sellPrice}
-            </td>
-            <td><span class="badge bg-label-primary me-1">${product.id}</span></td>
+            <td><span class="badge bg-label-primary me-1">Status</span></td>
             <td>
                 <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
