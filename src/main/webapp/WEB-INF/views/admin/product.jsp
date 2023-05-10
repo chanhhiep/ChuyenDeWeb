@@ -365,6 +365,7 @@ data-template="vertical-menu-template-free"
     <th>category</th>
     <th>quantity</th>
     <th>Discount Rate</th>
+    <th>Size</th>
     <th>Status</th>
     <th>Actions</th>
 </tr>
@@ -382,6 +383,7 @@ data-template="vertical-menu-template-free"
             <td>${product.name}</td>
             <td>
                 <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                    <c:forEach var="img" items="${product.images}">
                     <li
                             data-bs-toggle="tooltip"
                             data-popup="tooltip-custom"
@@ -391,28 +393,11 @@ data-template="vertical-menu-template-free"
                     >
                         <img src="${img}" alt="product" class="rounded-circle"/>
                     </li>
-                    <li
-                            data-bs-toggle="tooltip"
-                            data-popup="tooltip-custom"
-                            data-bs-placement="top"
-                            class="avatar avatar-xs pull-up"
-                            title="Sophia Wilkerson"
-                    >
-                        <img src="${img}" alt="product" class="rounded-circle"/>
-                    </li>
-                    <li
-                            data-bs-toggle="tooltip"
-                            data-popup="tooltip-custom"
-                            data-bs-placement="top"
-                            class="avatar avatar-xs pull-up"
-                            title="Christina Parker"
-                    >
-                        <img src="${img}" alt="product" class="rounded-circle"/>
-                    </li>
+                    </c:forEach>
                 </ul>
             </td>
             <td>
-                 ${product.brand}
+                 ${product.brand.name}
             </td>
             <td>
                  ${product.price}
@@ -422,6 +407,12 @@ data-template="vertical-menu-template-free"
             <td>
                 ${product.discountRate}
             </td>
+            <td>
+                <c:forEach var="size" items="${product.sizes}">
+                    <p>${size}</p>
+                </c:forEach>
+            </td>
+
             <td><span class="badge bg-label-primary me-1">Status</span></td>
             <td>
                 <div class="dropdown">

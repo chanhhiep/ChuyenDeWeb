@@ -30,10 +30,13 @@ public class ProductController {
     public String listProduct(ModelMap model){
         List<Product> listProduct = productService.getAllProduct();
         List<Category> listCategory = categoryService.listAllCategory();
-
+        List<Size> listSize = productService.getAllSize();
+        List<Brand> listBrand = productService.getAllBrands();
         if(listProduct !=null && listProduct .size()!=0) {
             model.put("productList", listProduct);
             model.put("categoryList",listCategory);
+            model.put("sizeList",listSize);
+            model.put("brandList",listBrand);
         }
         else{
             System.out.println("empty");

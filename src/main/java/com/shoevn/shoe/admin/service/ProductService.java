@@ -2,10 +2,7 @@ package com.shoevn.shoe.admin.service;
 
 import com.shoevn.shoe.Beans.*;
 import com.shoevn.shoe.admin.dto.ProductDto;
-import com.shoevn.shoe.admin.repository.BrandRepository;
-import com.shoevn.shoe.admin.repository.CategoryRepository;
-import com.shoevn.shoe.admin.repository.ImageRepository;
-import com.shoevn.shoe.admin.repository.ProductRepository;
+import com.shoevn.shoe.admin.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,16 +17,14 @@ import java.util.Set;
 public class ProductService {
     @Autowired
     private ProductRepository productRepository;
-
     @Autowired
     private CategoryRepository categoryRepository;
-
     @Autowired
     private BrandRepository brandRepository;
-
     @Autowired
     private ImageRepository imageRepository;
-
+    @Autowired
+    private SizeRepository sizeRepository;
     public List<Product> getAllProduct(){
         return productRepository.findAll();
     }
@@ -56,4 +51,11 @@ public class ProductService {
         Product product = new Product(category, productDto.getName(),Double.parseDouble(productDto.getPrice()),Double.parseDouble(productDto.getDiscountRate()),listImage, productDto.getDescription(), brand,sizes,Integer.parseInt(productDto.getQuantity()));
         productRepository.save(product);
     }
+    public List<Size> getAllSize(){
+        return sizeRepository.findAll();
+    }
+    public List<Brand> getAllBrands(){
+        return  brandRepository.findAll();
+    }
+
 }
