@@ -75,4 +75,10 @@ public class ProductController {
         }
         return imageModels;
     }
+    public String DeleteProduct(@PathVariable String id, ModelMap mode){
+        return "/admin/product";
+    }
+    public String EditProduct(@PathVariable String id, ModelMap mode){
+        return "/admin/product";
+    }
 }
