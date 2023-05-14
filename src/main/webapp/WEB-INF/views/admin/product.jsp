@@ -552,10 +552,9 @@ data-template="vertical-menu-template-free"
     <div class="mb-3">
     <label for="exampleFormControlSelect1" class="form-label">category</label>
     <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose category</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+        <c:forEach var="cate" items="${categoryList}">
+            <option value="${cate.id_category}">${cate.name}</option>
+        </c:forEach>
     </select>
     </div>
     <div class="mb-3">
@@ -573,6 +572,12 @@ data-template="vertical-menu-template-free"
     required="required"
     />
     </div>
+        <div class="mb-3">
+            <label for="exampleFormControlSelect1" class="form-label">Size:</label>
+            <c:forEach var="size" items="${sizeList}">
+                <input type="checkbox" name="sizes" value="${size.sizeId}">${size.size_num}
+            </c:forEach>
+        </div>
     <div class="mb-3">
     <label for="exampleFormControlSelect1" class="form-label">promotion</label>
     <select class="form-select" aria-label="Default select example" required="required">
@@ -585,10 +590,9 @@ data-template="vertical-menu-template-free"
     <div class="mb-3">
     <label for="exampleFormControlSelect1" class="form-label">brand</label>
     <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose brand</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+        <c:forEach var="brand" items="${brandList}">
+            <option value="${brand.id}">${brand.name}</option>
+        </c:forEach>
     </select>
     </div>
     <div class="mb-3">

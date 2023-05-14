@@ -38,7 +38,7 @@ public class ProductService {
         Category category = categoryRepository.findCategoryById(Long.parseLong(productDto.getCategory_id()));
         Brand brand = brandRepository.findBrandById(Long.parseLong(productDto.getBrand()));
         List<Size> sizes = new ArrayList<>();
-        List<Image> listImage=new ArrayList<>();
+        Set<Image> listImage=new HashSet<>();
         for(MultipartFile image: productDto.getImages()) {
             try {
                 Image imageModel = new Image(image.getOriginalFilename(), image.getContentType(), image.getBytes());

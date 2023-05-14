@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "products")
@@ -27,7 +28,7 @@ public class Product implements Serializable {
     private double discountRate;
     @OneToMany(mappedBy = "product")
     @Column(name = "image",nullable = false)
-    private List<Image> images;
+    private Set<Image> images;
     @Column(name = "description",nullable = false)
     private String description;
     @ManyToOne
@@ -48,7 +49,7 @@ public class Product implements Serializable {
 
     public Product(){}
 
-    public Product(Category category, String name, double price, double discountRate, List<Image> images, String description, Brand brand, List<Size> sizes, int quantity) {
+    public Product(Category category, String name, double price, double discountRate, Set<Image> images, String description, Brand brand, List<Size> sizes, int quantity) {
         this.category = category;
         this.name = name;
         this.price = price;
@@ -102,11 +103,11 @@ public class Product implements Serializable {
         this.discountRate = discountRate;
     }
 
-    public List<Image> getImages() {
+    public Set<Image> getImages() {
         return images;
     }
 
-    public void setImages(List<Image> images) {
+    public void setImages(Set<Image> images) {
         this.images = images;
     }
 

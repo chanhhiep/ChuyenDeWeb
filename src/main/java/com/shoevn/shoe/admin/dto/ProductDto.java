@@ -16,6 +16,7 @@ public class ProductDto {
     private String quantity;
     private String brand;
     private MultipartFile[] images;
+    private List<String> sizes;
 
     public String getCategory_id() {
         return category_id;
@@ -49,4 +50,7 @@ public class ProductDto {
         return quantity;
     }
 
+    public List<String> getSizes() {
+        return sizes;
+    }
 }

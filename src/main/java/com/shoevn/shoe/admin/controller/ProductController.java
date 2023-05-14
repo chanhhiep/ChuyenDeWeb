@@ -34,13 +34,13 @@ public class ProductController {
         List<Brand> listBrand = productService.getAllBrands();
         if(listProduct !=null && listProduct .size()!=0) {
             model.put("productList", listProduct);
-            model.put("categoryList",listCategory);
-            model.put("sizeList",listSize);
-            model.put("brandList",listBrand);
         }
         else{
             System.out.println("empty");
         }
+        model.put("categoryList",listCategory);
+        model.put("sizeList",listSize);
+        model.put("brandList",listBrand);
         return "/admin/product";
     }
     @GetMapping("/product/{id}")
