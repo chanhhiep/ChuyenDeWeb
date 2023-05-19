@@ -16,25 +16,35 @@ public class ShippingInfo {
     @Column(name = "shipping_name", length = 255, nullable = false)
     private String shippingName;
     @Column(name = "shipping_phone", length = 128, nullable = false)
-    private String  shippingPhone;
+    private String shippingPhone;
     @Column(name = "shipping_address", length = 255, nullable = false)
     private String shippingAddress;
+    @Column(name = "xa", length = 255, nullable = false)
+    private String xa;
+    @Column(name = "huyen", length = 255, nullable = false)
+    private String huyen;
+    @Column(name = "tinh", length = 255, nullable = false)
+    private String tinh;
     @Temporal(TemporalType.DATE)
-    @Column(name = "create_ship",nullable = false)
+    @Column(name = "create_ship", nullable = false)
     private Date createDate;
     @Temporal(TemporalType.DATE)
-    @Column(name = "update_ship",nullable = false)
+    @Column(name = "update_ship", nullable = false)
     private Date updateDate;
 
-    public ShippingInfo(){
+    public ShippingInfo() {
 
     }
-    public ShippingInfo(Long id, String shippingEmail, String shippingName, String shippingPhone, String shippingAddress, Date createDate, Date updateDate) {
+
+    public ShippingInfo(Long id, String shippingEmail, String shippingName, String shippingPhone, String shippingAddress, String xa, String huyen, String tinh, Date createDate, Date updateDate) {
         this.id = id;
         this.shippingEmail = shippingEmail;
         this.shippingName = shippingName;
         this.shippingPhone = shippingPhone;
         this.shippingAddress = shippingAddress;
+        this.xa = xa;
+        this.huyen = huyen;
+        this.tinh = tinh;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
@@ -95,6 +105,30 @@ public class ShippingInfo {
         this.updateDate = updateDate;
     }
 
+    public String getXa() {
+        return xa;
+    }
+
+    public void setXa(String xa) {
+        this.xa = xa;
+    }
+
+    public String getHuyen() {
+        return huyen;
+    }
+
+    public void setHuyen(String huyen) {
+        this.huyen = huyen;
+    }
+
+    public String getTinh() {
+        return tinh;
+    }
+
+    public void setTinh(String tinh) {
+        this.tinh = tinh;
+    }
+
     @Override
     public String toString() {
         return "ShippingInfo{" +
@@ -103,6 +137,9 @@ public class ShippingInfo {
                 ", shippingName='" + shippingName + '\'' +
                 ", shippingPhone='" + shippingPhone + '\'' +
                 ", shippingAddress='" + shippingAddress + '\'' +
+                ", xa='" + xa + '\'' +
+                ", huyen='" + huyen + '\'' +
+                ", tinh='" + tinh + '\'' +
                 ", createDate=" + createDate +
                 ", updateDate=" + updateDate +
                 '}';
