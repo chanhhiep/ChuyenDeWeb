@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -50,8 +47,8 @@ public class ProductController {
         model.put("showProduct", product);
         return "/admin/product";
     }
-    @PostMapping("/product/saveProduct")
-    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm, Model model) throws IOException {
+    @PostMapping(value = "/product/saveProduct")
+    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile[] images ) throws IOException {
         /*System.out.println(dataForm.toString());
         long category_id = Long.parseLong(dataForm.getCategory_id());
         Category category = categoryService.getCategoryById(category_id);
@@ -60,7 +57,11 @@ public class ProductController {
         List< Size > sizes = new ArrayList<>();
         Product product = new Product(category, dataForm.getName(), Double.parseDouble(dataForm.getPrice()),Double.parseDouble(dataForm.getDiscountRate()),imageList,dataForm.getDescription(), brand,sizes, Integer.parseInt(dataForm.getQuantity()));
         productService.saveProduct(product);*/
-        productService.uploadProduct(dataForm);
+        //dataForm.setImages(images);
+        for (MultipartFile image: images) {
+            System.out.println(image);
+        }
+        productService.uploadProduct(dataForm,images);
         return "/admin/product";
     }
     public List<Image> uploadImage(MultipartFile[] multipartFiles) throws IOException {

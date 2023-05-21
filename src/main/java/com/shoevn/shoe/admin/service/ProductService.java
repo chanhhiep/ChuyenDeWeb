@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ProductService {
@@ -34,21 +31,23 @@ public class ProductService {
     public void saveProduct(Product product){
         productRepository.save(product);
     }
-    public void uploadProduct(ProductDto productDto){
+    public void uploadProduct(ProductDto productDto,MultipartFile[] images){
+        System.out.println(productDto.toString());
         Category category = categoryRepository.findCategoryById(Long.parseLong(productDto.getCategory_id()));
         Brand brand = brandRepository.findBrandById(Long.parseLong(productDto.getBrand()));
         List<Size> sizes = new ArrayList<>();
         Set<Image> listImage=new HashSet<>();
-        for(MultipartFile image: productDto.getImages()) {
+        for(MultipartFile image: images) {
             try {
-                Image imageModel = new Image(image.getOriginalFilename(), image.getContentType(), image.getBytes());
+                Image imageModel = new Image( image.getOriginalFilename(), image.getContentType(), image.getBytes());
                 Image saveImage = imageRepository.save(imageModel);
                 listImage.add(saveImage);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        Product product = new Product(category, productDto.getName(),Double.parseDouble(productDto.getPrice()),Double.parseDouble(productDto.getDiscountRate()),listImage, productDto.getDescription(), brand,sizes,Integer.parseInt(productDto.getQuantity()));
+        Date currentDate = new Date();
+        Product product = new Product(category, productDto.getName(),Double.parseDouble(productDto.getPrice()),Double.parseDouble(productDto.getDiscountRate()),listImage, productDto.getDescription(), brand,sizes,Integer.parseInt(productDto.getQuantity()),currentDate,currentDate);
         productRepository.save(product);
     }
     public List<Size> getAllSize(){

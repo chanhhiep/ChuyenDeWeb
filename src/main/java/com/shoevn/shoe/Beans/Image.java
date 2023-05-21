@@ -29,7 +29,6 @@ private Product product;
 public Image(){
 
 }
-
     public Image(String name, String type, byte[] picByte) {
         this.name = name;
         this.type = type;

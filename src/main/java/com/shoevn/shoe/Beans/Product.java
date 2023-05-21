@@ -49,7 +49,7 @@ public class Product implements Serializable {
 
     public Product(){}
 
-    public Product(Category category, String name, double price, double discountRate, Set<Image> images, String description, Brand brand, List<Size> sizes, int quantity) {
+    public Product(Category category, String name, double price, double discountRate, Set<Image> images, String description, Brand brand, List<Size> sizes, int quantity, Date createDate, Date updateDate) {
         this.category = category;
         this.name = name;
         this.price = price;
