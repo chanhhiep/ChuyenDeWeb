@@ -365,6 +365,7 @@ data-template="vertical-menu-template-free"
     <th>category</th>
     <th>quantity</th>
     <th>Discount Rate</th>
+    <th>Size</th>
     <th>Status</th>
     <th>Actions</th>
 </tr>
@@ -389,30 +390,12 @@ data-template="vertical-menu-template-free"
                             class="avatar avatar-xs pull-up"
                             title="Lilian Fuller"
                     >
-                        <img src="${img}" alt="product" class="rounded-circle"/>
-                    </li>
-                    <li
-                            data-bs-toggle="tooltip"
-                            data-popup="tooltip-custom"
-                            data-bs-placement="top"
-                            class="avatar avatar-xs pull-up"
-                            title="Sophia Wilkerson"
-                    >
-                        <img src="${img}" alt="product" class="rounded-circle"/>
-                    </li>
-                    <li
-                            data-bs-toggle="tooltip"
-                            data-popup="tooltip-custom"
-                            data-bs-placement="top"
-                            class="avatar avatar-xs pull-up"
-                            title="Christina Parker"
-                    >
-                        <img src="${img}" alt="product" class="rounded-circle"/>
+                        <img src="${product.images}" alt="product" class="rounded-circle"/>
                     </li>
                 </ul>
             </td>
             <td>
-                 ${product.brand}
+                 ${product.brand.name}
             </td>
             <td>
                  ${product.price}
@@ -422,6 +405,12 @@ data-template="vertical-menu-template-free"
             <td>
                 ${product.discountRate}
             </td>
+            <td>
+                <c:forEach var="size" items="${product.sizes}">
+                    <p>${size}</p>
+                </c:forEach>
+            </td>
+
             <td><span class="badge bg-label-primary me-1">Status</span></td>
             <td>
                 <div class="dropdown">
@@ -542,48 +531,56 @@ data-template="vertical-menu-template-free"
     </div>
     <!--/ Responsive Table -->
     <!--/ Create Table -->
+    <form action="/product/saveProduct" method="post" enctype="multipart/form-data">
     <div class="d-flex aligns-items-center justify-content-center card text-left w-50 position-absolute top-50 start-50 translate-middle-x" id="create-product" style="margin-left: 100px;margin-top: -15%;;" aria-hidden="true">
     <div class="card mb-4">
     <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ;">
-    <h5 class="card-header">Create Produt</h5>
+    <h5 class="card-header">Create Product</h5>
     <button id="CreateBtn" type="button" class="btn btn-danger" style="margin-right: 20px;" onclick="clickCreateToggle()">Cancel</button>
     </div>
     <div class="card-body" style="margin-top: -3%;">
     <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">Name Product</label>
+    <label class="form-label">Name Product</label>
     <input
     type="text"
     class="form-control"
     placeholder="product name"
-    aria-describedby="defaultFormControlHelp" required="required"
+    required="required"
+    name="name"
     />
     </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">category</label>
-    <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose category</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+    <label class="form-label">category</label>
+    <select name="category_id" class="form-select" aria-label="Default select example" required="required">
+        <c:forEach var="cate" items="${categoryList}">
+            <option value="${cate.id_category}">${cate.name}</option>
+        </c:forEach>
     </select>
     </div>
     <div class="mb-3">
-    <label for="formFileMultiple" class="form-label">Upload Image</label>
-    <input class="form-control" type="file" id="formFileMultiple" multiple />
+    <label class="form-label">Upload Image</label>
+    <input name="images" class="form-control" type="file" id="formFileMultiple" multiple/>
     </div>
     <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">Price</label>
+    <label class="form-label">Price</label>
     <input
     type="number"
-    min="0" max="10000"
+    min="0" max="10000000"
     class="form-control"
     placeholder="price"
     aria-describedby="defaultFormControlHelp"
     required="required"
+    name="price"
     />
     </div>
+        <div class="mb-3">
+            <label class="form-label">Size:</label>
+            <c:forEach var="size" items="${sizeList}">
+                <input name="sizes[]" type="checkbox" value="${size.sizeId}">${size.size_num}
+            </c:forEach>
+        </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">promotion</label>
+    <label class="form-label">promotion</label>
     <select class="form-select" aria-label="Default select example" required="required">
     <option selected>chose promotion</option>
     <option value="1">One</option>
@@ -592,32 +589,42 @@ data-template="vertical-menu-template-free"
     </select>
     </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">brand</label>
-    <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose brand</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+    <label class="form-label">brand</label>
+    <select name="brand" class="form-select" aria-label="Default select example" required="required">
+        <c:forEach var="brand" items="${brandList}">
+            <option value="${brand.id}">${brand.name}</option>
+        </c:forEach>
     </select>
     </div>
     <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">quantity</label>
+    <label class="form-label">quantity</label>
     <input
     type="number" min="0" max="100000"
     class="form-control"
-
     placeholder="quantity"
     aria-describedby="defaultFormControlHelp"
     required="required"
+    name="quantity"
     />
     </div>
+        <div class="mb-3">
+            <label class="form-label">Discount Rate</label>
+            <input
+                    type="number" min="0" max="100"
+                    class="form-control"
+                    placeholder="Discount Rate"
+                    aria-describedby="defaultFormControlHelp"
+                    required="required"
+                    name="discountRate"
+            />
+        </div>
     <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">description</label>
-    <textarea class="form-control" rows="3" required="required"></textarea>
+    <label class="form-label">description</label>
+    <textarea name="description" class="form-control" rows="3" required="required"></textarea>
     </div>
     <div class="row mt-3">
     <div class="d-grid gap-2 col-lg-6 mx-auto">
-    <button class="btn btn-primary btn-lg" type="button">Save</button>
+    <button class="btn btn-primary btn-lg" value="Submit" type="submit">Save</button>
     </div>
     <div class="d-grid gap-2 col-lg-6 mx-auto">
     <button class="btn btn-danger btn-lg" type="button" onclick="clickCreateToggle()">Cancel</button>
@@ -626,6 +633,7 @@ data-template="vertical-menu-template-free"
     </div>
     </div>
     </div>
+    </form>
     <!--/ create Table -->
     <!-- Footer -->
     <footer class="content-footer footer bg-footer-theme">

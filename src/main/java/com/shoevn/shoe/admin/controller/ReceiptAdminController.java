@@ -1,17 +1,17 @@
 package com.shoevn.shoe.admin.controller;
 
-import com.shoevn.shoe.Beans.Category;
 import com.shoevn.shoe.Beans.Order;
-import com.shoevn.shoe.admin.service.ReceiptService;
+import com.shoevn.shoe.admin.service.ReceiptAdminService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-public class ReceiptController {
+public class ReceiptAdminController {
     @Autowired
-    private ReceiptService receiptService;
+    private ReceiptAdminService receiptService;
     @GetMapping("/receipt")
     public String listReceipt(ModelMap model){
         List<Order> listReceipt = receiptService.getAllReceipt();

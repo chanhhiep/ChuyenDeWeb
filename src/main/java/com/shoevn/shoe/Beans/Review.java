@@ -1,3 +1,4 @@
+
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
@@ -6,11 +7,10 @@ import java.io.Serializable;
 @Entity
 @Table(name = "reviews")
 public class Review implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", length = 50, nullable = false)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "username", nullable = false, //
             foreignKey = @ForeignKey(name = "Acc_PROD_FK"))
@@ -18,14 +18,12 @@ public class Review implements Serializable {
     private int star;
     @Column(name = "cmt", length = 255)
     private String cmt;
-    @ManyToOne(fetch =  FetchType.LAZY)
-    @JoinColumn(name = "product_id",nullable = false,foreignKey = @ForeignKey(name = "Pro_FK"))
-    private Product product;
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -36,7 +34,6 @@ public class Review implements Serializable {
     public void setAccount(Account account) {
         this.account = account;
     }
-
     public String getCmt() {
         return cmt;
     }
@@ -63,3 +60,4 @@ public class Review implements Serializable {
                 '}';
     }
 }
+

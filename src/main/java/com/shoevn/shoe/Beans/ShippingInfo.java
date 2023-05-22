@@ -1,3 +1,4 @@
+
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
@@ -9,42 +10,32 @@ import java.util.Date;
 public class ShippingInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "shipping_id")
+    @Column(name = "id")
     private Long id;
     @Column(name = "shipping_email", length = 128, nullable = false)
     private String shippingEmail;
     @Column(name = "shipping_name", length = 255, nullable = false)
-    private String shippingName;
+    private String name;
     @Column(name = "shipping_phone", length = 128, nullable = false)
-    private String shippingPhone;
+    private String phone;
     @Column(name = "shipping_address", length = 255, nullable = false)
-    private String shippingAddress;
-    @Column(name = "xa", length = 255, nullable = false)
-    private String xa;
-    @Column(name = "huyen", length = 255, nullable = false)
-    private String huyen;
-    @Column(name = "tinh", length = 255, nullable = false)
-    private String tinh;
+    private String address;
     @Temporal(TemporalType.DATE)
-    @Column(name = "create_ship", nullable = false)
+    @Column(name = "create_date",nullable = false)
     private Date createDate;
     @Temporal(TemporalType.DATE)
-    @Column(name = "update_ship", nullable = false)
+    @Column(name = "update_date",nullable = false)
     private Date updateDate;
 
-    public ShippingInfo() {
+    public ShippingInfo(){
 
     }
 
-    public ShippingInfo(Long id, String shippingEmail, String shippingName, String shippingPhone, String shippingAddress, String xa, String huyen, String tinh, Date createDate, Date updateDate) {
-        this.id = id;
+    public ShippingInfo(String shippingEmail, String name, String phone, String address, Date createDate, Date updateDate) {
         this.shippingEmail = shippingEmail;
-        this.shippingName = shippingName;
-        this.shippingPhone = shippingPhone;
-        this.shippingAddress = shippingAddress;
-        this.xa = xa;
-        this.huyen = huyen;
-        this.tinh = tinh;
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
@@ -65,28 +56,28 @@ public class ShippingInfo {
         this.shippingEmail = shippingEmail;
     }
 
-    public String getShippingName() {
-        return shippingName;
+    public String getName() {
+        return name;
     }
 
-    public void setShippingName(String shippingName) {
-        this.shippingName = shippingName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getShippingPhone() {
-        return shippingPhone;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setShippingPhone(String shippingPhone) {
-        this.shippingPhone = shippingPhone;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getShippingAddress() {
-        return shippingAddress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setShippingAddress(String shippingAddress) {
-        this.shippingAddress = shippingAddress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public Date getCreateDate() {
@@ -105,43 +96,17 @@ public class ShippingInfo {
         this.updateDate = updateDate;
     }
 
-    public String getXa() {
-        return xa;
-    }
-
-    public void setXa(String xa) {
-        this.xa = xa;
-    }
-
-    public String getHuyen() {
-        return huyen;
-    }
-
-    public void setHuyen(String huyen) {
-        this.huyen = huyen;
-    }
-
-    public String getTinh() {
-        return tinh;
-    }
-
-    public void setTinh(String tinh) {
-        this.tinh = tinh;
-    }
-
     @Override
     public String toString() {
         return "ShippingInfo{" +
                 "id=" + id +
                 ", shippingEmail='" + shippingEmail + '\'' +
-                ", shippingName='" + shippingName + '\'' +
-                ", shippingPhone='" + shippingPhone + '\'' +
-                ", shippingAddress='" + shippingAddress + '\'' +
-                ", xa='" + xa + '\'' +
-                ", huyen='" + huyen + '\'' +
-                ", tinh='" + tinh + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
                 ", createDate=" + createDate +
                 ", updateDate=" + updateDate +
                 '}';
     }
 }
+

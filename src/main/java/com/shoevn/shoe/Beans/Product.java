@@ -2,69 +2,83 @@ package com.shoevn.shoe.Beans;
 
 
 import jakarta.persistence.*;
-import org.springframework.format.annotation.NumberFormat;
+import lombok.Builder;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
+@Builder
 @Table(name = "products")
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "product_id",length = 20,nullable = false)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id", nullable = false)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, //
             foreignKey = @ForeignKey(name = "Category_PROD_FK"))
     private Category category;
     @Column(name = "name",length = 255,nullable = false)
     private String name;
-//    @Column(name = "discount_rate",nullable = false)
-//    private double discountRate;
     @Column(name = "price",nullable = false)
-    @NumberFormat( style = NumberFormat.Style.CURRENCY)
     private double price;
-    @Column(name = "sell_price",nullable = false)
-    @NumberFormat( style = NumberFormat.Style.CURRENCY)
-    private double sellPrice;
-    @Column(name = "img",nullable = false)
-    private String img;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "create_product",nullable = false)
-    private Date dateproduct;
-//    @Temporal(TemporalType.DATE)
-//    @Column(name = "update_product",nullable = false)
-//    private Date updateDate;
-    @Column(name = "quantity ",nullable = false)
-    private Integer quantity;
-//    @ManyToOne
-//    @JoinColumn(name = "brand_id", nullable = false, //
-//            foreignKey = @ForeignKey(name = "brand_PROD_FK"))
-//    private Brand brand;
+    @Column(name = "discount_rate",nullable = false)
+    private double discountRate;
+    @Column(name = "image")
+    private String images;
+    @Column(name = "description",nullable = false)
+    private String description;
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "brand_PROD_FK"))
+    private Brand brand;
     @OneToMany(mappedBy = "product")
-    @Column(name = "Size",nullable = false)
+    @Column(name = "size",nullable = false)
     private List<Size> sizes;
+    @Column(name = "quantity",nullable = false)
+    private int quantity;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "create_date",nullable = false)
+    private Date createDate;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "update_date",nullable = false)
+    private Date updateDate;
+
     public Product(){}
 
-    public List<Size> getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(List<Size> sizes) {
+    public Product(Long id, Category category, String name, double price, double discountRate, String images, String description, Brand brand, List<Size> sizes, int quantity, Date createDate, Date updateDate) {
+        this.id = id;
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.discountRate = discountRate;
+        this.images = images;
+        this.description = description;
+        this.brand = brand;
         this.sizes = sizes;
+        this.quantity = quantity;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public String getName() {
         return name;
@@ -78,61 +92,71 @@ public class Product implements Serializable {
         return price;
     }
 
-
-    public double getSellPrice() {
-        return sellPrice;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
-    }
-
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setSellPrice(double sellPrice) {
-        this.sellPrice = sellPrice;
+    public double getDiscountRate() {
+        return discountRate;
     }
 
-    public Date getDateproduct() {
-        return dateproduct;
+    public void setDiscountRate(double discountRate) {
+        this.discountRate = discountRate;
     }
 
-    public void setDateproduct(Date dateproduct) {
-        this.dateproduct = dateproduct;
+    public String getImages() {
+        return images;
     }
 
-    public Category getCategory() {
-        return category;
+    public void setImages(String images) {
+        this.images = images;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public String getDescription() {
+        return description;
     }
 
-    public Integer getQuantity() {
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public List<Size> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<Size> sizes) {
+        this.sizes = sizes;
+    }
+
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id='" + id + '\'' +
-                ", category=" + category +
-                ", name='" + name + '\'' +
-                ", price=" + price +
-                ", sellPrice=" + sellPrice +
-                ", img='" + img + '\'' +
-                ", dateproduct=" + dateproduct +
-                '}';
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 }

@@ -2,10 +2,9 @@ package com.shoevn.shoe.admin.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class DashboardController {
+public class DashboardAdminController {
     @RequestMapping("dashboard")
     //@ResponseBody
     public String index(){

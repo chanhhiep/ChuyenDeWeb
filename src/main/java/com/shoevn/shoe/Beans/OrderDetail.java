@@ -1,3 +1,4 @@
+
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
@@ -7,11 +8,10 @@ import java.util.Date;
 @Entity
 @Table(name = "order_Details")
 public class OrderDetail implements Serializable {
-    private static final long serialVersionUID = 7550745928843183535L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", length = 50, nullable = false)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID", nullable = false, //
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_ORD_FK"))
@@ -20,28 +20,33 @@ public class OrderDetail implements Serializable {
     @JoinColumn(name = "PRODUCT_ID", nullable = false, //
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_PROD_FK"))
     private Product product;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SIZE_ID", nullable = false, //
-            foreignKey = @ForeignKey(name = "ORDER_DETAIL_SIZE_FK"))
-    private Size size;
-    @Column(name = "Quanity", nullable = false)
-    private int quanity;
+    @Column(name = "Quantity", nullable = false)
+    private int quantity;
     @Column(name = "Price", nullable = false)
     private double price;
-    @Column(name = "note", length = 128)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "size_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "SIZE_DETAIL_PROD_FK"))
+    private Size size;
+    @Column(name = "note", length = 128, nullable = false)
     private String note;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "Create_Date", nullable = false)
-    private Date orderDatedetail;
-
     public OrderDetail(){
-
     }
-    public long getId() {
+
+    public OrderDetail(Order order, Product product, int quantity, double price, Size size, String note) {
+        this.order = order;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+        this.size = size;
+        this.note = note;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -61,12 +66,12 @@ public class OrderDetail implements Serializable {
         this.product = product;
     }
 
-    public int getQuanity() {
-        return quanity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuanity(int quanity) {
-        this.quanity = quanity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getPrice() {
@@ -77,22 +82,6 @@ public class OrderDetail implements Serializable {
         this.price = price;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Date getOrderDatedetail() {
-        return orderDatedetail;
-    }
-
-    public void setOrderDatedetail(Date orderDatedetail) {
-        this.orderDatedetail = orderDatedetail;
-    }
-
     public Size getSize() {
         return size;
     }
@@ -101,17 +90,25 @@ public class OrderDetail implements Serializable {
         this.size = size;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
     @Override
     public String toString() {
         return "OrderDetail{" +
                 "id=" + id +
                 ", order=" + order +
                 ", product=" + product +
-                ", size=" + size +
-                ", quanity=" + quanity +
+                ", quantity=" + quantity +
                 ", price=" + price +
+                ", size=" + size +
                 ", note='" + note + '\'' +
-                ", orderDatedetail=" + orderDatedetail +
                 '}';
     }
 }
+

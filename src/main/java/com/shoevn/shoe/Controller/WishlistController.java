@@ -38,10 +38,10 @@ public class WishlistController {
         // Tạo một đối tượng WishlistItem từ thông tin sản phẩ
         Wishlist item = new Wishlist();
         item.setId(product.getId());
-        item.setImg(product.getImg());
+        item.setImg(product.getImages());
         item.setName(product.getName());
         item.setPrice(product.getPrice());
-        item.setSellPrice(product.getSellPrice());
+        item.setSellPrice(product.getDiscountRate());
 
         wishlists.add(item);
 

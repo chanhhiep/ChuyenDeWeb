@@ -50,9 +50,8 @@ public class CheckoutController {
             detail.setProduct(entry.getValue().getProduct());
 //            detail.setProduct(product);
             detail.setPrice(entry.getValue().getProduct().getPrice());
-            detail.setQuanity(entry.getValue().getQuantity());
+            detail.setQuantity(entry.getValue().getQuantity());
             detail.setSize(entry.getValue().getSize());
-            detail.setOrderDatedetail(new Timestamp(new Date().getTime()));
             orderDetailService.saveOrderDetail(detail);
         }
         cartItems = new HashMap<>();
