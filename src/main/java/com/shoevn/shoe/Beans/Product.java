@@ -2,6 +2,7 @@ package com.shoevn.shoe.Beans;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
+@Builder
 @Table(name = "products")
 public class Product implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -26,9 +28,8 @@ public class Product implements Serializable {
     private double price;
     @Column(name = "discount_rate",nullable = false)
     private double discountRate;
-    @OneToMany(mappedBy = "product")
-    @Column(name = "image",nullable = false)
-    private Set<Image> images;
+    @Column(name = "image")
+    private String images;
     @Column(name = "description",nullable = false)
     private String description;
     @ManyToOne
@@ -36,20 +37,20 @@ public class Product implements Serializable {
             foreignKey = @ForeignKey(name = "brand_PROD_FK"))
     private Brand brand;
     @OneToMany(mappedBy = "product")
-    @Column(name = "Size",nullable = false)
+    @Column(name = "size",nullable = false)
     private List<Size> sizes;
     @Column(name = "quantity",nullable = false)
     private int quantity;
     @Temporal(TemporalType.DATE)
-    @Column(name = "create_product",nullable = false)
+    @Column(name = "create_date",nullable = false)
     private Date createDate;
     @Temporal(TemporalType.DATE)
-    @Column(name = "update_product",nullable = false)
+    @Column(name = "update_date",nullable = false)
     private Date updateDate;
 
     public Product(){}
 
-    public Product(Category category, String name, double price, double discountRate, Set<Image> images, String description, Brand brand, List<Size> sizes, int quantity, Date createDate, Date updateDate) {
+    public Product(Category category, String name, double price, double discountRate, String images, String description, Brand brand, List<Size> sizes, int quantity, Date createDate, Date updateDate) {
         this.category = category;
         this.name = name;
         this.price = price;
@@ -103,11 +104,11 @@ public class Product implements Serializable {
         this.discountRate = discountRate;
     }
 
-    public Set<Image> getImages() {
+    public String getImages() {
         return images;
     }
 
-    public void setImages(Set<Image> images) {
+    public void setImages(String images) {
         this.images = images;
     }
 

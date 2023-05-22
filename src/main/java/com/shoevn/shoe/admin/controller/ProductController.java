@@ -48,7 +48,7 @@ public class ProductController {
         return "/admin/product";
     }
     @PostMapping(value = "/product/saveProduct")
-    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile[] images ) throws IOException {
+    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile images ) throws IOException {
         /*System.out.println(dataForm.toString());
         long category_id = Long.parseLong(dataForm.getCategory_id());
         Category category = categoryService.getCategoryById(category_id);
@@ -58,9 +58,7 @@ public class ProductController {
         Product product = new Product(category, dataForm.getName(), Double.parseDouble(dataForm.getPrice()),Double.parseDouble(dataForm.getDiscountRate()),imageList,dataForm.getDescription(), brand,sizes, Integer.parseInt(dataForm.getQuantity()));
         productService.saveProduct(product);*/
         //dataForm.setImages(images);
-        for (MultipartFile image: images) {
-            System.out.println(image);
-        }
+
         productService.uploadProduct(dataForm,images);
         return "/admin/product";
     }

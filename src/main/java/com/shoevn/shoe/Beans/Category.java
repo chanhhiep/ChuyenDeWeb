@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Table(name = "category")
 
 public class Category implements Serializable {
-    private static final long serialVersionUID = -2054386655979281969L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_category", nullable = false)

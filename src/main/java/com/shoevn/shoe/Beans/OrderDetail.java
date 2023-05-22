@@ -20,8 +20,8 @@ public class OrderDetail implements Serializable {
     @JoinColumn(name = "PRODUCT_ID", nullable = false, //
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_PROD_FK"))
     private Product product;
-    @Column(name = "Quanity", nullable = false)
-    private int quanity;
+    @Column(name = "Quantity", nullable = false)
+    private int quantity;
     @Column(name = "Price", nullable = false)
     private double price;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,11 +33,10 @@ public class OrderDetail implements Serializable {
     public OrderDetail(){
     }
 
-    public OrderDetail(Long id, Order order, Product product, int quanity, double price, Size size, String note) {
-        this.id = id;
+    public OrderDetail(Order order, Product product, int quantity, double price, Size size, String note) {
         this.order = order;
         this.product = product;
-        this.quanity = quanity;
+        this.quantity = quantity;
         this.price = price;
         this.size = size;
         this.note = note;
@@ -67,12 +66,12 @@ public class OrderDetail implements Serializable {
         this.product = product;
     }
 
-    public int getQuanity() {
-        return quanity;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setQuanity(int quanity) {
-        this.quanity = quanity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public double getPrice() {
@@ -105,7 +104,7 @@ public class OrderDetail implements Serializable {
                 "id=" + id +
                 ", order=" + order +
                 ", product=" + product +
-                ", quanity=" + quanity +
+                ", quantity=" + quantity +
                 ", price=" + price +
                 ", size=" + size +
                 ", note='" + note + '\'' +

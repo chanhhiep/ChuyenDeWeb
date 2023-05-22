@@ -9,16 +9,16 @@ import java.util.Date;
 public class DiscountCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "discountcode_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "discountcode_name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
     @Column(name = "description", nullable = false)
     private String description;
     @Temporal(TemporalType.DATE)
-    @Column(name = "create_payment",nullable = false)
+    @Column(name = "create_date",nullable = false)
     private Date createDate;
     @Temporal(TemporalType.DATE)
-    @Column(name = "update_payment",nullable = false)
+    @Column(name = "update_date",nullable = false)
     private Date updateDate;
 }
