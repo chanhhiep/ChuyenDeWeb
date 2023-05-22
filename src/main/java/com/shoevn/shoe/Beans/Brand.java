@@ -1,5 +1,4 @@
 package com.shoevn.shoe.Beans;
-
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -11,18 +10,19 @@ public class Brand {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "brand_id", nullable = false)
     private Long id;
-    @Column(name = "name",length = 255,nullable = false)
+    @Column(name = "name", length = 255, nullable = false)
     private String name;
     @Temporal(TemporalType.DATE)
-    @Column(name = "create_brand",nullable = false)
+    @Column(name = "create_brand", nullable = false)
     private Date createDate;
     @Temporal(TemporalType.DATE)
-    @Column(name = "update_brand",nullable = false)
+    @Column(name = "update_brand", nullable = false)
     private Date updateDate;
 
-    public Brand(){
+    public Brand() {
 
     }
+
     public Brand(Long id, String name, Date createDate, Date updateDate) {
         this.id = id;
         this.name = name;

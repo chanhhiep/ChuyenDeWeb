@@ -383,7 +383,6 @@ data-template="vertical-menu-template-free"
             <td>${product.name}</td>
             <td>
                 <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                    <c:forEach var="img" items="${product.images}">
                     <li
                             data-bs-toggle="tooltip"
                             data-popup="tooltip-custom"
@@ -391,9 +390,8 @@ data-template="vertical-menu-template-free"
                             class="avatar avatar-xs pull-up"
                             title="Lilian Fuller"
                     >
-                        <img src="${img.name}" alt="product" class="rounded-circle"/>
+                        <img src="${product.images}" alt="product" class="rounded-circle"/>
                     </li>
-                    </c:forEach>
                 </ul>
             </td>
             <td>

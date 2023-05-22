@@ -1,3 +1,4 @@
+
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
@@ -7,10 +8,9 @@ import java.util.Date;
 @Entity
 @Table(name = "order_Details")
 public class OrderDetail implements Serializable {
-    private static final long serialVersionUID = 7550745928843183535L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID", nullable = false, //
@@ -111,3 +111,4 @@ public class OrderDetail implements Serializable {
                 '}';
     }
 }
+

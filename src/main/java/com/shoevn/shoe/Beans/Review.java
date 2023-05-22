@@ -1,3 +1,4 @@
+
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
@@ -6,7 +7,6 @@ import java.io.Serializable;
 @Entity
 @Table(name = "reviews")
 public class Review implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -60,3 +60,4 @@ public class Review implements Serializable {
                 '}';
     }
 }
+

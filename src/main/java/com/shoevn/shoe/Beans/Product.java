@@ -7,7 +7,6 @@ import lombok.Builder;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Builder
@@ -50,7 +49,8 @@ public class Product implements Serializable {
 
     public Product(){}
 
-    public Product(Category category, String name, double price, double discountRate, String images, String description, Brand brand, List<Size> sizes, int quantity, Date createDate, Date updateDate) {
+    public Product(Long id, Category category, String name, double price, double discountRate, String images, String description, Brand brand, List<Size> sizes, int quantity, Date createDate, Date updateDate) {
+        this.id = id;
         this.category = category;
         this.name = name;
         this.price = price;

@@ -9,9 +9,9 @@ import java.io.Serializable;
 public class Sale implements Serializable {
     private static final long serialVersionUID = -2576670215015463100L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", length = 50)
+    private long id;
     @Column(name = "numSale")
     private double numSale;
     @Column(name = "name")
@@ -20,6 +20,9 @@ public class Sale implements Serializable {
 
     }
 
+    public long getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -33,7 +36,7 @@ public class Sale implements Serializable {
         this.name = name;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

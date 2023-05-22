@@ -1,3 +1,4 @@
+
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
@@ -21,4 +22,16 @@ public class DiscountCode {
     @Temporal(TemporalType.DATE)
     @Column(name = "update_date",nullable = false)
     private Date updateDate;
+
+    public DiscountCode(){
+
+    }
+    public DiscountCode(String name, String description, Date createDate, Date updateDate) {
+        this.name = name;
+        this.description = description;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
+
 }
+

@@ -1,3 +1,4 @@
+
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
@@ -108,3 +109,4 @@ public class ShippingInfo {
                 '}';
     }
 }
+

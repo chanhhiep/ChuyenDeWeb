@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,8 +44,8 @@
     <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body id="content">
 <header>
@@ -61,75 +62,72 @@
                     <li>
                         <a href="/wishlist" title="Danh sách yêu thích">
                             <div class="img">
-                                <img src="images/wish-list.png" alt="Cập nhật danh sách yêu thích" width="24"
-                                     height="24"></div>
+                                <img src="/images/wish-list.png" alt="Cập nhật danh sách yêu thích" width="24"
+                                     height="24">
+                            </div>
                             <p>Wish List</p>
                         </a>
                     </li>
 
                 </ul>
-                <a href="/cart" id="cart"><i><img src="images/ico_cart.svg" alt="Thông tin đơn hàng" width="15"
-                                                  height="15"></i><span>( 0 sản phẩm )</span></a>
+                <a href="/cart" id="cart">
+                    <i><img src="/images/ico_cart.svg" alt="Thông tin đơn hàng" width="15"
+                            height="15"></i><span>( ${myCartNum} sản phẩm )</span>
+                </a>
             </div>
             <div class="clear"></div>
             <div class="header">
                 <div class="logo">
-                    <a href="/home" title="Trang chủ | Shop Giày Thể Thao - Sneaker Nam, Nữ Replica Đẹp Giá Rẻ">
-                        <img src="images/logo.png" alt="Shop Giày Thể Thao - Sneaker Nam, Nữ Replica Đẹp Giá Rẻ"
+                    <a href="/" title="Trang chủ | Shop Giày Thể Thao - Sneaker Nam, Nữ Replica Đẹp Giá Rẻ">
+                        <img src="/images/logo.png" alt="Shop Giày Thể Thao - Sneaker Nam, Nữ Replica Đẹp Giá Rẻ"
                              width="261"
-                             height="50"></a></div>
+                             height="50">
+                    </a>
+                </div>
                 <div class="logomb">
-                    <a href="/home" title="Trang chủ | Shop Giày Thể Thao - Sneaker Nam, Nữ Replica Đẹp Giá Rẻ">
-                        <img src="images/logo.png" alt="Shop Giày Thể Thao - Sneaker Nam, Nữ Replica Đẹp Giá Rẻ"
-                             width="47" height="36"></a>
+                    <a href="/" title="Trang chủ | Shop Giày Thể Thao - Sneaker Nam, Nữ Replica Đẹp Giá Rẻ">
+                        <img src="/images/logomb.png" alt="Shop Giày Thể Thao - Sneaker Nam, Nữ Replica Đẹp Giá Rẻ"
+                             width="47" height="36">
+                    </a>
                 </div>
                 <div class="account">
-                    <a href="/login" title="Đăng ký &amp; tạo tài khoản">
-                        <img src="images/user.svg" alt="Tài khoản thành viên" height="36" width="36"
-                             class="default"><span>Đăng ký / đăng nhập</span>
-                        <p class="capdo"><i>Nhận ngay ưu đãi</i></p></a>
-                    <p><a href="/" title="Đăng ký &amp; tạo tài khoản"></a></p></div>
+                    <c:if test="${not empty sessionScope.user}">
+                        <a href=""><p>Xin chào, ${sessionScope.user.username}!</p></a>
+                        <a href="/logout">Đăng xuất</a>
+                    </c:if>
+                    <c:if test="${empty sessionScope.user}">
+                        <a href="/login" title="Đăng ký &amp; tạo tài khoản">
+                            <img src="/images/user.svg" alt="Tài khoản thành viên" height="36" width="36"
+                                 class="default"><span>Đăng ký / đăng nhập</span>
+                            <p class="capdo"><i>Nhận ngay ưu đãi</i></p>
+                        </a>
+                    </c:if>
+                </div>
                 <div class="search">
-                    <form action="tim-kiem" method="get" target="_top"><input type="text" name="key"
-                                                                              placeholder="Nhập gợi ý từ khóa...">
+                    <form action="/product/search" method="get" target="_top"><input type="text" name="key"
+                                                                                     placeholder="Nhập gợi ý từ khóa...">
                         <input type="submit" value="Tìm kiếm">
                         <ul class="search_result"></ul>
                     </form>
                 </div>
-                <a href="/cart" title="Giỏ hàng của bạn" class="cartmb"><span>0</span></a>
+                <a href="/cart" title="Giỏ hàng của bạn" class="cartmb"><span>${myCartNum}</span></a>
                 <a class="togglemenu">Menu</a>
                 <nav class="subnav">
                     <ul class="navigation">
-                        <li class="category" href="/product"
-                            title="Shop giày thể thao Adidas nam nữ mới nhất 2022"><a>Adidas</a></li>
-
-                        <li class="category" href="/product"
-                            title="Giày Thể Thao Nike Chính Hãng Nam Nữ Đẹp Giá Giảm 25%"><a>Nike</a></li>
-
-                        <li class="category" href="/product"
-                            title="Giày Sneaker MLB Korea Nam Nữ Mới Giá Rẻ Giảm 25%"><a>MLB Korea</a></li>
-
-                        <li class="category" href="/product"
-                            title="Giày New Balance Chất Lượng Siêu Cấp Giá Rẻ Giảm 20%"><a>New Balance</a></li>
-
-                        <li class="category" href="/product"
-                            title="Giày Sneaker McQueen Mới Nhất | Chuẩn Đẹp Giảm 25%"><a>McQueen</a></li>
-
-                        <li class="category" href="/product"
-                            title="Giày Converse Vietnam: Chuck Taylor 1970s Nam Nữ Giá Rẻ"><a>Converse</a></li>
-
-                        <li class="category" href="/product"
-                            title="Store Giày Vans Việt Nam: Old Skool, Slip On, Vault, Classic, Marvel"><a>VANS</a>
-                        </li>
-
+                        <c:forEach var="categories" items="${menuItems}">
+                            <c:if test="${categories.getParent_id() == 0}">
+                                <li class="category" title="Shop giày thể thao Adidas nam nữ mới nhất 2022">
+                                    <a href="/parent/${item.getId_category()}/products">${categories.getName()}</a>
+                                </li>
+                            </c:if>
+                        </c:forEach>
                         <ul class="linknews">
                             <li><a href="/" title="Thông tin giới thiệu">Giới thiệu</a></li>
-                            <li><a href="/"
-                                   title="Chia sẻ kinh nghiệm hay về giày thể thao">
-                                Chia sẻ kinh nghiệm hay <label>Mới</label></a></li>
-                            <li><a href="/" title="Tin tức - tư vấn giày thể thao">Tin tức - tư
-                                vấn </a>
+                            <li><a href="/" title="Chia sẻ kinh nghiệm hay về giày thể thao">
+                                Chia sẻ kinh nghiệm hay <label>Mới</label></a>
                             </li>
+                            <li><a href="/" title="Tin tức - tư vấn giày thể thao">Tin tức - tư
+                                vấn </a></li>
                             <li><a href="/" title="Thông tin liên hệ">Liên hệ</a></li>
                         </ul>
                     </ul>
@@ -141,67 +139,31 @@
         <nav id="menu" class="menu">
             <div class="container">
                 <ul>
-                    <li><a href="/home" title="Giới thiệu"><span class="brand"><img
-                            src="images/gioi-thieu.png" alt="Giới thiệu" width="33" height="24"></span>Trang chủ</a>
+                    <li><a href="/" title="Giới thiệu"><span class="brand"><img
+                            src="/images/gioi-thieu.png" alt="Giới thiệu" width="33" height="24"></span>Trang chủ</a>
                     </li>
-                    <li><a href="/product" title="Adidas"><span class="brand"><img
-                            src="images/adidas.png" alt="Adidas" width="40" height="24"></span>Adidas</a>
-                        <ul>
-                            <li><a href="/product" title="Ultra Boost">Ultra Boost</a></li>
-                            <li><a href="/product" title="Yeezy">Yeezy</a></li>
-                            <li><a href="/product" title="ZX 5K Boost">ZX 5K Boost</a></li>
-                            <li><a href="/product" title="Alpha Magma">Alpha Magma</a></li>
-                            <li><a href="/product" title="EQT+">EQT+</a></li>
-                            <li><a href="/product" title="ZX 2K Boost">ZX 2K Boost</a></li>
-                            <li><a href="/product" title="Alphabounce">Alphabounce</a></li>
-                            <li><a href="/product" title="X9000L4">X9000L4</a></li>
-                            <li><a href="/product" title="Stan Smith">Stan Smith</a></li>
-                            <li><a href="/product" title="Prophere">Prophere</a></li>
-                            <li><a href="/product" title="Superstar">Superstar</a></li>
-                            <li><a href="/product" title="NMD Humanrace">NMD Humanrace</a></li>
-                            <li><a href="/product" title="Ozweego">Ozweego</a></li>
-                            <li><a href="/product" title="Adidas Yung">Adidas Yung</a></li>
-                        </ul>
-                    </li>
+                    <c:forEach var="item" items="${menuItems}">
+                        <c:if test="${item.getParent_id() == 0}">
+                            <li>
+                                <a href="/parent/${item.getId_category()}/products">
+                                    <span class="brand">
+                                        <img src="/images/${item.getImg()}" width="40"
+                                             height="24"></span>${item.getName()}
+                                </a>
+
+                                <ul><c:forEach var="submenu" items="${menuItems}">
+                                    <c:if test="${submenu.getParent_id() == item.getId_category()}">
+                                        <li>
+                                            <a href="/categories/${submenu.getId_category()}/products">${submenu.getName()}</a>
+                                        </li>
+                                    </c:if>
+                                </c:forEach></ul>
+                            </li>
+                        </c:if>
+                    </c:forEach>
                     <li>
-                        <a href="/product" title="Nike"><span class="brand">
-                        <img src="images/nike.png" alt="Nike" width="40" height="24"></span>Nike</a>
-                        <ul>
-                            <li><a href="/product" title="SB Dunk">SB Dunk</a></li>
-                            <li><a href="/product" title="Jordan">Jordan</a></li>
-                            <li><a href="/product" title="Air Force 1">Air Force 1</a></li>
-                            <li><a href="/product" title="Blazer">Blazer</a></li>
-                            <li><a href="/product" title="Pegasus">Pegasus</a></li>
-                            <li><a href="/product" title="Air Max">Air Max</a></li>
-                            <li><a href="/product" title="Joyride">Joyride</a></li>
-                            <li><a href="/product" title="M2K">M2K</a></li>
-                            <li><a href="/product" title="Uptempo">Uptempo</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="/product" title="MLB Korea"><span class="brand">
-                        <img src="images/mlb.png" alt="MLB Korea" width="40" height="24"></span>MLB Korea</a>
-                    </li>
-                    <li><a href="/product" title="New Balance"><span class="brand"><img
-                            src="images/new-balance.png" alt="New Balance" width="40" height="24"></span>New
-                        Balance</a>
-                        <ul>
-                            <li><a href="/product" title="New Balance 300">New Balance 300</a></li>
-                            <li><a href="/product" title="New Balance 550">New Balance 550</a></li>
-                            <li><a href="/product" title="New Balance 574">New Balance 574</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="/product" title="McQueen"><span class="brand"><img
-                            src="images/mcqueen.png" alt="McQueen" width="40" height="24"></span>McQueen</a>
-                    </li>
-                    <li><a href="/product" title="Converse"><span class="brand"><img
-                            src="images/converse.png" alt="Converse" width="40" height="24"></span>Converse</a>
-                    </li>
-                    <li><a href="/product" title="VANS"><span class="brand">
-                        <img src="images/vans.png" alt="VANS" width="40" height="24"></span>VANS</a>
-                    </li>
-                    <li><a href="/product" title="Sale Off" class="sale"><span class="brand"><img
-                            src="images/sale-off.png" alt="Sale Off" width="40" height="24"></span>Sale Off</a>
+                        <a href="/" title="Sale Off" class="sale"><span class="brand"><img
+                                src="/images/sale-off.png" alt="Sale Off" width="40" height="24"></span>Sale Off</a>
                     </li>
                 </ul>
             </div>
@@ -216,13 +178,12 @@
         <!---->
         <div class="padmb">
             <div class="hinhsp">
-                <img class=" lazyloaded"
-                     alt="Nike M2k Trắng Gót Đỏ Nam, Nữ" width="500" height="500"
-                     src="images/sp/nike-m2k-trang-got-do-nam-nu.jpg">
+                <img class=" lazyloaded" width="500" height="500" src="/images/sp/${products.getImg()}">
             </div>
+
             <div class="infosp">
-                <div class="ten">Nike M2k Trắng Gót Đỏ Nam, Nữ</div>
-                <a class="rew" href="/" title="Đánh giá Nike M2k Trắng Gót Đỏ Nam, Nữ">
+                <div class="ten">${products.getName()}</div>
+                <a class="rew">
                     <span>
                         <i class="iconcom-star"></i>
                         <i class="iconcom-star"></i>
@@ -233,15 +194,9 @@
                     <span> (đánh giá)</span>
                 </a>
                 <div class="clear"></div>
-                <div class="brand">
-                    <p>Brand: <a href="giay-nike" title="Nike" rel="nofollow">Nike</a></p>
-                    <p class="code">Code/Sku: <b>M2K3</b></p>
-                    <p class="code">Views: <b>8,981</b></p>
+                <div id="setPrice"><p class="price">${products.getPrice()}<sup>đ</sup></p>
+                    <p class="company"><span>${products.getSellPrice()}</span></p>
                 </div>
-                <div class="clear"></div>
-                <div id="setPrice"><p class="price">900,000<sup>đ</sup></p>
-                    <p class="company"><span>1,950,000</span></p>
-                    <p class="discount">GIẢM 1,050,000₫</p></div>
                 <div class="clear"></div>
                 <div class="khuyenmai">
                     <ul>
@@ -249,35 +204,31 @@
                         <li><strong>Tình trạng :</strong> Hàng mới 100%</li>
                     </ul>
                 </div>
+
                 <div class="choosesize ">
                     <p>Chọn size: </p>
                     <ul class="ulsize">
-                        <li>36</li>
-                        <li>37</li>
-                        <li>38</li>
-                        <li>39</li>
-                        <li>40</li>
-                        <li>41</li>
-                        <li>42</li>
-                        <li>43</li>
-                        <li>44</li>
+                        <c:forEach var="size" items="${sizes}">
+                            <li>${size.getSize_num()}</li>
+                        </c:forEach>
                     </ul>
                 </div>
-                <form class="product " name="Order">
+                <form class="product" action="/add/${products.getId()}/size" method="get" name="Order">
                     <div class="soluongsp">
-                        <input id="qty" name="quantity" type="number" class="soluong" value="1" max="10">
+                        <input id="qty" name="quantity" type="number" class="soluong" value="1" min="1"
+                               max="${products.quantity}">
                         <div class="upqty" onclick="updownqty('up');">+</div>
                         <div class="downqty" onclick="updownqty('down');">–</div>
                         <span>(Chọn số lượng)</span>
                     </div>
-                    <input class="sizesp" name="sizesp" type="hidden" value="" id="size">
-                    <input type="hidden" name="giaban" class="giabansp" value="">
-                    <input type="hidden" name="giacty" class="giactysp" value="">
-                    <input type="hidden" name="product_id" value="">
+
+                    <input class="sizesp" name="sizesp" type="hidden" value="${size.getSize_num()}" id="size">
+                    <input type="hidden" name="giaban" class="giabansp" value="${products.getPrice()}">
+                    <input type="hidden" name="product_id" value="${products.getId()}">
                     <div class="clear"></div>
                     <input type="submit" class="buynow" value="Mua ngay">
-                    <a href="gio-hang.html" class="intocart">Thêm vào giỏ</a>
-                    <a class="wishlist" href="wishlist.html">Danh sách yêu thích</a>
+                    <a href="/add/${products.getId()}/size" class="intocart">Thêm vào giỏ</a>
+                    <a class="wishlist" href="/wishlist/${products.getId()}/add">Danh sách yêu thích</a>
                 </form>
                 <div class="clear10"></div>
 
@@ -414,7 +365,7 @@
                         <div class="clear"></div>
                         <div class="ro">
                             <p>
-                                <img class="ls-is-cached lazyloaded" src="images/logomb.png" width="24" height="24"
+                                <img class="ls-is-cached lazyloaded" src="/images/logomb.png" width="24" height="24"
                                      alt="">
                                 ok
                             </p>
@@ -459,7 +410,7 @@
         </div>
         <div class="col phot">
             <b>Gọi mua hàng (08:30-21:30)</b>
-            <p><img src="images/phone.svg" alt="Liên hệ đặt hàng" width="22" height="22">0344660857</p>
+            <p><img src="/images/phone.svg" alt="Liên hệ đặt hàng" width="22" height="22">0344660857</p>
             <span>Tất cả các ngày trong tuần</span>
         </div>
         <div class="col large">
@@ -559,6 +510,34 @@
 
     });
 </script>
+<script>
+    $(document).ready(function () {
+        $(".buynow").click(function () {
+            if ("" == $(".product").find("input[name=sizesp]").val())
+                return alert("Vui lòng chọn size trước!"),
+                    $("html, body").animate({
+                        scrollTop: $("#setPrice").offset().top
+                    }, "slow"),
+                    !1;
+            var t = "pid=" + $(".product").find("input[name=product_id]").val() + "&qty=" + $(".product").find("input[name=quantity]").val() + "&giaban=" + $(".product").find("input[name=giaban]").val()  + "&size=" + $(".product").find("input[name=sizesp]").val() + "&action=cart";
+            return $.ajax({
+                type: "GET",
+                url: "/add/${products.getId()}/size",
+                data: t,
+                success: function (t) {
+                    window.location.href = "/cart"
+                }
+            }),
+                !1
+        }),
+            $("ul.ulsize li").click(function () {
+                $("ul.ulsize li").removeClass("tick"),
+                    $(this).addClass("tick");
+                var t = $(this).text();
+                $("input#size").val(t)
+            })
+    })
+</script>
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 <script
         src="https://code.jquery.com/jquery-3.6.3.js"
@@ -572,7 +551,7 @@
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <!-- Slider -->
-<script src="test.js"></script>
+<script src="/js/test.js"></script>
 
 </body>
 </html>
