@@ -5,6 +5,8 @@ import com.shoevn.shoe.admin.dto.ProductDto;
 import com.shoevn.shoe.admin.service.CategoryAdminService;
 import com.shoevn.shoe.admin.service.ProductAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -40,12 +42,11 @@ public class ProductAdminController {
         model.put("brandList",listBrand);
         return "/admin/product";
     }
-    @GetMapping("/product/{id}")
-    public String showProduct(@PathVariable String id, ModelMap model) {
+    @GetMapping("/product/showProduct")
+    public ResponseEntity<Product> showProduct(@RequestParam("id") String id) {
         Long productId = Long.parseLong(id);
         Product product = productService.getProductById(productId);
-        model.put("showProduct", product);
-        return "/admin/product";
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
     @PostMapping(value = "/product/saveProduct")
     public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile images ) throws IOException {
@@ -74,8 +75,15 @@ public class ProductAdminController {
         }
         return imageModels;
     }
-    public String DeleteProduct(@PathVariable String id, ModelMap mode){
-        return "/admin/product";
+    @PostMapping(value="/product/deleteProduct")
+    public ResponseEntity<?> DeleteProduct(@RequestParam("id") String id){
+        try {
+            Long productId = Long.parseLong(id);
+            productService.deleteProduct(productId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
     public String EditProduct(@PathVariable String id, ModelMap mode){
         return "/admin/product";

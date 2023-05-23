@@ -89,5 +89,7 @@ public class ProductAdminService {
     public List<Brand> getAllBrands(){
         return  brandRepository.findAll();
     }
-
+    public void deleteProduct(long id){
+        productRepository.deleteById(id);
+    }
 }

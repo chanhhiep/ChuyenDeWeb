@@ -418,10 +418,11 @@ data-template="vertical-menu-template-free"
                         <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" onclick="clickEditToggle()" href="javascript:void(0);"
-                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                        >
-                        <a class="dropdown-item" href="javascript:void(0);"
+                        <a class="dropdown-item" id="edit_btn" onclick="btnEdit(${product.id})" href="javascript:void(0);">
+                            <i class="bx bx-edit-alt me-1"></i>
+                            Edit
+                        </a>
+                        <a class="dropdown-item" onclick="deleteProduct(${product.id})" href="javascript:void(0);"
                         ><i class="bx bx-trash me-1"></i> Delete</a
                         >
                     </div>
@@ -446,28 +447,27 @@ data-template="vertical-menu-template-free"
     </div>
     <div class="card-body" style="margin-top: -3%;">
     <div class="mb-3">
-    <label for="exampleFormControlReadOnlyInput1" class="form-label">Product Id</label>
+    <label class="form-label">Product Id</label>
     <input
     class="form-control"
     type="text"
-    id="exampleFormControlReadOnlyInput1"
-    placeholder="product id here"
+    id="edit_id"
     readonly
     />
     </div>
     <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">Name Product</label>
+    <label class="form-label">Name Product</label>
     <input
     type="text"
     class="form-control"
-    id="defaultFormControlInput"
     placeholder="product name"
-    aria-describedby="defaultFormControlHelp" required="required"
+    id="edit_name"
+    required="required"
     />
     </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">category</label>
-    <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
+    <label class="form-label">category</label>
+    <select class="form-select" id="exampleFormControlSelect1" required="required">
     <option selected>chose category</option>
     <option value="1">One</option>
     <option value="2">Two</option>
@@ -475,7 +475,7 @@ data-template="vertical-menu-template-free"
     </select>
     </div>
     <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">Price</label>
+    <label  class="form-label">Price</label>
     <input
     type="number"
     min="0" max="10000"
@@ -505,7 +505,7 @@ data-template="vertical-menu-template-free"
     </select>
     </div>
     <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">quantity</label>
+    <label class="form-label">quantity</label>
     <input
     type="number" min="0" max="100000"
     class="form-control"
