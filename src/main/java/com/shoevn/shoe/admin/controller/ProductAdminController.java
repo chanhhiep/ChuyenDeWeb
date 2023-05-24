@@ -85,7 +85,15 @@ public class ProductAdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-    public String EditProduct(@PathVariable String id, ModelMap mode){
+    @PostMapping(value="/product/updateProduct")
+    public String UpdateProduct(@ModelAttribute("dataForm") ProductDto product){
+        productService.updateProduct(product);
+        return "/admin/product";
+    }
+    @PostMapping(value="/product/search")
+    public String search(@RequestParam("searchTerm") String searchTerm, ModelMap model){
+        List<Product> products = productService.getProductByTitle(searchTerm);
+        model.put("productList", products);
         return "/admin/product";
     }
 }

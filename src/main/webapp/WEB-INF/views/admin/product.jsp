@@ -347,7 +347,9 @@ data-template="vertical-menu-template-free"
 <div class="card">
 <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ; padding: 10px;">
     <div class="col-md-3">
-        <input class="form-control" type="search" value="Search ..." id="html5-search-input"/>
+        <form id="searchForm" action="/product/search"></form>
+        <input class="form-control" type="search" name="searchTerm"  id="search-input"/>
+        <button type="submit">Search</button>
     </div>
     <button id="addBtn" type="button" class="btn btn-primary" style="margin-right: 20px;" onclick="clickCreateToggle()">
         Create
@@ -439,10 +441,11 @@ data-template="vertical-menu-template-free"
     </div>
     <!-- / Content -->
     <!--/ Basic Bootstrap Table -->
+    <form id="updateForm" action="/product/updateProduct" method="post">
     <div class="d-flex aligns-items-center justify-content-center card text-left w-50 position-absolute top-50 start-50 translate-middle-x" id="product_edit" style="margin-left: 100px;margin-top: -15%;;" aria-hidden="true">
     <div class="card mb-4">
     <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ;">
-    <h5 class="card-header">Edit Produt</h5>
+    <h5 class="card-header">Edit Product</h5>
     <button id="EditBtn" type="button" class="btn btn-danger" style="margin-right: 20px;" onclick="clickEditToggle()">Cancel</button>
     </div>
     <div class="card-body" style="margin-top: -3%;">
@@ -452,6 +455,7 @@ data-template="vertical-menu-template-free"
     class="form-control"
     type="text"
     id="edit_id"
+    name="id"
     readonly
     />
     </div>
@@ -462,16 +466,16 @@ data-template="vertical-menu-template-free"
     class="form-control"
     placeholder="product name"
     id="edit_name"
+    name="name"
     required="required"
     />
     </div>
     <div class="mb-3">
     <label class="form-label">category</label>
-    <select class="form-select" id="exampleFormControlSelect1" required="required">
-    <option selected>chose category</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+    <select class="form-select" name="category_id" id="edit_category" required="required">
+        <c:forEach var="cate" items="${categoryList}">
+            <option value="${cate.id_category}">${cate.name}</option>
+        </c:forEach>
     </select>
     </div>
     <div class="mb-3">
@@ -481,27 +485,31 @@ data-template="vertical-menu-template-free"
     min="0" max="10000"
     class="form-control"
     placeholder="price"
-    aria-describedby="defaultFormControlHelp"
+    id="edit_price"
+    name="price"
     required="required"
     />
     </div>
-
+        <div class="mb-3">
+            <label class="form-label">Discount Rate</label>
+            <input
+                    type="number"
+                    min="0" max="100"
+                    class="form-control"
+                    placeholder="Discount Rate"
+                    required="required"
+                    name="discountRate"
+                    id="edit_rate"
+            />
+        </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">promotion</label>
-    <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose promotion</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-    </select>
     </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">brand</label>
-    <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose brand</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+    <label class="form-label">brand</label>
+    <select class="form-select" name="brand" id="edit_brand" required="required">
+        <c:forEach var="brand" items="${brandList}">
+            <option value="${brand.id}">${brand.name}</option>
+        </c:forEach>
     </select>
     </div>
     <div class="mb-3">
@@ -510,17 +518,18 @@ data-template="vertical-menu-template-free"
     type="number" min="0" max="100000"
     class="form-control"
     placeholder="quantity"
-    aria-describedby="defaultFormControlHelp"
+    id="edit_quantity"
+    name="quantity"
     required="required"
     />
     </div>
     <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">description</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required="required"></textarea>
+    <label class="form-label">description</label>
+    <textarea name="description" class="form-control" id="edit_description" rows="3" required="required"></textarea>
     </div>
     <div class="row mt-3">
     <div class="d-grid gap-2 col-lg-6 mx-auto">
-    <button class="btn btn-primary btn-lg" type="button">Save</button>
+    <button class="btn btn-primary btn-lg" type="button" onclick="updateProduct()">Save</button>
     </div>
     <div class="d-grid gap-2 col-lg-6 mx-auto">
     <button class="btn btn-danger btn-lg" type="button">Cancel</button>
@@ -529,6 +538,7 @@ data-template="vertical-menu-template-free"
     </div>
     </div>
     </div>
+    </form>
     <!--/ Responsive Table -->
     <!--/ Create Table -->
     <form action="/product/saveProduct" method="post" enctype="multipart/form-data">
@@ -568,7 +578,6 @@ data-template="vertical-menu-template-free"
     min="0" max="10000000"
     class="form-control"
     placeholder="price"
-    aria-describedby="defaultFormControlHelp"
     required="required"
     name="price"
     />

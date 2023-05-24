@@ -12,7 +12,6 @@ import java.util.List;
 @Builder
 @Table(name = "products")
 public class Product implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)
@@ -159,4 +158,5 @@ public class Product implements Serializable {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+
 }

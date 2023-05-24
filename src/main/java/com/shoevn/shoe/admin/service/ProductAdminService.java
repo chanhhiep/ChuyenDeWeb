@@ -92,4 +92,24 @@ public class ProductAdminService {
     public void deleteProduct(long id){
         productRepository.deleteById(id);
     }
+    public void updateProduct(ProductDto productDto){
+        System.out.println(productDto.toString());
+        Category category = categoryRepository.findCategoryById(Long.parseLong(productDto.getCategory_id()));
+        Brand brand = brandRepository.findBrandById(Long.parseLong(productDto.getBrand()));
+        Product product = productRepository.findProductById(Long.parseLong(productDto.getId()));
+        List<Size> sizes = new ArrayList<>();
+        Date currentDate = new Date();
+        product.setName(productDto.getName());
+        product.setCategory(category);
+        product.setBrand(brand);
+        product.setPrice(Double.parseDouble(productDto.getPrice()));
+        product.setDescription(productDto.getDescription());
+        product.setQuantity(Integer.parseInt(productDto.getQuantity()));
+        product.setDiscountRate(Double.parseDouble(productDto.getDiscountRate()));
+        product.setUpdateDate(currentDate);
+        productRepository.save(product);
+    }
+    public List<Product> getProductByTitle(String title){
+        return productRepository.findByTitleContaining(title);
+    }
 }
