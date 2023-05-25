@@ -109,7 +109,7 @@ public class ProductAdminService {
         product.setUpdateDate(currentDate);
         productRepository.save(product);
     }
-    public List<Product> getProductByTitle(String title){
-        return productRepository.findByTitleContaining(title);
+    public List<Product> getProductByKeyword(String keyword){
+        return productRepository.searchProduct(keyword);
     }
 }

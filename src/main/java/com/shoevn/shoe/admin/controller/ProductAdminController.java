@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -91,9 +92,17 @@ public class ProductAdminController {
         return "/admin/product";
     }
     @PostMapping(value="/product/search")
-    public String search(@RequestParam("searchTerm") String searchTerm, ModelMap model){
-        List<Product> products = productService.getProductByTitle(searchTerm);
-        model.put("productList", products);
-        return "/admin/product";
+    public ResponseEntity<?> search(@RequestParam("keyword") String keyword, ModelMap model){
+        System.out.println(keyword);
+        List<Product> products = productService.getProductByKeyword(keyword);
+        System.out.println(products);
+        if(products !=null && products.size()!=0) {
+            model.put("productList", products);
+        }
+        else{
+            System.out.println("empty search");
+            model.put("productList",null);
+        }
+        return ResponseEntity.ok(products);
     }
 }

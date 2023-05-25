@@ -117,20 +117,21 @@ function updateProduct(){
 }
 function search(){
     $(document).ready(function() {
-        // When the search form is submitted, make an AJAX request to the search controller
-        $("#searchForm").submit(function() {
+            console.log("keyup")
+            console.log($("#searchTerm").val())
             $.ajax({
-                url: "/product/search",
-                type: "post",
-                data: $(this).serialize(),
+                url: '/product/search',
+                type: 'POST',
+                data: {
+                    keyword: $("#searchTerm").val()
+                },
                 success: function(response) {
-                    // Update the HTML DOM with the new search results
-                    $("#searchResults").html(response);
+                    // Do something with the results of the search
+                    $('#data_table').load(document.URL+ ' #data_table');
+                    console.log(response);
                 }
             });
-            return false;
         });
-    });
 }
 function clickCreateToggle(){
     var popup = document.getElementById("create-product");

@@ -347,9 +347,9 @@ data-template="vertical-menu-template-free"
 <div class="card">
 <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ; padding: 10px;">
     <div class="col-md-3">
-        <form id="searchForm" action="/product/search"></form>
-        <input class="form-control" type="search" name="searchTerm"  id="search-input"/>
-        <button type="submit">Search</button>
+        <form id="searchForm" action="/product/search" method="post">
+            <input class="form-control" type="search" name="searchTerm" onkeyup="search()" id="searchTerm"/>
+        </form>
     </div>
     <button id="addBtn" type="button" class="btn btn-primary" style="margin-right: 20px;" onclick="clickCreateToggle()">
         Create
@@ -372,7 +372,7 @@ data-template="vertical-menu-template-free"
     <th>Actions</th>
 </tr>
 </thead>
-<tbody class="table-border-bottom-0">
+<tbody class="table-border-bottom-0" id="data_table">
 <c:if test="${productList == null}">
     <div class="alert alert-danger">
         <p>Không có dữ liệu</p>
