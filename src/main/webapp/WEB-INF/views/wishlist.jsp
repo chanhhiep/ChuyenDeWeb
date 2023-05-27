@@ -146,7 +146,7 @@
                             <li>
                                 <a href="/parent/${item.getId_category()}/products">
                                     <span class="brand">
-                                        <img src="/images/${item.getImg()}" width="40"
+                                        <img src="/images/${item.getImages()}" width="40"
                                              height="24"></span>${item.getName()}
                                 </a>
 
@@ -185,14 +185,14 @@
                             </a>
                             <div class="ribbon"><span>Hàng mới</span></div>
                             <a href="/products/${product.getId()}/info-product">
-                                <img width="234" height="234" class=" lazyloaded" src="/images/sp/${product.getImg()}">
+                                <img width="234" height="234" class=" lazyloaded" src="../uploads/${product.getImg()}">
                             </a>
                         </div>
                         <div class="info">
                             <h3>
                                 <a href="/products/${product.getId()}/info-product">${product.getName()}</a>
                             </h3>
-                            <p>${product.getPrice()}<sup>đ</sup><span>${product.getSellPrice()}</span></p>
+                            <p>${products.getPrice()}<sup>đ</sup><span>${products.getPrice()*products.getDiscountRate()/100}</span></p>
                         </div>
                     </li>
                 </c:forEach>

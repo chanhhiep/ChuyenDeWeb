@@ -5,11 +5,14 @@ import com.shoevn.shoe.admin.dto.ProductDto;
 import com.shoevn.shoe.admin.service.CategoryAdminService;
 import com.shoevn.shoe.admin.service.ProductAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -23,7 +26,7 @@ public class ProductAdminController {
     @Autowired
     private CategoryAdminService categoryService;
 
-    @GetMapping("product")
+    @GetMapping("/product")
     public String listProduct(ModelMap model){
         List<Product> listProduct = productService.getAllProduct();
         List<Category> listCategory = categoryService.listAllCategory();
@@ -40,15 +43,14 @@ public class ProductAdminController {
         model.put("brandList",listBrand);
         return "/admin/product";
     }
-    @GetMapping("/product/{id}")
-    public String showProduct(@PathVariable String id, ModelMap model) {
+    @GetMapping("/product/showProduct")
+    public ResponseEntity<Product> showProduct(@RequestParam("id") String id) {
         Long productId = Long.parseLong(id);
         Product product = productService.getProductById(productId);
-        model.put("showProduct", product);
-        return "/admin/product";
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
     @PostMapping(value = "/product/saveProduct")
-    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile images ) throws IOException {
+    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile images ){
         /*System.out.println(dataForm.toString());
         long category_id = Long.parseLong(dataForm.getCategory_id());
         Category category = categoryService.getCategoryById(category_id);
@@ -58,9 +60,18 @@ public class ProductAdminController {
         Product product = new Product(category, dataForm.getName(), Double.parseDouble(dataForm.getPrice()),Double.parseDouble(dataForm.getDiscountRate()),imageList,dataForm.getDescription(), brand,sizes, Integer.parseInt(dataForm.getQuantity()));
         productService.saveProduct(product);*/
         //dataForm.setImages(images);
-
+        /*
+        try {
+            productService.uploadProduct(dataForm,images);
+            //productService.uploadProduct(dataForm);
+            System.out.println("save success");
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        */
         productService.uploadProduct(dataForm,images);
-        return "/admin/product";
+        return "redirect:/product";
     }
     public List<Image> uploadImage(MultipartFile[] multipartFiles) throws IOException {
         List<Image> imageModels = new ArrayList<>();
@@ -74,10 +85,44 @@ public class ProductAdminController {
         }
         return imageModels;
     }
-    public String DeleteProduct(@PathVariable String id, ModelMap mode){
-        return "/admin/product";
+    @PostMapping(value="/product/deleteProduct")
+    public ResponseEntity<?> DeleteProduct(@RequestParam("id") String id){
+        try {
+            Long productId = Long.parseLong(id);
+            productService.deleteProduct(productId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
-    public String EditProduct(@PathVariable String id, ModelMap mode){
+    @PostMapping(value="/product/updateProduct")
+    public ResponseEntity<?> UpdateProduct(@ModelAttribute("dataForm") ProductDto product){
+        try {
+            productService.updateProduct(product);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    @PostMapping(value="/product/search")
+    public String search(@RequestParam("keyword") String keyword, ModelMap model){
+        System.out.println(keyword);
+        List<Category> listCategory = categoryService.listAllCategory();
+        List<Size> listSize = productService.getAllSize();
+        List<Brand> listBrand = productService.getAllBrands();
+        List<Product> products = productService.getProductByKeyword(keyword);
+        System.out.println(products);
+        //model.put("productList", products);
+        if(products !=null && products.size()!=0) {
+            model.put("productList", products);
+        }
+        else{
+            System.out.println("empty search");
+            model.put("productList",null);
+        }
+        model.put("categoryList",listCategory);
+        model.put("sizeList",listSize);
+        model.put("brandList",listBrand);
         return "/admin/product";
     }
 }

@@ -12,12 +12,11 @@ import java.util.List;
 @Builder
 @Table(name = "products")
 public class Product implements Serializable {
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)
     private Long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false, //
             foreignKey = @ForeignKey(name = "Category_PROD_FK"))
     private Category category;
@@ -159,4 +158,5 @@ public class Product implements Serializable {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+
 }

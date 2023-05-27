@@ -60,9 +60,13 @@ public class ProductAdminService {
         Category category = categoryRepository.findCategoryById(Long.parseLong(productDto.getCategory_id()));
         Brand brand = brandRepository.findBrandById(Long.parseLong(productDto.getBrand()));
         List<Size> sizes = new ArrayList<>();
+        for(String size_id:productDto.getSizes()){
+            sizes.add(sizeRepository.findSizeById(Long.parseLong(size_id)));
+        }
         String url;
         try {
-            url = uploadService.uploadFile(images, "upload");
+            url = uploadService.uploadFile(images, "D:\\shoe\\ChuyenDeWeb\\src\\main\\resources\\static\\uploads");
+            //url = uploadService.uploadFile(productDto.getImages(), "upload");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -81,6 +85,7 @@ public class ProductAdminService {
                 .createDate(currentDate)
                 .updateDate(currentDate)
                 .build();
+        System.out.println(product.getSizes().get(0));
         productRepository.save(product);
     }
     public List<Size> getAllSize(){
@@ -89,5 +94,27 @@ public class ProductAdminService {
     public List<Brand> getAllBrands(){
         return  brandRepository.findAll();
     }
-
+    public void deleteProduct(long id){
+        productRepository.deleteById(id);
+    }
+    public void updateProduct(ProductDto productDto){
+        System.out.println(productDto.toString());
+        Category category = categoryRepository.findCategoryById(Long.parseLong(productDto.getCategory_id()));
+        Brand brand = brandRepository.findBrandById(Long.parseLong(productDto.getBrand()));
+        Product product = productRepository.findProductById(Long.parseLong(productDto.getId()));
+        List<Size> sizes = new ArrayList<>();
+        Date currentDate = new Date();
+        product.setName(productDto.getName());
+        product.setCategory(category);
+        product.setBrand(brand);
+        product.setPrice(Double.parseDouble(productDto.getPrice()));
+        product.setDescription(productDto.getDescription());
+        product.setQuantity(Integer.parseInt(productDto.getQuantity()));
+        product.setDiscountRate(Double.parseDouble(productDto.getDiscountRate()));
+        product.setUpdateDate(currentDate);
+        productRepository.save(product);
+    }
+    public List<Product> getProductByKeyword(String keyword){
+        return productRepository.searchProduct(keyword);
+    }
 }

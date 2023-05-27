@@ -144,7 +144,7 @@
                             <li>
                                 <a href="/parent/${item.getId_category()}/products">
                                     <span class="brand">
-                                        <img src="/images/${item.getImg()}" width="40"
+                                        <img src="../uploads/${item.getImages()}" width="40"
                                              height="24"></span>${item.getName()}
                                 </a>
 

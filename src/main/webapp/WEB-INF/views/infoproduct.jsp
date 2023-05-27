@@ -147,7 +147,7 @@
                             <li>
                                 <a href="/parent/${item.getId_category()}/products">
                                     <span class="brand">
-                                        <img src="/images/${item.getImg()}" width="40"
+                                        <img src="/images/${item.getImages()}" width="40"
                                              height="24"></span>${item.getName()}
                                 </a>
 
@@ -178,7 +178,7 @@
         <!---->
         <div class="padmb">
             <div class="hinhsp">
-                <img class=" lazyloaded" width="500" height="500" src="/images/sp/${products.getImg()}">
+                <img class=" lazyloaded" width="500" height="500" src="../uploads/${products.getImages()}">
             </div>
 
             <div class="infosp">
@@ -195,7 +195,7 @@
                 </a>
                 <div class="clear"></div>
                 <div id="setPrice"><p class="price">${products.getPrice()}<sup>đ</sup></p>
-                    <p class="company"><span>${products.getSellPrice()}</span></p>
+                    <p class="company"><span>${products.getPrice()*products.getDiscountRate()/100}</span></p>
                 </div>
                 <div class="clear"></div>
                 <div class="khuyenmai">

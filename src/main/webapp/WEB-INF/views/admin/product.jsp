@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html
 lang="en"
@@ -35,9 +36,9 @@ data-template="vertical-menu-template-free"
     <!-- Icons-->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <!-- Core CSS -->
-    <link rel="stylesheet" href="assets/vendor/css/core.css" class="template-customizer-core-css"/>
-    <link rel="stylesheet" href="assets/vendor/css/theme-default.css" class="template-customizer-theme-css"/>
-    <link rel="stylesheet" href="assets/css/demo.css"/>
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css"/>
+    <link rel="stylesheet" href="../assets/css/demo.css"/>
 
     <!-- Vendors CSS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"
@@ -47,9 +48,9 @@ data-template="vertical-menu-template-free"
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <!--! Config-->
-    <script src="assets/js/config.js"></script>
+    <script src="../assets/js/config.js"></script>
     <!-- Helpers -->
-    <script src="assets/vendor/js/helpers.js"></script>
+    <script src="../assets/vendor/js/helpers.js"></script>
     <style>
         #product_edit {
             visibility: hidden;
@@ -172,14 +173,14 @@ data-template="vertical-menu-template-free"
         </li>
         <!-- Category -->
         <li class="menu-item">
-            <a href="category.html" class="menu-link">
+            <a href="/admin/category" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-hive"></i>
                 <div data-i18n="Category">Category</div>
             </a>
         </li>
         <!-- Product -->
         <li class="menu-item active">
-            <a href="product.html" class="menu-link">
+            <a href="/product" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-atom"></i>
                 <div data-i18n="Product">Product</div>
             </a>
@@ -255,7 +256,7 @@ data-template="vertical-menu-template-free"
 <!-- / Menu -->
 <!-- main data -->
 <!-- Layout container -->
-<div class="layout-page" >
+<div class="layout-page">
 <!-- Navbar -->
 
 <nav
@@ -347,7 +348,10 @@ data-template="vertical-menu-template-free"
 <div class="card">
 <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ; padding: 10px;">
     <div class="col-md-3">
-        <input class="form-control" type="search" value="Search ..." id="html5-search-input"/>
+        <form id="searchForm" action="/product/search" style="display: flex;flex-direction: row" method="post">
+            <input class="form-control" type="text" name="keyword" id="searchTerm"/>
+            <button class="btn btn-primary btn" style="margin-left: 30px" onclick="search()">search</button>
+        </form>
     </div>
     <button id="addBtn" type="button" class="btn btn-primary" style="margin-right: 20px;" onclick="clickCreateToggle()">
         Create
@@ -370,7 +374,7 @@ data-template="vertical-menu-template-free"
     <th>Actions</th>
 </tr>
 </thead>
-<tbody class="table-border-bottom-0">
+<tbody class="table-border-bottom-0" >
 <c:if test="${productList == null}">
     <div class="alert alert-danger">
         <p>Không có dữ liệu</p>
@@ -388,9 +392,9 @@ data-template="vertical-menu-template-free"
                             data-popup="tooltip-custom"
                             data-bs-placement="top"
                             class="avatar avatar-xs pull-up"
-                            title="Lilian Fuller"
+                            title="{product.name}"
                     >
-                        <img src="${product.images}" alt="product" class="rounded-circle"/>
+                        <img src="../uploads/${product.images}" alt="product" class="rounded-square"/>
                     </li>
                 </ul>
             </td>
@@ -405,23 +409,24 @@ data-template="vertical-menu-template-free"
             <td>
                 ${product.discountRate}
             </td>
-            <td>
+            <td style="display: flex;flex-direction: row">
                 <c:forEach var="size" items="${product.sizes}">
-                    <p>${size}</p>
+                    <p style="font-size: 12px">${size.size_num}</p>
                 </c:forEach>
             </td>
 
-            <td><span class="badge bg-label-primary me-1">Status</span></td>
+            <td><span class="badge bg-label-primary me-1">Stocking</span></td>
             <td>
                 <div class="dropdown">
                     <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                         <i class="bx bx-dots-vertical-rounded"></i>
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" onclick="clickEditToggle()" href="javascript:void(0);"
-                        ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                        >
-                        <a class="dropdown-item" href="javascript:void(0);"
+                        <a class="dropdown-item" id="edit_btn" onclick="btnEdit(${product.id})" href="javascript:void(0);">
+                            <i class="bx bx-edit-alt me-1"></i>
+                            Edit
+                        </a>
+                        <a class="dropdown-item" onclick="deleteProduct(${product.id})" href="javascript:void(0);"
                         ><i class="bx bx-trash me-1"></i> Delete</a
                         >
                     </div>
@@ -438,89 +443,95 @@ data-template="vertical-menu-template-free"
     </div>
     <!-- / Content -->
     <!--/ Basic Bootstrap Table -->
+    <form id="updateForm" action="/product/updateProduct" method="post">
     <div class="d-flex aligns-items-center justify-content-center card text-left w-50 position-absolute top-50 start-50 translate-middle-x" id="product_edit" style="margin-left: 100px;margin-top: -15%;;" aria-hidden="true">
     <div class="card mb-4">
     <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ;">
-    <h5 class="card-header">Edit Produt</h5>
+    <h5 class="card-header">Edit Product</h5>
     <button id="EditBtn" type="button" class="btn btn-danger" style="margin-right: 20px;" onclick="clickEditToggle()">Cancel</button>
     </div>
     <div class="card-body" style="margin-top: -3%;">
     <div class="mb-3">
-    <label for="exampleFormControlReadOnlyInput1" class="form-label">Product Id</label>
+    <label class="form-label">Product Id</label>
     <input
     class="form-control"
     type="text"
-    id="exampleFormControlReadOnlyInput1"
-    placeholder="product id here"
+    id="edit_id"
+    name="id"
     readonly
     />
     </div>
     <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">Name Product</label>
+    <label class="form-label">Name Product</label>
     <input
     type="text"
     class="form-control"
-    id="defaultFormControlInput"
     placeholder="product name"
-    aria-describedby="defaultFormControlHelp" required="required"
+    id="edit_name"
+    name="name"
+    required="required"
     />
     </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">category</label>
-    <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
-    <option selected>chose category</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+    <label class="form-label">category</label>
+    <select class="form-select" name="category_id" id="edit_category" required="required">
+        <c:forEach var="cate" items="${categoryList}">
+            <option value="${cate.id_category}">${cate.name}</option>
+        </c:forEach>
     </select>
     </div>
     <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">Price</label>
+    <label  class="form-label">Price</label>
     <input
     type="number"
     min="0" max="10000"
     class="form-control"
     placeholder="price"
-    aria-describedby="defaultFormControlHelp"
+    id="edit_price"
+    name="price"
     required="required"
     />
     </div>
-
+        <div class="mb-3">
+            <label class="form-label">Discount Rate</label>
+            <input
+                    type="number"
+                    min="0" max="100"
+                    class="form-control"
+                    placeholder="Discount Rate"
+                    required="required"
+                    name="discountRate"
+                    id="edit_rate"
+            />
+        </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">promotion</label>
-    <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose promotion</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
+    </div>
+    <div class="mb-3">
+    <label class="form-label">brand</label>
+    <select class="form-select" name="brand" id="edit_brand" required="required">
+        <c:forEach var="brand" items="${brandList}">
+            <option value="${brand.id}">${brand.name}</option>
+        </c:forEach>
     </select>
     </div>
     <div class="mb-3">
-    <label for="exampleFormControlSelect1" class="form-label">brand</label>
-    <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose brand</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-    </select>
-    </div>
-    <div class="mb-3">
-    <label for="defaultFormControlInput" class="form-label">quantity</label>
+    <label class="form-label">quantity</label>
     <input
     type="number" min="0" max="100000"
     class="form-control"
     placeholder="quantity"
-    aria-describedby="defaultFormControlHelp"
+    id="edit_quantity"
+    name="quantity"
     required="required"
     />
     </div>
     <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">description</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" required="required"></textarea>
+    <label class="form-label">description</label>
+    <textarea name="description" class="form-control" id="edit_description" rows="3" required="required"></textarea>
     </div>
     <div class="row mt-3">
     <div class="d-grid gap-2 col-lg-6 mx-auto">
-    <button class="btn btn-primary btn-lg" type="button">Save</button>
+    <button class="btn btn-primary btn-lg" type="button" onclick="updateProduct()">Save</button>
     </div>
     <div class="d-grid gap-2 col-lg-6 mx-auto">
     <button class="btn btn-danger btn-lg" type="button">Cancel</button>
@@ -529,9 +540,10 @@ data-template="vertical-menu-template-free"
     </div>
     </div>
     </div>
+    </form>
     <!--/ Responsive Table -->
     <!--/ Create Table -->
-    <form action="/product/saveProduct" method="post" enctype="multipart/form-data">
+    <form id="saveForm" action="/product/saveProduct" method="post" enctype="multipart/form-data">
     <div class="d-flex aligns-items-center justify-content-center card text-left w-50 position-absolute top-50 start-50 translate-middle-x" id="create-product" style="margin-left: 100px;margin-top: -15%;;" aria-hidden="true">
     <div class="card mb-4">
     <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ;">
@@ -568,7 +580,6 @@ data-template="vertical-menu-template-free"
     min="0" max="10000000"
     class="form-control"
     placeholder="price"
-    aria-describedby="defaultFormControlHelp"
     required="required"
     name="price"
     />
@@ -576,18 +587,9 @@ data-template="vertical-menu-template-free"
         <div class="mb-3">
             <label class="form-label">Size:</label>
             <c:forEach var="size" items="${sizeList}">
-                <input name="sizes[]" type="checkbox" value="${size.sizeId}">${size.size_num}
+                <input name="sizes[]" type="checkbox" value="${size.id}">${size.size_num}
             </c:forEach>
         </div>
-    <div class="mb-3">
-    <label class="form-label">promotion</label>
-    <select class="form-select" aria-label="Default select example" required="required">
-    <option selected>chose promotion</option>
-    <option value="1">One</option>
-    <option value="2">Two</option>
-    <option value="3">Three</option>
-    </select>
-    </div>
     <div class="mb-3">
     <label class="form-label">brand</label>
     <select name="brand" class="form-select" aria-label="Default select example" required="required">
@@ -602,7 +604,6 @@ data-template="vertical-menu-template-free"
     type="number" min="0" max="100000"
     class="form-control"
     placeholder="quantity"
-    aria-describedby="defaultFormControlHelp"
     required="required"
     name="quantity"
     />
@@ -624,7 +625,7 @@ data-template="vertical-menu-template-free"
     </div>
     <div class="row mt-3">
     <div class="d-grid gap-2 col-lg-6 mx-auto">
-    <button class="btn btn-primary btn-lg" value="Submit" type="submit">Save</button>
+    <button class="btn btn-primary btn-lg" value="Submit" type="submit" >Save</button>
     </div>
     <div class="d-grid gap-2 col-lg-6 mx-auto">
     <button class="btn btn-danger btn-lg" type="button" onclick="clickCreateToggle()">Cancel</button>
@@ -657,13 +658,13 @@ data-template="vertical-menu-template-free"
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js" integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="assets/vendor/js/menu.js"></script>
+    <script src="../assets/vendor/js/menu.js"></script>
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="js/hidden.js"></script>
-
+    <script src="../js/hidden.js"></script>
+    <script src="../js/product.js"></script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     </body>
     </html>
