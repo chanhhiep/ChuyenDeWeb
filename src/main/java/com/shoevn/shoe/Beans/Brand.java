@@ -1,9 +1,11 @@
 package com.shoevn.shoe.Beans;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.Date;
 
 @Entity
+@Builder
 @Table(name = "brand")
 public class Brand {
     @Id

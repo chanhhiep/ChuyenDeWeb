@@ -148,7 +148,7 @@
                             <li>
                                 <a href="/parent/${item.getId_category()}/products">
                                     <span class="brand">
-                                        <img src="/images/${item.getImg()}" width="40"
+                                        <img src="/images/${item.getImages()}" width="40"
                                              height="24"></span>${item.getName()}
                                 </a>
 
@@ -195,7 +195,7 @@
                             <c:forEach var="map" items="${myCartItems}">
                                 <tr class="product" id="product-0">
                                     <td class="image">
-                                        <img src="/images/sp/${map.value.product.getImg()}">
+                                        <img src="/images/sp/${map.value.product.getImages()}">
                                         <span>${map.value.quantity}</span>
                                     </td>
                                     <td class="description">

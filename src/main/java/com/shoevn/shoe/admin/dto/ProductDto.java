@@ -13,6 +13,7 @@ public class ProductDto {
     private String id;
     private String name;
     private String category_id;
+    //private MultipartFile images;
     private String price;
     private String discountRate;
     private String description;
@@ -29,6 +30,39 @@ public class ProductDto {
         this.description = description;
         this.quantity = quantity;
         this.brand = brand;
+        this.sizes = sizes;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setCategory_id(String category_id) {
+        this.category_id = category_id;
+    }
+
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setDiscountRate(String discountRate) {
+        this.discountRate = discountRate;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setSizes(List<String> sizes) {
         this.sizes = sizes;
     }
 

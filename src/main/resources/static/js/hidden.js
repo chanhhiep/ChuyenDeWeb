@@ -4,6 +4,7 @@ function clickEditToggle(){
     var blur = document.getElementById("blur-action");
     blur.classList.toggle('active');
 }
+/*
 function btnEdit(key){
     $(document).ready(function() {
             $.ajax({
@@ -36,68 +37,30 @@ function deleteProduct(key){
             type: "POST",
             data: {id: key},
             success: function (response) {
-                if (response.success) {
-                    window.location.reload();
-                    alert("Object deleted successfully");
-                } else {
-                    alert("Error deleting object");
-                }
+                //$('#data_table').load(document.URL+ '#data_table');
+                location.reload();
+                alert("Object deleted successfully");
             }
         });
     });
 }
 function saveProduct(){
-   /* var data = {
-        id:$("#edit_id").val(),
-        name: $("#edit_name").val(),
-        category:$("#edit_category").val(),
-        price:$("#edit_price").val(),
-        discountRate:$("#edit_rate").val(),
-        description:$("#edit_description").val(),
-        quantity:$("#edit_quantity").val(),
-        brand:$("#edit_brand").val(),
-        size:[$("#edit_size").val()],
-    };*/
     $(document).ready(function() {
+        var data = $("#saveForm").serialize();
         $.ajax({
-            url: "/product/updateProduct",
+            url: "/product/saveProduct",
             type: "Post",
-            data: {
-                id: $("#edit_id").val(),
-                name: $("#edit_name").val(),
-                category: $("#edit_category").val(),
-                price: $("#edit_price").val(),
-                discountRate: $("#edit_rate").val(),
-                description: $("#edit_description").val(),
-                quantity: $("#edit_quantity").val(),
-                brand: $("#edit_brand").val(),
-                size: [$("#edit_size").val()],
-            },
+            data: data,
             success: function (response) {
-                if (response.status === 200) {
-
-                    alert('Product updated successfully');
-                } else {
-                    alert('Error updating Product');
-                }
+                console.log("get save infomation")
+                //$('#data_table').load("http://localhost:8080/product"+ ' #data_table');
+                alert('Product updated successfully');
             }
         });
     });
 }
 function updateProduct(){
     $(document).ready(function() {
-        /*
-        var data = {
-            id:$("#edit_id").val(),
-            name: $("#edit_name").val(),
-            category:$("#edit_category").val(),
-            price:$("#edit_price").val(),
-            discountRate:$("#edit_rate").val(),
-            description:$("#edit_description").val(),
-            quantity:$("#edit_quantity").val(),
-            brand:$("#edit_brand").val(),
-            size:[$("#edit_size").val()],
-        };*/
         var data = $("#updateForm").serialize();
         console.log(data);
         $.ajax({
@@ -105,12 +68,9 @@ function updateProduct(){
             type: "Post",
             data: data,
             success: function (response) {
-                if (response.status === 200) {
-                    window.location.reload();
-                    alert('Product updated successfully');
-                } else {
-                    alert('Error updating Product' + response.status);
-                }
+                //$('#data_table').load(document.URL+ ' #data_table');
+                location.reload();
+                alert('Product updated successfully');
             }
         });
     });
@@ -118,7 +78,7 @@ function updateProduct(){
 function search(){
     $(document).ready(function() {
             console.log("keyup")
-            console.log($("#searchTerm").val())
+            var key = $("#searchTerm").val();
             $.ajax({
                 url: '/product/search',
                 type: 'POST',
@@ -127,12 +87,16 @@ function search(){
                 },
                 success: function(response) {
                     // Do something with the results of the search
-                    $('#data_table').load(document.URL+ ' #data_table');
+                    //$("#search_result").text(response);
+                    //$('#data_table').load(document.URL+ ' #data_table');
+                    //location.reload();
+                    $("#searchTerm").text(key);
                     console.log(response);
                 }
             });
         });
 }
+*/
 function clickCreateToggle(){
     var popup = document.getElementById("create-product");
         popup.classList.toggle('active');

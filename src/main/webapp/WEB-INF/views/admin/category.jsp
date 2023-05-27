@@ -1,3 +1,4 @@
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html
@@ -9,7 +10,7 @@
   data-template="vertical-menu-template-free"
 >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <meta
           name="viewport"
           content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
@@ -17,14 +18,14 @@
 
   <title>Product Manager</title>
 
-  <meta name="description" content="" />
+  <meta name="description" content=""/>
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico"/>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link
           href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
           rel="stylesheet"
@@ -33,36 +34,43 @@
   <!-- Icons-->
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <!-- Core CSS -->
-  <link rel="stylesheet" href="assets/vendor/css/core.css" class="template-customizer-core-css" />
-  <link rel="stylesheet" href="assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-  <link rel="stylesheet" href="assets/css/demo.css" />
+  <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css"/>
+  <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css"/>
+  <link rel="stylesheet" href="../assets/css/demo.css"/>
 
   <!-- Vendors CSS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js" integrity="sha512-ec1IDrAZxPSKIe2wZpNhxoFIDjmqJ+Z5SGhbuXZrw+VheJu2MqqJfnYsCD8rf71sQfKYMF4JxNSnKCjDCZ/Hlw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"
+          integrity="sha512-ec1IDrAZxPSKIe2wZpNhxoFIDjmqJ+Z5SGhbuXZrw+VheJu2MqqJfnYsCD8rf71sQfKYMF4JxNSnKCjDCZ/Hlw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <!-- Page CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!--! Config-->
-  <script src="assets/js/config.js"></script>
+  <script src="../assets/js/config.js"></script>
   <!-- Helpers -->
-  <script src="assets/vendor/js/helpers.js"></script>
+  <script src="../assets/vendor/js/helpers.js"></script>
   <style>
-    #product_edit{
+    #product_edit {
       visibility: hidden;
 
     }
-    #product_edit.active{
+
+    #product_edit.active {
       visibility: visible;
 
     }
-    #create-product{
+
+    #create-product {
       visibility: hidden;
 
     }
-    #create-product.active{
+
+    #create-product.active {
       visibility: visible;
 
     }
-    #blur-action.active{
+
+    #blur-action.active {
       filter: blur(4px);
       pointer-events: none;
       user-select: none;
@@ -337,7 +345,10 @@
               <div class="card">
                 <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ; padding: 10px;">
                     <div class="col-md-3">
-                      <input class="form-control" type="search" value="Search ..." id="html5-search-input" />
+                      <form id="searchForm" action="/category/search" style="display: flex;flex-direction: row" method="post">
+                        <input class="form-control" type="text" name="keyword" id="searchTerm"/>
+                        <button class="btn btn-primary btn" style="margin-left: 30px" onclick="search()">search</button>
+                      </form>
                     </div>
                   <button id="CreateBtn" type="button" class="btn btn-primary" style="margin-right: 20px;" onclick="clickCreateToggle()">Create</button>
                 </div>
@@ -347,35 +358,61 @@
                       <tr>
                         <th>Category ID</th>
                         <th>Category Name</th>
+                        <th>Images</th>
+                        <th>Parent Id</th>
                         <th>Status</th>
-                        <th>modify-date</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Category id</strong></td>
-                        <td>Category Came</td>
-                        <td><span class="badge bg-label-primary me-1">Active</span></td>
-                        <td>
-                            modify-date
-                        </td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" onclick="clickEditToggle()" href="javascript:void(0);"
-                                ><i class="bx bx-edit-alt me-1"></i> Edit</a
-                              >                              
-                              <a class="dropdown-item" href="javascript:void(0);"
-                                ><i class="bx bx-trash me-1"></i> Delete</a
+                    <c:if test="${categoryList == null}">
+                      <div class="alert alert-danger">
+                        <p>Không có dữ liệu</p>
+                      </div>
+                    </c:if>
+                    <c:if test="${categoryList != null}">
+                      <c:forEach var="category" items="${categoryList}">
+                        <tr>
+                          <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${category.id_category}</strong></td>
+                          <td>${category.name}</td>
+                          <td>
+                            <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
+                              <li
+                                      data-bs-toggle="tooltip"
+                                      data-popup="tooltip-custom"
+                                      data-bs-placement="top"
+                                      class="avatar avatar-xs pull-up"
+                                      title="${category.name}"
                               >
+                                <img src="../uploads/${category.img}" alt="category" class="rounded-square"/>
+                              </li>
+                            </ul>
+                          </td>
+                          <td>
+                              ${category.parent_id}
+                          </td>
+
+                          <td><span class="badge bg-label-primary me-1">Active</span></td>
+                          <td>
+                            <div class="dropdown">
+                              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                                <i class="bx bx-dots-vertical-rounded"></i>
+                              </button>
+                              <div class="dropdown-menu">
+                                <a class="dropdown-item" id="edit_btn" onclick="btnEdit(${category.id_category})" href="javascript:void(0);">
+                                  <i class="bx bx-edit-alt me-1"></i>
+                                  Edit
+                                </a>
+                                <a class="dropdown-item" onclick="deleteCategory(${category.id_category})" href="javascript:void(0);"
+                                ><i class="bx bx-trash me-1"></i> Delete</a
+                                >
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                      </tr>
+                          </td>
+                        </tr>
+                      </c:forEach>
+                    </c:if>
+
                     </tbody>
                   </table>
                 </div>
@@ -384,6 +421,7 @@
             </div>
             <!-- / Content -->
             <!--/ Basic Bootstrap Table -->
+            <form id="updateForm" action="/category/updateCategory" method="post">
               <div class="d-flex aligns-items-center justify-content-center card text-left w-50 position-absolute top-50 start-50 translate-middle-x" id="product_edit" style="margin-left: 100px;margin-top: -15%;;" aria-hidden="true">
                 <div class="card mb-4">
                   <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ;">
@@ -392,46 +430,62 @@
                   </div>
                   <div class="card-body" style="margin-top: -3%;">
                     <div class="mb-3">
-                      <label for="exampleFormControlReadOnlyInput1" class="form-label">Category Id</label>
+                      <label  class="form-label">Category Id</label>
                       <input
                         class="form-control"
                         type="text"
-                        id="exampleFormControlReadOnlyInput1"
-                        placeholder="product id here"
+                        id="edit_id"
+                        name="id"
                         readonly
                       />
                     </div>
                     <div class="mb-3">
-                      <label for="defaultFormControlInput" class="form-label">Category Name</label>
+                      <label class="form-label">Category Name</label>
                       <input
                         type="text"
                         class="form-control"
-                        placeholder="product name"
-                        aria-describedby="defaultFormControlHelp" required="required"
+                        placeholder="category name"
+                        id="edit_name"
+                        name="name"
+                        required="required"
                       />
-                    </div>                  
+                    </div>
                     <div class="mb-3">
-                      <label for="exampleFormControlSelect1" class="form-label">status</label>
-                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" required="required">
-                        <option selected>chose promotion</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
+                      <label class="form-label">Description</label>
+                      <input
+                              type="text"
+                              class="form-control"
+                              placeholder="product name"
+                              id="edit_description"
+                              required="required"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Parent Id</label>
+                      <input
+                              type="text"
+                              class="form-control"
+                              placeholder="product name"
+                              id="edit_parent"
+                              name="idParent"
+                              required="required"
+                      />
                     </div>
                     <div class="row mt-3">
                       <div class="d-grid gap-2 col-lg-6 mx-auto">
-                        <button class="btn btn-primary btn-lg" type="button">Save</button>
+                        <button class="btn btn-primary btn-lg" onclick="updateCategory()" type="button">Save</button>
                       </div>
                       <div class="d-grid gap-2 col-lg-6 mx-auto">
-                        <button class="btn btn-danger btn-lg" type="button">Cancel</button>
+                        <button class="btn btn-danger btn-lg" onclick="clickEditToggle()" type="button">Cancel</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </form>
               <!--/ Responsive Table -->
               <!--/ Create Table -->
+            <form id="saveForm" action="/category/saveCategory" method="post" enctype="multipart/form-data">
               <div class="d-flex aligns-items-center justify-content-center card text-left w-50 position-absolute top-50 start-50 translate-middle-x" id="create-product" style="margin-left: 100px;margin-top: -15%;;" aria-hidden="true">
                 <div class="card mb-4">
                   <div style="display: flex; flex-direction: row; justify-content: space-between; align-items:center ;">
@@ -440,18 +494,39 @@
                   </div>
                   <div class="card-body" style="margin-top: -3%;">
                     <div class="mb-3">
-                      <label for="defaultFormControlInput" class="form-label">Name Category</label>
+                      <label class="form-label">Name Category</label>
                       <input
                         type="text"
                         class="form-control"
-                        id="defaultFormControlInput"
                         placeholder="product name"
-                        aria-describedby="defaultFormControlHelp" required="required"
+                        name="name"
+                        required="required"
                       />
-                    </div> 
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Parent Id</label>
+                      <input
+                              type="number"
+                              class="form-control"
+                              placeholder="quantity"
+                              required="required"
+                              name="idParent"
+                      />
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label">Upload Image</label>
+                      <input name="images" class="form-control" type="file" id="formFileMultiple" multiple/>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label">description</label>
+                      <textarea name="description" class="form-control" rows="3" required="required"></textarea>
+                    </div>
+
+                    <div class="mb-3">
                     <div class="row mt-3">
                       <div class="d-grid gap-2 col-lg-6 mx-auto">
-                        <button class="btn btn-primary btn-lg" type="button">Save</button>
+                        <button class="btn btn-primary btn-lg" value="Submit" type="submit" >Save</button>
                       </div>
                       <div class="d-grid gap-2 col-lg-6 mx-auto">
                         <button class="btn btn-danger btn-lg" type="button" onclick="clickCreateToggle()">Cancel</button>
@@ -460,6 +535,8 @@
                   </div>
                 </div>
               </div>
+            </div>
+            </form>
               <!--/ create Table -->
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
@@ -483,12 +560,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.5/perfect-scrollbar.min.js" integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="assets/vendor/js/menu.js"></script>
+    <script src="../assets/vendor/js/menu.js"></script>
     <!-- Main JS -->
-    <script src="assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="js/hidden.js"></script>
+    <script src="../js/hidden.js"></script>
+    <script src="../js/category.js"></script>
 
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>

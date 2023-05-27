@@ -26,7 +26,7 @@ public class ProductAdminController {
     @Autowired
     private CategoryAdminService categoryService;
 
-    @GetMapping("product")
+    @GetMapping("/product")
     public String listProduct(ModelMap model){
         List<Product> listProduct = productService.getAllProduct();
         List<Category> listCategory = categoryService.listAllCategory();
@@ -50,7 +50,7 @@ public class ProductAdminController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
     @PostMapping(value = "/product/saveProduct")
-    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile images ) throws IOException {
+    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile images ){
         /*System.out.println(dataForm.toString());
         long category_id = Long.parseLong(dataForm.getCategory_id());
         Category category = categoryService.getCategoryById(category_id);
@@ -60,9 +60,18 @@ public class ProductAdminController {
         Product product = new Product(category, dataForm.getName(), Double.parseDouble(dataForm.getPrice()),Double.parseDouble(dataForm.getDiscountRate()),imageList,dataForm.getDescription(), brand,sizes, Integer.parseInt(dataForm.getQuantity()));
         productService.saveProduct(product);*/
         //dataForm.setImages(images);
-
+        /*
+        try {
+            productService.uploadProduct(dataForm,images);
+            //productService.uploadProduct(dataForm);
+            System.out.println("save success");
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        */
         productService.uploadProduct(dataForm,images);
-        return "/admin/product";
+        return "redirect:/product";
     }
     public List<Image> uploadImage(MultipartFile[] multipartFiles) throws IOException {
         List<Image> imageModels = new ArrayList<>();
@@ -87,15 +96,23 @@ public class ProductAdminController {
         }
     }
     @PostMapping(value="/product/updateProduct")
-    public String UpdateProduct(@ModelAttribute("dataForm") ProductDto product){
-        productService.updateProduct(product);
-        return "/admin/product";
+    public ResponseEntity<?> UpdateProduct(@ModelAttribute("dataForm") ProductDto product){
+        try {
+            productService.updateProduct(product);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
     @PostMapping(value="/product/search")
-    public ResponseEntity<?> search(@RequestParam("keyword") String keyword, ModelMap model){
+    public String search(@RequestParam("keyword") String keyword, ModelMap model){
         System.out.println(keyword);
+        List<Category> listCategory = categoryService.listAllCategory();
+        List<Size> listSize = productService.getAllSize();
+        List<Brand> listBrand = productService.getAllBrands();
         List<Product> products = productService.getProductByKeyword(keyword);
         System.out.println(products);
+        //model.put("productList", products);
         if(products !=null && products.size()!=0) {
             model.put("productList", products);
         }
@@ -103,6 +120,9 @@ public class ProductAdminController {
             System.out.println("empty search");
             model.put("productList",null);
         }
-        return ResponseEntity.ok(products);
+        model.put("categoryList",listCategory);
+        model.put("sizeList",listSize);
+        model.put("brandList",listBrand);
+        return "/admin/product";
     }
 }

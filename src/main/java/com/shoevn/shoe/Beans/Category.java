@@ -2,10 +2,12 @@
 package com.shoevn.shoe.Beans;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.io.Serializable;
 
 @Entity
+@Builder
 @Table(name = "category")
 public class Category implements Serializable {
     @Id
@@ -16,6 +18,7 @@ public class Category implements Serializable {
     private String name;
     @Column(name = "img", length = 255)
     private String img;
+
     @Column(name = "parent_id",length = 20, nullable = false)
     private int parent_id;
 

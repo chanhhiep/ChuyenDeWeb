@@ -2,10 +2,12 @@ package com.shoevn.shoe.Beans;
 
 
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.io.Serializable;
 
 @Entity
+@Builder
 @Table(name = "accounts")
 public class Account implements Serializable {
     private static final long serialVersionUID = -2054386655979281969L;
@@ -33,12 +35,15 @@ public class Account implements Serializable {
 
     }
 
-    public Account(String username, String password, String email, String phone, String user_role) {
+    public Account(long id, String username, String password, String name, String email, String phone, boolean active, String user_role) {
+        this.id = id;
         this.username = username;
         this.password = password;
+        this.name = name;
         this.email = email;
         this.phone = phone;
-        this.user_role = "customer";
+        this.active = active;
+        this.user_role = user_role;
     }
 
     public long getId() {

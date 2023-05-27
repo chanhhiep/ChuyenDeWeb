@@ -60,9 +60,13 @@ public class ProductAdminService {
         Category category = categoryRepository.findCategoryById(Long.parseLong(productDto.getCategory_id()));
         Brand brand = brandRepository.findBrandById(Long.parseLong(productDto.getBrand()));
         List<Size> sizes = new ArrayList<>();
+        for(String size_id:productDto.getSizes()){
+            sizes.add(sizeRepository.findSizeById(Long.parseLong(size_id)));
+        }
         String url;
         try {
-            url = uploadService.uploadFile(images, "upload");
+            url = uploadService.uploadFile(images, "D:\\shoe\\ChuyenDeWeb\\src\\main\\resources\\static\\uploads");
+            //url = uploadService.uploadFile(productDto.getImages(), "upload");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -81,6 +85,7 @@ public class ProductAdminService {
                 .createDate(currentDate)
                 .updateDate(currentDate)
                 .build();
+        System.out.println(product.getSizes().get(0));
         productRepository.save(product);
     }
     public List<Size> getAllSize(){
