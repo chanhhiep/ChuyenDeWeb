@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category,Long> {
@@ -16,4 +17,9 @@ public interface CategoryRepository extends JpaRepository<Category,Long> {
     @Modifying
     @Query("select c from Category c where c.name like ?1")
     public List<Category> searchCategory(String keyword);
+    @Query("SELECT c FROM Category c WHERE c.name LIKE CONCAT('%', :name, '%')")
+    List<Category> findBySearchKey(String name);
+    @Query("select u from Category  u where  u.parent_id =?1")
+    public List<Category> findByParentId(int parentId);
+    Optional<Category> findByName(String name);
 }

@@ -1,19 +1,12 @@
 package com.shoevn.shoe.admin.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.shoevn.shoe.Beans.Category;
-import com.shoevn.shoe.Beans.Image;
-import jakarta.persistence.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Arrays;
 import java.util.List;
 
 public class ProductDto {
     private String id;
     private String name;
     private String category_id;
-    //private MultipartFile images;
+    //private String images;
     private String price;
     private String discountRate;
     private String description;

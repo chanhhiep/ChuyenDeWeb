@@ -4,6 +4,7 @@ import com.shoevn.shoe.Beans.Brand;
 import com.shoevn.shoe.Beans.Category;
 import com.shoevn.shoe.admin.dto.BrandDto;
 import com.shoevn.shoe.admin.dto.CategoryDto;
+import com.shoevn.shoe.admin.dto.SearchDto;
 import com.shoevn.shoe.admin.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class BrandAdminService {
         brand.setUpdateDate(currentDate);
         brandRepository.save(brand);
     }
-    public List<Brand> getBrandByKeyword(String keyword){
-        return brandRepository.searchBrand(keyword);
+    public List<Brand> getBrandByKeyword(SearchDto keyword){
+        return brandRepository.searchBrand(keyword.getKeywords());
     }
 }

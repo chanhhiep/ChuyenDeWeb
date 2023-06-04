@@ -2,14 +2,17 @@ package com.shoevn.shoe.admin.controller;
 
 import com.shoevn.shoe.Beans.*;
 import com.shoevn.shoe.admin.dto.ProductDto;
+import com.shoevn.shoe.admin.dto.SearchDto;
 import com.shoevn.shoe.admin.service.CategoryAdminService;
 import com.shoevn.shoe.admin.service.ProductAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
@@ -18,39 +21,37 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-@Controller
+@RestController
 public class ProductAdminController {
     @Autowired
     private ProductAdminService productService;
 
     @Autowired
     private CategoryAdminService categoryService;
+    private static final String PATH = "/admin/product";
 
-    @GetMapping("/product")
-    public String listProduct(ModelMap model){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(PATH)
+    public List<Product> listProduct(){
         List<Product> listProduct = productService.getAllProduct();
-        List<Category> listCategory = categoryService.listAllCategory();
-        List<Size> listSize = productService.getAllSize();
-        List<Brand> listBrand = productService.getAllBrands();
-        if(listProduct !=null && listProduct .size()!=0) {
-            model.put("productList", listProduct);
-        }
-        else{
-            System.out.println("empty");
-        }
-        model.put("categoryList",listCategory);
-        model.put("sizeList",listSize);
-        model.put("brandList",listBrand);
-        return "/admin/product";
+//        List<Category> listCategory = categoryService.listAllCategory();
+//        List<Size> listSize = productService.getAllSize();
+//        List<Brand> listBrand = productService.getAllBrands();
+//        model.put("categoryList",listCategory);
+//        model.put("sizeList",listSize);
+//        model.put("brandList",listBrand);
+        return listProduct;
     }
-    @GetMapping("/product/showProduct")
-    public ResponseEntity<Product> showProduct(@RequestParam("id") String id) {
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(PATH+"/showProduct/{id}")
+    public Product showProduct(@PathVariable(name = "id") String id) {
         Long productId = Long.parseLong(id);
         Product product = productService.getProductById(productId);
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return product;
     }
-    @PostMapping(value = "/product/saveProduct")
-    public String saveProduct(@ModelAttribute("dataForm") ProductDto dataForm , @RequestParam("images") MultipartFile images ){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value = PATH+"/saveProduct",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity saveProduct(@RequestParam("product") String product,@RequestParam(value = "images",required = false) MultipartFile images ){
         /*System.out.println(dataForm.toString());
         long category_id = Long.parseLong(dataForm.getCategory_id());
         Category category = categoryService.getCategoryById(category_id);
@@ -70,9 +71,11 @@ public class ProductAdminController {
             return ResponseEntity.badRequest().build();
         }
         */
-        productService.uploadProduct(dataForm,images);
-        return "redirect:/product";
+          productService.uploadProduct(product, images);
+          System.out.println("save success");
+          return ResponseEntity.ok().build();
     }
+    /*
     public List<Image> uploadImage(MultipartFile[] multipartFiles) throws IOException {
         List<Image> imageModels = new ArrayList<>();
         for (MultipartFile file : multipartFiles) {
@@ -84,9 +87,10 @@ public class ProductAdminController {
             imageModels.add(imageModel);
         }
         return imageModels;
-    }
-    @PostMapping(value="/product/deleteProduct")
-    public ResponseEntity<?> DeleteProduct(@RequestParam("id") String id){
+    }*/
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping(value=PATH+"/deleteProduct/{id}")
+    public ResponseEntity DeleteProduct(@PathVariable(name = "id") String id){
         try {
             Long productId = Long.parseLong(id);
             productService.deleteProduct(productId);
@@ -95,8 +99,9 @@ public class ProductAdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping(value="/product/updateProduct")
-    public ResponseEntity<?> UpdateProduct(@ModelAttribute("dataForm") ProductDto product){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping(value=PATH+"/updateProduct")
+    public ResponseEntity UpdateProduct(@RequestBody ProductDto product){
         try {
             productService.updateProduct(product);
             return ResponseEntity.ok().build();
@@ -104,25 +109,12 @@ public class ProductAdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping(value="/product/search")
-    public String search(@RequestParam("keyword") String keyword, ModelMap model){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value=PATH+"/search")
+    public List<Product> search(@RequestBody SearchDto keyword){
         System.out.println(keyword);
-        List<Category> listCategory = categoryService.listAllCategory();
-        List<Size> listSize = productService.getAllSize();
-        List<Brand> listBrand = productService.getAllBrands();
-        List<Product> products = productService.getProductByKeyword(keyword);
+        List<Product> products = productService.getProductByKeywords(keyword);
         System.out.println(products);
-        //model.put("productList", products);
-        if(products !=null && products.size()!=0) {
-            model.put("productList", products);
-        }
-        else{
-            System.out.println("empty search");
-            model.put("productList",null);
-        }
-        model.put("categoryList",listCategory);
-        model.put("sizeList",listSize);
-        model.put("brandList",listBrand);
-        return "/admin/product";
+        return products;
     }
 }

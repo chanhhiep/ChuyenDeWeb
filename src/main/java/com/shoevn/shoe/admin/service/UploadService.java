@@ -21,9 +21,8 @@ public class UploadService {
 
         BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(path.resolve(name).toFile()));
         stream.write(file.getBytes());
-
         stream.close();
-        return directoryName.substring(54) + "/" + name;
+        return directoryName + "/" + name;
     }
     //create directory
     private String createDirectory(String directoryName) {

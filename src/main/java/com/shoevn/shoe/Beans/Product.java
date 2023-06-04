@@ -1,17 +1,26 @@
 package com.shoevn.shoe.Beans;
 
 
-import jakarta.persistence.*;
-import lombok.Builder;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-@Entity
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "products")
-public class Product implements Serializable {
+@SQLDelete(sql = "UPDATE products SET isDeleted = true WHERE product_id = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class Product extends AuditableBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id", nullable = false)
@@ -34,34 +43,19 @@ public class Product implements Serializable {
     @JoinColumn(name = "brand_id", nullable = false, //
             foreignKey = @ForeignKey(name = "brand_PROD_FK"))
     private Brand brand;
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @Column(name = "size",nullable = false)
     private List<Size> sizes;
     @Column(name = "quantity",nullable = false)
     private int quantity;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Review> listReview;
     @Temporal(TemporalType.DATE)
     @Column(name = "create_date",nullable = false)
     private Date createDate;
     @Temporal(TemporalType.DATE)
     @Column(name = "update_date",nullable = false)
     private Date updateDate;
-
-    public Product(){}
-
-    public Product(Long id, Category category, String name, double price, double discountRate, String images, String description, Brand brand, List<Size> sizes, int quantity, Date createDate, Date updateDate) {
-        this.id = id;
-        this.category = category;
-        this.name = name;
-        this.price = price;
-        this.discountRate = discountRate;
-        this.images = images;
-        this.description = description;
-        this.brand = brand;
-        this.sizes = sizes;
-        this.quantity = quantity;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-    }
 
     public Long getId() {
         return id;
@@ -159,4 +153,11 @@ public class Product implements Serializable {
         this.updateDate = updateDate;
     }
 
+    public List<Review> getListReview() {
+        return listReview;
+    }
+
+    public void setListReview(List<Review> listReview) {
+        this.listReview = listReview;
+    }
 }

@@ -1,15 +1,22 @@
 package com.shoevn.shoe.Beans;
 
-import jakarta.persistence.*;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import javax.persistence.*;
 
 
-import java.io.Serializable;
-import java.util.Date;
-
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "orders")
-public class Order implements Serializable {
-    private static final long serialVersionUID = -2576670215015463100L;
+@SQLDelete(sql = "UPDATE orders SET isDeleted = true WHERE ID = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class Order extends AuditableBase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", length = 50)
@@ -21,18 +28,17 @@ public class Order implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false, //
             foreignKey = @ForeignKey(name = "Acc_ORD_FK"))
-    private Account account;
+    private User account;
+    @OneToOne
+    @JoinColumn(name = "payment_id",nullable = false)
+    private PaymentMethod paymentMethod;
     @Column(name = "state", length = 128)
     private String state;
     @Column(name = "note", length = 128)
     private String note;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "Create_Date", nullable = false)
-    private Date orderDate;
 
-    public Order(){
 
-    }
+
     public long getId() {
         return id;
     }
@@ -41,13 +47,6 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
 
     public String getNote() {
         return note;
@@ -66,11 +65,11 @@ public class Order implements Serializable {
         this.shippingInfo = shippingInfo;
     }
 
-    public Account getAccount() {
+    public User getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(User account) {
         this.account = account;
     }
 

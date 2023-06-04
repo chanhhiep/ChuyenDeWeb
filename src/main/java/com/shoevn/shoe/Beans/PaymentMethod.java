@@ -1,14 +1,23 @@
 package com.shoevn.shoe.Beans;
 
-import jakarta.persistence.*;
-import lombok.Builder;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "payment")
-public class PaymentMethod {
+@SQLDelete(sql = "UPDATE payment SET isDeleted = true WHERE payment_id = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class PaymentMethod extends AuditableBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -23,16 +32,6 @@ public class PaymentMethod {
     @Temporal(TemporalType.DATE)
     @Column(name = "update_date",nullable = false)
     private Date updateDate;
-
-    public PaymentMethod(){
-    }
-    public PaymentMethod(Long id, String name, String description, Date createDate, Date updateDate) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-    }
 
     public Long getId() {
         return id;

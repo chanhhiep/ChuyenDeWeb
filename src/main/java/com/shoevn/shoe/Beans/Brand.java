@@ -1,7 +1,8 @@
 package com.shoevn.shoe.Beans;
-import jakarta.persistence.*;
+
 import lombok.Builder;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity

@@ -3,49 +3,51 @@ package com.shoevn.shoe.admin.controller;
 
 import com.shoevn.shoe.Beans.PaymentMethod;
 import com.shoevn.shoe.admin.dto.PaymentMethodDto;
+import com.shoevn.shoe.admin.dto.ProductDto;
+import com.shoevn.shoe.admin.dto.SearchDto;
 import com.shoevn.shoe.admin.service.PaymentMethodAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class PaymentAdminController {
 
     @Autowired
     private PaymentMethodAdminService paymentService;
+    private static final String PATH = "/admin/payment";
 
-    @GetMapping("/admin/payment")
-    public String listPayment(ModelMap model){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(PATH)
+    public List<PaymentMethod> listPayment(){
         List<PaymentMethod> listPayment = paymentService.listAllPaymentMethod();
-        if(listPayment!=null && listPayment.size()!=0) {
-            model.put("paymentList",listPayment);
-        }
-        else{
-            System.out.println("empty");
-        }
-        return "/admin/payment";
+        return listPayment;
     }
-    @GetMapping("/payment/showPayment")
-    public ResponseEntity<PaymentMethod> showpayment(@RequestParam("id") String id) {
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(PATH+"/payment/{id}")
+    public PaymentMethod showPayment(@PathVariable(name = "id") String id) {
         Long paymentId = Long.parseLong(id);
         PaymentMethod payment = paymentService.getPaymentMethodById(paymentId);
-        return new ResponseEntity<>(payment, HttpStatus.OK);
+        return payment;
     }
-    @PostMapping(value = "/payment/savePayment")
-    public String savePayment(@ModelAttribute("dataForm") PaymentMethodDto dataForm){
-        paymentService.uploadPaymentMethod(dataForm);
-        return "redirect:/admin/payment";
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value = PATH+"/savePayment")
+    public ResponseEntity savePayment(@RequestBody PaymentMethodDto payment){
+        try {
+            paymentService.uploadPaymentMethod(payment);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
-    @PostMapping(value="/payment/deletePayment")
-    public ResponseEntity<?> deletePayment(@RequestParam("id") String id){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping(value=PATH+"/deletePayment/{id}")
+    public ResponseEntity deletePayment(@PathVariable(name = "id") String id){
         try {
             Long paymentId = Long.parseLong(id);
             paymentService.deletePaymentMethod(paymentId);
@@ -54,8 +56,9 @@ public class PaymentAdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping(value="/payment/updatePayment")
-    public ResponseEntity<?> UpdatePayment(@ModelAttribute("dataForm") PaymentMethodDto payment){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PutMapping(value=PATH+"/updatePayment")
+    public ResponseEntity UpdatePayment(@RequestBody PaymentMethodDto payment){
         try {
             paymentService.updatePaymentMethod(payment);
             return ResponseEntity.ok().build();
@@ -63,18 +66,12 @@ public class PaymentAdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping(value="/payment/search")
-    public String search(@RequestParam("keyword") String keyword, ModelMap model){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value=PATH+"/payment/search")
+    public List<PaymentMethod> search(@RequestBody SearchDto keyword){
         System.out.println(keyword);
         List<PaymentMethod> payments = paymentService.getPaymentMethodByKeyword(keyword);
         System.out.println(payments);
-        if(payments !=null && payments.size()!=0) {
-            model.put("paymentList",payments);
-        }
-        else{
-            System.out.println("empty search");
-            model.put("paymentList",null);
-        }
-        return "/admin/payment";
+        return payments;
     }
 }

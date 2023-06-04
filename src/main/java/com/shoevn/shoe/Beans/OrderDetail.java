@@ -1,52 +1,52 @@
 
 package com.shoevn.shoe.Beans;
 
-import jakarta.persistence.*;
+import com.shoevn.shoe.Beans.base.AuditableBase;
 
-import java.io.Serializable;
-import java.util.Date;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
+import javax.persistence.*;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "order_Details")
-public class OrderDetail implements Serializable {
+@SQLDelete(sql = "UPDATE order_Details SET isDeleted = true WHERE ID = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class OrderDetail extends AuditableBase {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", length = 50, nullable = false)
+    private long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID", nullable = false, //
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_ORD_FK"))
     private Order order;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PRODUCT_ID", nullable = false, //
-            foreignKey = @ForeignKey(name = "ORDER_DETAIL_PROD_FK"))
-    private Product product;
-    @Column(name = "Quantity", nullable = false)
-    private int quantity;
+    @JoinColumn(name = "size_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "ORDER_DETAIL_PRO_FK"))
+    private Size size;
+    @Column(name = "Quanity", nullable = false)
+    private int quanity;
     @Column(name = "Price", nullable = false)
     private double price;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "size_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "SIZE_DETAIL_PROD_FK"))
-    private Size size;
-    @Column(name = "note", length = 128, nullable = false)
+    @Column(name = "total", nullable = false)
+    private double total;
+    @Column(name = "note", length = 128)
     private String note;
-    public OrderDetail(){
+
+    public OrderDetail(Order order, Size size, int quantity, double price, double setTotal, String note) {
     }
 
-    public OrderDetail(Order order, Product product, int quantity, double price, Size size, String note) {
-        this.order = order;
-        this.product = product;
-        this.quantity = quantity;
-        this.price = price;
-        this.size = size;
-        this.note = note;
-    }
-
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -58,20 +58,13 @@ public class OrderDetail implements Serializable {
         this.order = order;
     }
 
-    public Product getProduct() {
-        return product;
+
+    public int getQuanity() {
+        return quanity;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setQuanity(int quanity) {
+        this.quanity = quanity;
     }
 
     public double getPrice() {
@@ -82,14 +75,6 @@ public class OrderDetail implements Serializable {
         this.price = price;
     }
 
-    public Size getSize() {
-        return size;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
     public String getNote() {
         return note;
     }
@@ -98,17 +83,13 @@ public class OrderDetail implements Serializable {
         this.note = note;
     }
 
-    @Override
-    public String toString() {
-        return "OrderDetail{" +
-                "id=" + id +
-                ", order=" + order +
-                ", product=" + product +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                ", size=" + size +
-                ", note='" + note + '\'' +
-                '}';
+    public Size getSize() {
+        return size;
     }
+
+    public void setSize(Size size) {
+        this.size = size;
+    }
+
 }
 

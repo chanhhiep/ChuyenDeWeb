@@ -2,6 +2,7 @@ package com.shoevn.shoe.admin.service;
 
 import com.shoevn.shoe.Beans.PaymentMethod;
 import com.shoevn.shoe.admin.dto.PaymentMethodDto;
+import com.shoevn.shoe.admin.dto.SearchDto;
 import com.shoevn.shoe.admin.repository.PaymentMethodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class PaymentMethodAdminService {
         paymentMethod.setUpdateDate(currentDate);
         paymentMethodRepository.save(paymentMethod);
     }
-    public List<PaymentMethod> getPaymentMethodByKeyword(String keyword){
-        return paymentMethodRepository.searchPaymentMethod(keyword);
+    public List<PaymentMethod> getPaymentMethodByKeyword(SearchDto keyword){
+        return paymentMethodRepository.searchPaymentMethod(keyword.getKeywords());
     }
 }
