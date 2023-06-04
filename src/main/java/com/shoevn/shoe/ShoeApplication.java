@@ -10,12 +10,13 @@ import java.util.Arrays;
 
 @SpringBootApplication
 public class ShoeApplication {
+    /*
     @Bean
     public FormHttpMessageConverter formHttpMessageConverter() {
         FormHttpMessageConverter formHttpMessageConverter = new FormHttpMessageConverter();
         formHttpMessageConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_FORM_URLENCODED));
         return formHttpMessageConverter;
-    }
+    }*/
     public static void main(String[] args) {
         SpringApplication.run(ShoeApplication.class, args);
     }

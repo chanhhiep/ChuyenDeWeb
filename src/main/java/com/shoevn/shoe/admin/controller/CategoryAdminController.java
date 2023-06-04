@@ -3,54 +3,51 @@ package com.shoevn.shoe.admin.controller;
 import com.shoevn.shoe.Beans.*;
 import com.shoevn.shoe.admin.dto.CategoryDto;
 import com.shoevn.shoe.admin.dto.ProductDto;
+import com.shoevn.shoe.admin.dto.SearchDto;
 import com.shoevn.shoe.admin.service.CategoryAdminService;
 import com.shoevn.shoe.admin.service.ProductAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 public class CategoryAdminController {
 
     @Autowired
     private CategoryAdminService categoryService;
+    private static final String PATH = "/admin/category";
 
-    @GetMapping("/admin/category")
-    public String listCategory(ModelMap model){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(PATH)
+    public List<Category> listCategory(){
         List<Category> listCategory = categoryService.listAllCategory();
-        if(listCategory!=null && listCategory.size()!=0) {
-            model.put("categoryList",listCategory);
-        }
-        else{
-            System.out.println("empty");
-        }
-        return "/admin/category";
+        return listCategory;
     }
-    @GetMapping("/category/showCategory")
-    public ResponseEntity<Category> showCategory(@RequestParam("id") String id) {
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(PATH+"/showCategory/{id}")
+    public Category showCategory(@PathVariable(name = "id") String id) {
         Long categoryId = Long.parseLong(id);
         Category category = categoryService.getCategoryById(categoryId);
-        return new ResponseEntity<>(category, HttpStatus.OK);
+        return category;
     }
-    @PostMapping(value = "/category/saveCategory")
-    public String saveCategory(@ModelAttribute("dataForm") CategoryDto dataForm , @RequestParam("images") MultipartFile images ){
-        categoryService.uploadCategory(dataForm,images);
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value = PATH+"/saveCategory",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    public String saveCategory(@RequestParam("category") String category, @RequestParam("images") MultipartFile images ){
+        categoryService.uploadCategory(category,images);
         return "redirect:/admin/category";
     }
-
-    @PostMapping(value="/category/deleteCategory")
-    public ResponseEntity<?> DeleteCategory(@RequestParam("id") String id){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping (value=PATH+"/deleteCategory/{id}")
+    public ResponseEntity DeleteCategory(@PathVariable(name = "id") String id){
         try {
             Long categoryId = Long.parseLong(id);
             categoryService.deleteCategory(categoryId);
@@ -59,8 +56,8 @@ public class CategoryAdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping(value="/category/updateCategory")
-    public ResponseEntity<?> UpdateProduct(@ModelAttribute("dataForm") CategoryDto category){
+    @PutMapping(value=PATH+"/updateCategory")
+    public ResponseEntity UpdateCategory(@RequestBody CategoryDto category){
         try {
             categoryService.updateCategory(category);
             return ResponseEntity.ok().build();
@@ -68,19 +65,12 @@ public class CategoryAdminController {
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping(value="/category/search")
-    public String search(@RequestParam("keyword") String keyword, ModelMap model){
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value=PATH+"/search")
+    public List<Category> search(@RequestBody SearchDto keyword){
         System.out.println(keyword);
-        List<Category> categories = categoryService.geCategoryByKeyword(keyword);
+        List<Category> categories = categoryService.getCategoryByKeyword(keyword);
         System.out.println(categories);
-        if(categories !=null && categories.size()!=0) {
-            model.put("categoryList",categories);
-        }
-        else{
-            System.out.println("empty search");
-            model.put("categoryList",null);
-        }
-
-        return "/admin/category";
+        return categories;
     }
 }

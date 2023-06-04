@@ -1,15 +1,24 @@
 
 package com.shoevn.shoe.Beans;
 
-import jakarta.persistence.*;
-import lombok.Builder;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "category")
-public class Category implements Serializable {
+@SQLDelete(sql = "UPDATE category SET isDeleted = true WHERE id_category = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class Category extends AuditableBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_category", nullable = false)
@@ -21,17 +30,6 @@ public class Category implements Serializable {
 
     @Column(name = "parent_id",length = 20, nullable = false)
     private int parent_id;
-
-    public Category() {
-
-    }
-
-    public Category(Long id_category, String name, String img, int parent_id) {
-        this.id_category = id_category;
-        this.name = name;
-        this.img = img;
-        this.parent_id = parent_id;
-    }
 
     public void setImg(String img) {
         this.img = img;
@@ -65,13 +63,4 @@ public class Category implements Serializable {
         this.parent_id = parent_id;
     }
 
-    @Override
-    public String toString() {
-        return "Category{" +
-                "id_category=" + id_category +
-                ", name='" + name + '\'' +
-                ", img='" + img + '\'' +
-                ", parent_id=" + parent_id +
-                '}';
-    }
 }

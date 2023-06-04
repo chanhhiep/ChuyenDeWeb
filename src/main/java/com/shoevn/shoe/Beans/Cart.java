@@ -1,51 +1,32 @@
 package com.shoevn.shoe.Beans;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
-public class Cart implements Serializable {
-    private Product product;
-    private int quantity;
+import javax.persistence.*;
+
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "cart")
+@SQLDelete(sql = "UPDATE cart SET isDeleted = true WHERE id = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class Cart  extends AuditableBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @OneToOne
     private Size size;
+    @OneToOne
+    private User user;
+    private int quantity;
 
-    public  Cart(){}
-    public Cart(Product product, int quantity, Size size) {
-        this.product = product;
-        this.quantity = quantity;
-        this.size = size;
-    }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public Size getSize() {
-        return size;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "product=" + product +
-                ", quantity=" + quantity +
-                ", size=" + size +
-                '}';
-    }
 }
+

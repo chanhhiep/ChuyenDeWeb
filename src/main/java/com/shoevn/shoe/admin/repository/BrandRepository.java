@@ -16,4 +16,6 @@ public interface BrandRepository extends JpaRepository<Brand,Long> {
     @Modifying
     @Query("select b from Brand b where b.name like ?1")
     public List<Brand> searchBrand(String keyword);
+    @Query("SELECT b FROM Brand b WHERE b.name LIKE CONCAT('%', :name, '%')")
+    List<Brand> findBySearchKey(String name);
 }

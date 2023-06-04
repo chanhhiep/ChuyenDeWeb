@@ -1,7 +1,11 @@
 package com.shoevn.shoe.admin.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shoevn.shoe.Beans.*;
 import com.shoevn.shoe.admin.dto.ProductDto;
+import com.shoevn.shoe.admin.dto.Request.ProductRequest;
+import com.shoevn.shoe.admin.dto.SearchDto;
 import com.shoevn.shoe.admin.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +22,6 @@ public class ProductAdminService {
     private CategoryRepository categoryRepository;
     @Autowired
     private BrandRepository brandRepository;
-    @Autowired
-    private ImageRepository imageRepository;
     @Autowired
     private SizeRepository sizeRepository;
 
@@ -54,39 +56,47 @@ public class ProductAdminService {
         productRepository.save(product);
     }*/
 
-    public void uploadProduct(ProductDto productDto,MultipartFile images) {
-
-        System.out.println(productDto.toString());
-        Category category = categoryRepository.findCategoryById(Long.parseLong(productDto.getCategory_id()));
-        Brand brand = brandRepository.findBrandById(Long.parseLong(productDto.getBrand()));
-        List<Size> sizes = new ArrayList<>();
-        for(String size_id:productDto.getSizes()){
-            sizes.add(sizeRepository.findSizeById(Long.parseLong(size_id)));
-        }
-        String url;
+    public void uploadProduct(String productJson,MultipartFile images) {
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(productJson);
         try {
-            url = uploadService.uploadFile(images, "D:\\shoe\\ChuyenDeWeb\\src\\main\\resources\\static\\uploads");
-            //url = uploadService.uploadFile(productDto.getImages(), "upload");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            ProductRequest request = mapper.readValue(productJson,ProductRequest.class);
+            Category category = categoryRepository.findCategoryById(request.getCategory_id());
+            Brand brand = brandRepository.findBrandById(request.getBrand());
+            List<Size> sizes = new ArrayList<>();
+            for(String s: request.getSizes()){
+                sizes.add(sizeRepository.findSizeById(Long.parseLong(s)));
+            }
+            String url;
+            try {
+                //url = uploadService.uploadFile(images, "D:\\shoe\\ChuyenDeWeb\\src\\main\\resources\\static\\uploads");
+                url = uploadService.uploadFile(images, "upload");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            Date currentDate = new Date();
+            List<Review> reviews = new ArrayList<Review>();
+            Product product = Product.builder()
+                    .category(category)
+                    .name(request.getName())
+                    .price(request.getPrice())
+                    .discountRate(request.getDiscountRate())
+                    .images(url)
+                    .description(request.getDescription())
+                    .brand(brand)
+                    .sizes(sizes)
+                    .quantity(request.getQuantity())
+                    .listReview(reviews)
+                    .createDate(currentDate)
+                    .updateDate(currentDate)
+                    .build();
+            System.out.println(product.getSizes().get(0));
+            productRepository.save(product);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
-        Date currentDate = new Date();
 
-        Product product = Product.builder()
-                .category(category)
-                .name(productDto.getName())
-                .price(Double.parseDouble(productDto.getPrice()))
-                .discountRate(Double.parseDouble(productDto.getDiscountRate()))
-                .images(url)
-                .description(productDto.getDescription())
-                .brand(brand)
-                .sizes(sizes)
-                .quantity(Integer.parseInt(productDto.getQuantity()))
-                .createDate(currentDate)
-                .updateDate(currentDate)
-                .build();
-        System.out.println(product.getSizes().get(0));
-        productRepository.save(product);
+
     }
     public List<Size> getAllSize(){
         return sizeRepository.findAll();
@@ -114,7 +124,10 @@ public class ProductAdminService {
         product.setUpdateDate(currentDate);
         productRepository.save(product);
     }
-    public List<Product> getProductByKeyword(String keyword){
-        return productRepository.searchProduct(keyword);
+    public List<Product> getProductByKeyword(SearchDto keyword){
+        return productRepository.searchProduct(keyword.getKeywords());
+    }
+    public List<Product> getProductByKeywords(SearchDto keyword){
+        return productRepository.findBySearchKey(keyword.getKeywords(),keyword.getKeywords());
     }
 }

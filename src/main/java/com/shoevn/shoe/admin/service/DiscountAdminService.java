@@ -2,6 +2,7 @@ package com.shoevn.shoe.admin.service;
 
 import com.shoevn.shoe.Beans.DiscountCode;
 import com.shoevn.shoe.admin.dto.DiscountDto;
+import com.shoevn.shoe.admin.dto.SearchDto;
 import com.shoevn.shoe.admin.repository.DiscountCodeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class DiscountAdminService {
         discount.setUpdateDate(currentDate);
         discountRepository.save(discount);
     }
-    public List<DiscountCode> getDiscountByKeyword(String keyword){
-        return discountRepository.searchDiscount(keyword);
+    public List<DiscountCode> getDiscountByKeyword(SearchDto keyword){
+        return discountRepository.searchDiscount(keyword.getKeywords());
     }
 }

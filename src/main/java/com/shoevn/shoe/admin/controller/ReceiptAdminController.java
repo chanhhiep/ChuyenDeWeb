@@ -12,6 +12,7 @@ import java.util.List;
 public class ReceiptAdminController {
     @Autowired
     private ReceiptAdminService receiptService;
+    private static final String PATH = "/admin/receipt";
     @GetMapping("/receipt")
     public String listReceipt(ModelMap model){
         List<Order> listReceipt = receiptService.getAllReceipt();

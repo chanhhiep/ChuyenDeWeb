@@ -1,15 +1,24 @@
 
 package com.shoevn.shoe.Beans;
 
-import jakarta.persistence.*;
-import lombok.Builder;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "discountcode")
-public class DiscountCode {
+@SQLDelete(sql = "UPDATE discountcode SET isDeleted = true WHERE id = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class DiscountCode extends AuditableBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,17 +34,6 @@ public class DiscountCode {
     @Column(name = "update_date",nullable = false)
     private Date updateDate;
 
-    public DiscountCode(){
-
-    }
-
-    public DiscountCode(Long id, String name, String description, Date createDate, Date updateDate) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-    }
 
     public Long getId() {
         return id;

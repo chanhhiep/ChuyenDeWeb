@@ -1,39 +1,51 @@
 
 package com.shoevn.shoe.Beans;
 
-import jakarta.persistence.*;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.*;
 import java.io.Serializable;
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "reviews")
-public class Review implements Serializable {
+@SQLDelete(sql = "UPDATE reviews SET isDeleted = true WHERE ID = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class Review extends AuditableBase {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID", length = 50, nullable = false)
+    private long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "username", nullable = false, //
             foreignKey = @ForeignKey(name = "Acc_PROD_FK"))
-    private Account account;
+    private User account;
     private int star;
     @Column(name = "cmt", length = 255)
     private String cmt;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Account getAccount() {
+    public User getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(User account) {
         this.account = account;
     }
+
     public String getCmt() {
         return cmt;
     }
@@ -50,14 +62,5 @@ public class Review implements Serializable {
         this.star = star;
     }
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", account=" + account +
-                ", star=" + star +
-                ", cmt='" + cmt + '\'' +
-                '}';
-    }
 }
 

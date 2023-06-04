@@ -2,7 +2,7 @@ package com.shoevn.shoe.admin.service;
 
 import com.shoevn.shoe.Beans.Order;
 import com.shoevn.shoe.admin.repository.OrderDetailRepository;
-import com.shoevn.shoe.admin.repository.ReceiptRepository;
+import com.shoevn.shoe.admin.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class ReceiptAdminService {
     @Autowired
-    private ReceiptRepository receiptRepository;
+    private OrderRepository receiptRepository;
 
     @Autowired
     private OrderDetailRepository receiptDetailRepository;

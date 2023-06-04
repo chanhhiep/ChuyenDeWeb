@@ -2,37 +2,37 @@
 package com.shoevn.shoe.Beans;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import javax.persistence.*;
 import java.io.Serializable;
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "size")
-public class Size implements Serializable {
+@SQLDelete(sql = "UPDATE size SET isDeleted = true WHERE size_id = ?")
+@Where(clause = "is_deleted = false")
+@EqualsAndHashCode(callSuper = true)
+public class Size extends AuditableBase {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "size_id", nullable = false)
     private Long id;
     @Column(name = "size_num",nullable = false)
     private int size_num;
     @Column(name = "size_description",nullable = false)
     private String description;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "product_id", nullable = false, //
-//            foreignKey = @ForeignKey(name = "SIZE_PROD_FK"))
-//    private Product product;
-@ManyToOne
-@JoinColumn(name = "product_id")
-@JsonBackReference
-private Product product;
-    public Size(){}
-
-    public Size(Long id, int size_num, String description) {
-        this.id = id;
-        this.size_num = size_num;
-        this.description = description;
-    }
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     public Long getId() {
         return id;
@@ -66,13 +66,5 @@ private Product product;
         this.product = product;
     }
 
-    @Override
-    public String toString() {
-        return "Size{" +
-                "id=" + id +
-                ", size_num=" + size_num +
-                ", description='" + description + '\'' +
-                ", product=" + product +
-                '}';
-    }
+
 }
