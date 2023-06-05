@@ -13,8 +13,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "orders")
-@SQLDelete(sql = "UPDATE orders SET isDeleted = true WHERE ID = ?")
-@Where(clause = "is_deleted = false")
 @EqualsAndHashCode(callSuper = true)
 public class Order extends AuditableBase {
     @Id
