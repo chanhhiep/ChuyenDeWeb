@@ -43,9 +43,11 @@ public class Product extends AuditableBase {
     @JoinColumn(name = "brand_id", nullable = false, //
             foreignKey = @ForeignKey(name = "brand_PROD_FK"))
     private Brand brand;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    /*
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL
     @Column(name = "size",nullable = false)
     private List<Size> sizes;
+    */
     @Column(name = "quantity",nullable = false)
     private int quantity;
     @OneToMany(fetch = FetchType.LAZY)
@@ -121,13 +123,7 @@ public class Product extends AuditableBase {
         this.brand = brand;
     }
 
-    public List<Size> getSizes() {
-        return sizes;
-    }
 
-    public void setSizes(List<Size> sizes) {
-        this.sizes = sizes;
-    }
 
     public int getQuantity() {
         return quantity;

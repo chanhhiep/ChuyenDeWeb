@@ -63,13 +63,13 @@ public class ProductAdminService {
             ProductRequest request = mapper.readValue(productJson,ProductRequest.class);
             Category category = categoryRepository.findCategoryById(request.getCategory_id());
             Brand brand = brandRepository.findBrandById(request.getBrand());
-            List<Size> sizes = new ArrayList<>();
-            for(String s: request.getSizes()){
+           // List<Size> sizes = new ArrayList<>();
+           /* for(String s: request.getSizes()){
                 sizes.add(sizeRepository.findSizeById(Long.parseLong(s)));
-            }
+            }*/
             String url;
             try {
-                //url = uploadService.uploadFile(images, "D:\\shoe\\ChuyenDeWeb\\src\\main\\resources\\static\\uploads");
+               // url = uploadService.uploadFile(images, "D:\\shoe\\ChuyenDeWeb\\src\\main\\resources\\static\\uploads");
                 url = uploadService.uploadFile(images, "upload");
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -84,13 +84,11 @@ public class ProductAdminService {
                     .images(url)
                     .description(request.getDescription())
                     .brand(brand)
-                    .sizes(sizes)
                     .quantity(request.getQuantity())
                     .listReview(reviews)
                     .createDate(currentDate)
                     .updateDate(currentDate)
                     .build();
-            System.out.println(product.getSizes().get(0));
             productRepository.save(product);
         } catch (JsonProcessingException e) {
             e.printStackTrace();

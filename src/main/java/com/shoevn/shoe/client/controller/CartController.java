@@ -22,7 +22,7 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping(value = {"/add/prodcut"})
+    @PostMapping(value = {"/add/product"})
     public ResponseEntity<?> addCart(@Valid @RequestBody CartRequest request) {
         return ResponseEntity.ok(cartService.addCart(request));
     }

@@ -36,6 +36,20 @@ public class AuthenticationService {
                 .token(jwtToken)
                 .build();
     }
+    public AuthenticationResponse registerAdmin(RegisterRequest request) {
+        var user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .phone(request.getPhone())
+                .role(Role.ADMIN)
+                .status(Status.NORMAL)
+                .build();
+        var savedUser = repository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
+    }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) throws ResourceNotFoundException {
         try {

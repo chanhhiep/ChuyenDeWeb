@@ -19,5 +19,4 @@ public class ProductRequest {
     private String description;
     private int quantity;
     private long brand;
-    private List<String> sizes;
 }

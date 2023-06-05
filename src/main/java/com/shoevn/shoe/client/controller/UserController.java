@@ -6,10 +6,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Api(tags = "users")
@@ -17,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
-    @GetMapping("/profile")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/profile/{email}")
     @ApiOperation(value = "lấy thông tin user")
-    public ResponseEntity<?> getProfile(@RequestAttribute("email") String user) {
+    public ResponseEntity<?> getProfile(@PathVariable( name = "email") String user) {
         return ResponseEntity.ok(userService.getProfile(user));
     }
     @GetMapping("/getAll")
