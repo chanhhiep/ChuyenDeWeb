@@ -19,13 +19,11 @@ public class Order extends AuditableBase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", length = 50)
     private long id;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shipping_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "Ship_DETAIL_ORD_FK"))
+    @OneToOne(fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ShippingInfo shippingInfo;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "Acc_ORD_FK"))
+    @OneToOne(fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User account;
     @OneToOne
     @JoinColumn(name = "payment_id",nullable = false)
@@ -34,8 +32,6 @@ public class Order extends AuditableBase {
     private String state;
     @Column(name = "note", length = 128)
     private String note;
-
-
 
     public long getId() {
         return id;
@@ -77,5 +73,13 @@ public class Order extends AuditableBase {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 }
