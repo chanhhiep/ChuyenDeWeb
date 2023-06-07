@@ -28,31 +28,25 @@ public class CartService {
     @Autowired
     private CartDtoMapper mapper;
 
-    public Cart addProToCart(CartDTO cartDto){
-        Cart cart = new Cart();
-        Size size = sizeRepository.findById(cartDto.getSize()).get();
-        User user = userRepository.findById(cartDto.getUser()).get();
-        cart.setSize(size);
-        cart.setUser(user);
-        cart.setQuantity(cartDto.getQuantity());
-
-        return cartRepository.save(cart);
-    }
-    public CartDto addCart(@Valid CartRequest request){
-        User user = userRepository.findById(request.getUser()).get();
-        Size size = sizeRepository.findById(request.getSize()).get();
-
+    public CartDto addCart(Long productID,String email,CartRequest request) {
+        Product product = productRepository.findById(productID).get();
+        User user = userRepository.findByEmail(email).get();
         Cart cart = Cart.builder()
-                .user(user).size(size).quantity(request.getQuantity()).build();
+                .product(product)
+                .user(user)
+                .size(request.getSize())
+                .quantity(request.getQuantity())
+                .build();
         Cart save = cartRepository.save(cart);
-        return mapper.apply(save);
+       return mapper.apply(save);
     }
-    public void removeCart(long id){
+
+    public void removeCart(long id) {
         cartRepository.deleteById(id);
     }
 
 
-    public List<CartDto> getAllProToCartByUser(long user_id){
+    public List<CartDto> getAllProToCartByUser(long user_id) {
         List<Cart> list = cartRepository.findByUser(user_id);
         List<CartDto> cartDtos = list.stream().map(mapper::apply).collect(Collectors.toList());
         return cartDtos;
