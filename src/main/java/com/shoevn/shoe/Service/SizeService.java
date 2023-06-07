@@ -50,7 +50,6 @@ public class SizeService {
 
         Size size = Size.builder()
                 .size_num(request.getNSize())
-                .product(product)
                 .build();
         Size save = sizeRepository.save(size);
         return mapper.apply(save);
