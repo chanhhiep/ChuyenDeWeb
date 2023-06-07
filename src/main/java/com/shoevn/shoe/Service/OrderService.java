@@ -27,21 +27,21 @@ public class OrderService {
     @Autowired
     private ShippingRepository shippingRepository;
 
-    public Order createOrder(OrderDTO dto){
-        Order order = new Order();
-
-        User user = userRepository.findById(dto.getUser()).get();
-        PaymentMethod payment = paymentRepository.findById(dto.getPayment()).get();
-        ShippingInfo ship = shippingRepository.findById(dto.getShipping()).get();
-
-        order.setAccount(user);
-        order.setPaymentMethod(payment);
-        order.setShippingInfo(ship);
-        order.setState(dto.getState());
-        order.setNote(dto.getNote());
-        return orderRepository.save(order);
+    public Order createOrder(OrderRequest request,String email,Long IdShip) {
+        User user = userRepository.findByEmail(email).get();
+        ShippingInfo shippingInfo = shippingRepository.findById(IdShip).get();
+        PaymentMethod paymentMethod = paymentRepository.findById(request.getIdPayment()).get();
+        Order order = Order.builder()
+                .account(user)
+                .shippingInfo(shippingInfo)
+                .paymentMethod(paymentMethod)
+                .note(request.getNote())
+                .state(request.getState())
+                .build();
+     return orderRepository.save(order);
     }
     public OrderDto getAllOrderById(long id){
         return orderDtoMapper.apply(orderRepository.findById(id).get());
     }
+
 }
