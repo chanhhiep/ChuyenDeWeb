@@ -17,61 +17,40 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "products")
-@SQLDelete(sql = "UPDATE products SET isDeleted = true WHERE product_id = ?")
-@Where(clause = "is_deleted = false")
 @EqualsAndHashCode(callSuper = true)
 public class Product extends AuditableBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", nullable = false)
-    private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+  @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "product_id",length = 20,nullable = false)
+    private long id;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "Category_PROD_FK"))
+            foreignKey = @ForeignKey(name = "FK"))
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category category;
     @Column(name = "name",length = 255,nullable = false)
-    private String name;
+    private String name;;
     @Column(name = "price",nullable = false)
+    @NumberFormat( style = NumberFormat.Style.CURRENCY)
     private double price;
-    @Column(name = "discount_rate",nullable = false)
-    private double discountRate;
-    @Column(name = "image")
-    private String images;
-    @Column(name = "description",nullable = false)
-    private String description;
-    @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "brand_PROD_FK"))
-    private Brand brand;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    @Column(name = "size",nullable = false)
-    private List<Size> sizes;
-    @Column(name = "quantity",nullable = false)
-    private int quantity;
+    @Column(name = "sell_price",nullable = false)
+    @NumberFormat( style = NumberFormat.Style.CURRENCY)
+    private double sellPrice;
+    @Column(name = "img",nullable = false)
+    private String img;
+    @Column(name = "quantity ",nullable = false)
+    private Integer quantity;
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Review> listReview;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "create_date",nullable = false)
-    private Date createDate;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "update_date",nullable = false)
-    private Date updateDate;
+    private List<Review> listComment;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     public String getName() {
         return name;
@@ -85,79 +64,49 @@ public class Product extends AuditableBase {
         return price;
     }
 
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public double getDiscountRate() {
-        return discountRate;
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
-    public void setDiscountRate(double discountRate) {
-        this.discountRate = discountRate;
+
+    public Category getCategory() {
+        return category;
     }
 
-    public String getImages() {
-        return images;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
-    public void setImages(String images) {
-        this.images = images;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
-    }
-
-    public List<Size> getSizes() {
-        return sizes;
-    }
-
-    public void setSizes(List<Size> sizes) {
-        this.sizes = sizes;
-    }
-
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public List<Review> getListComment() {
+        return listComment;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public List<Review> getListReview() {
-        return listReview;
-    }
-
-    public void setListReview(List<Review> listReview) {
-        this.listReview = listReview;
+    public void setListComment(List<Review> listComment) {
+        this.listComment = listComment;
     }
 }
