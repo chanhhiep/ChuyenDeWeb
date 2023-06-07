@@ -61,10 +61,9 @@ public class ProductService {
         return productDtos;
     }
 
-    public List<ProductDto> getInfoPro(long id){
-        List<Product> list = productRepository.getProductBySize(id);
-        List<ProductDto> productDtos = list.stream().map(mapper::apply).collect(Collectors.toList());
-        return  productDtos;
+      public ProductDto getInfoPro(long id){
+       Product dto = productRepository.findProductById(id);
+       return mapper.apply(dto);
     }
 
     public long getTotalProduct(long id){
