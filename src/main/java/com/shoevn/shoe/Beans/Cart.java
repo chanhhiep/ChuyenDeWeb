@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Table(name = "cart")
 @EqualsAndHashCode(callSuper = true)
 public class Cart  extends AuditableBase {
-    @Id
+      @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne

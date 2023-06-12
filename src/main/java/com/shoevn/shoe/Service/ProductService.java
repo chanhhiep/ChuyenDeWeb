@@ -62,6 +62,7 @@ public class ProductService {
         return productDtos;
     }
 
+
     public ProductDto getInfoPro(long id){
         Product dto = productRepository.findProductById(id);
         return mapper.apply(dto);

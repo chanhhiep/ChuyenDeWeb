@@ -37,8 +37,6 @@ public class Order extends AuditableBase {
     private  double totalOrder;
 
 
-
-
     public long getId() {
         return id;
     }
@@ -80,6 +78,7 @@ public class Order extends AuditableBase {
     public void setState(String state) {
         this.state = state;
     }
+
     public PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }

@@ -21,11 +21,11 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @EqualsAndHashCode(callSuper = true)
 public class Product extends AuditableBase {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "product_id", nullable = false)
-    private Long id;
-    @ManyToOne(fetch = FetchType.EAGER)
+  @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "product_id",length = 20,nullable = false)
+    private long id;
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, //
             foreignKey = @ForeignKey(name = "Category_PROD_FK"))
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -33,6 +33,7 @@ public class Product extends AuditableBase {
     @Column(name = "name",length = 255,nullable = false)
     private String name;
     @Column(name = "price",nullable = false)
+    @NumberFormat( style = NumberFormat.Style.CURRENCY)
     private double price;
     @Column(name = "discount_rate",nullable = false)
     private double discountRate;
@@ -52,29 +53,16 @@ public class Product extends AuditableBase {
     @Column(name = "quantity",nullable = false)
     private int quantity;
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Review> listReview;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "create_date",nullable = false)
-    private Date createDate;
-    @Temporal(TemporalType.DATE)
-    @Column(name = "update_date",nullable = false)
-    private Date updateDate;
+    private List<Review> listComment;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     public String getName() {
         return name;
@@ -88,73 +76,49 @@ public class Product extends AuditableBase {
         return price;
     }
 
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public double getDiscountRate() {
-        return discountRate;
-    }
-
-    public void setDiscountRate(double discountRate) {
-        this.discountRate = discountRate;
-    }
-
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Brand getBrand() {
-        return brand;
-    }
-
-    public void setBrand(Brand brand) {
-        this.brand = brand;
+    public void setSellPrice(double sellPrice) {
+        this.sellPrice = sellPrice;
     }
 
 
+    public Category getCategory() {
+        return category;
+    }
 
-    public int getQuantity() {
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public List<Review> getListComment() {
+        return listComment;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public List<Review> getListReview() {
-        return listReview;
-    }
-
-    public void setListReview(List<Review> listReview) {
-        this.listReview = listReview;
+    public void setListComment(List<Review> listComment) {
+        this.listComment = listComment;
     }
 }

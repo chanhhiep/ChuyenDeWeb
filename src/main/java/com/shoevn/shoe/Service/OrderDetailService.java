@@ -49,17 +49,20 @@ public class OrderDetailService {
    /* public OrderDetailDto create(@Valid OrderDetailRequest request){
         Order order = orderRepository.findById(request.getOrder()).get();
         Size size = sizeRepository.findById(request.getSize()).get();
+
         OrderDetail orderDetail = OrderDetail.builder()
                 .order(order)
-                .size(size)
-                .price(request.getPrice())
-                .quanity(request.getQuantity())
-                .total(request.getPrice()* request.getQuantity())
+                .product(product)
+                .quantity(request.getQuantity())
+                .size(request.getSize())
+                .total(request.getTotal())
                 .note(request.getNote())
                 .build();
+
         OrderDetail save = orderDetailRepository.save(orderDetail);
         return mapper.apply(save);
     }*/
+
 
     public List<OrderDetailDto> getLstOrderByUser(long idUser){
         List<OrderDetail> list = orderDetailRepository.getOrderDetailByUser(idUser);

@@ -33,7 +33,6 @@ public class OrderDetail extends AuditableBase {
     private int size;
     @Column(name = "Quanity", nullable = false)
     private int quantity;
-
     @Column(name = "total", nullable = false)
     private double total;
     @Column(name = "note", length = 128)

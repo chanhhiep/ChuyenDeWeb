@@ -45,7 +45,7 @@ public class CartService {
                 .quantity(request.getQuantity())
                 .build();
         Cart save = cartRepository.save(cart);
-        return mapper.apply(save);
+       return mapper.apply(save);
     }
 
     public  CartDto updateCart(UpdateCartRequest request){
@@ -56,12 +56,13 @@ public class CartService {
         return  mapper.apply(save);
     }
 
+
     public void removeCart(long id) {
         cartRepository.deleteById(id);
     }
 
 
-    public List<CartDto> getAllProToCartByUser(long user_id){
+    public List<CartDto> getAllProToCartByUser(long user_id) {
         List<Cart> list = cartRepository.findByUser(user_id);
         List<CartDto> cartDtos = list.stream().map(mapper::apply).collect(Collectors.toList());
         return cartDtos;

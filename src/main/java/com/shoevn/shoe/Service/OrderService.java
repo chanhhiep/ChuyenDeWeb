@@ -45,24 +45,29 @@ public class OrderService {
        shippingRepository.save(shippingInfo);
        PaymentMethod paymentMethod = paymentRepository.findById(request.getIdPayment()).get();
        System.out.println(shippingInfo);
+
         Order order = Order.builder()
                 .account(user)
                 .shippingInfo(shippingInfo)
                 .paymentMethod(paymentMethod)
                 .note(request.getNote())
                 .state(request.getState())
+
                 .totalOrder(request.getTotalOrder())
                 .build();
         Order save = orderRepository.save(order);
         return orderDtoMapper.apply(save);
 
+
     }
     public OrderDto getAllOrderById(long id){
         return orderDtoMapper.apply(orderRepository.findById(id).get());
     }
+
     public List<OrderDto> getAllOrderByUser(Long idUser){
         List<Order> orderList = orderRepository.getOrderByUser(idUser);
         List<OrderDto> orderDtos = orderList.stream().map(orderDtoMapper::apply).collect(Collectors.toList());
         return orderDtos;
     }
+
 }
