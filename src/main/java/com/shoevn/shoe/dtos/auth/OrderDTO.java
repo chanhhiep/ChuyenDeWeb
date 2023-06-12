@@ -9,4 +9,5 @@ public class OrderDTO {
     private Long payment;
     private String state;
     private String note;
+    private double totalOrder;
 }

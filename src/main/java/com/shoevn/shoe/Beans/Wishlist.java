@@ -1,49 +1,47 @@
 package com.shoevn.shoe.Beans;
 
-public class Wishlist {
-    private long id;
-    private String img;
-    private String name;
-    private double price;
-    private double sellPrice;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
 
-    public long getId() {
+import javax.persistence.*;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "wishlist")
+@EqualsAndHashCode(callSuper = true)
+public class Wishlist extends AuditableBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @OneToOne
+    private Product product;
+    @OneToOne
+    private User user;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getImg() {
-        return img;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setImg(String img) {
-        this.img = img;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public String getName() {
-        return name;
+    public User getUser() {
+        return user;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public double getSellPrice() {
-        return sellPrice;
-    }
-
-    public void setSellPrice(double sellPrice) {
-        this.sellPrice = sellPrice;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -3,15 +3,7 @@ package com.shoevn.shoe.admin.dto;
 public class CategoryDto {
     private String id;
     private String name;
-    private String description;
     private String idParent;
-
-    public CategoryDto(String id, String name, String description, String idParent) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.idParent = idParent;
-    }
 
     public String getId() {
         return id;
@@ -29,29 +21,11 @@ public class CategoryDto {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getIdParent() {
         return idParent;
     }
 
     public void setIdParent(String idParent) {
         this.idParent = idParent;
-    }
-
-    @Override
-    public String toString() {
-        return "CategoryDto{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", idParent='" + idParent + '\'' +
-                '}';
     }
 }

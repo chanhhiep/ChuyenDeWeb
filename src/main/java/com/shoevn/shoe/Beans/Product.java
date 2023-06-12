@@ -1,6 +1,7 @@
 package com.shoevn.shoe.Beans;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shoevn.shoe.Beans.base.AuditableBase;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -17,6 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "products")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @EqualsAndHashCode(callSuper = true)
 public class Product extends AuditableBase {
   @Id
@@ -25,21 +27,31 @@ public class Product extends AuditableBase {
     private long id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false, //
-            foreignKey = @ForeignKey(name = "FK"))
+            foreignKey = @ForeignKey(name = "Category_PROD_FK"))
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category category;
     @Column(name = "name",length = 255,nullable = false)
-    private String name;;
+    private String name;
     @Column(name = "price",nullable = false)
     @NumberFormat( style = NumberFormat.Style.CURRENCY)
     private double price;
-    @Column(name = "sell_price",nullable = false)
-    @NumberFormat( style = NumberFormat.Style.CURRENCY)
-    private double sellPrice;
-    @Column(name = "img",nullable = false)
-    private String img;
-    @Column(name = "quantity ",nullable = false)
-    private Integer quantity;
+    @Column(name = "discount_rate",nullable = false)
+    private double discountRate;
+    @Column(name = "image")
+    private String images;
+    @Column(name = "description",nullable = false)
+    private String description;
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false, //
+            foreignKey = @ForeignKey(name = "brand_PROD_FK"))
+    private Brand brand;
+    /*
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL
+    @Column(name = "size",nullable = false)
+    private List<Size> sizes;
+    */
+    @Column(name = "quantity",nullable = false)
+    private int quantity;
     @OneToMany(fetch = FetchType.LAZY)
     private List<Review> listComment;
 

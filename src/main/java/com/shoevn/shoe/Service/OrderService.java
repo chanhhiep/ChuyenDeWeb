@@ -11,8 +11,12 @@ import com.shoevn.shoe.client.repository.UserRepository;
 import com.shoevn.shoe.dtos.OrderDto;
 import com.shoevn.shoe.dtos.auth.OrderDTO;
 import com.shoevn.shoe.dtos.mappers.OrderDtoMapper;
+import com.shoevn.shoe.dtos.request.OrderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -27,21 +31,43 @@ public class OrderService {
     @Autowired
     private ShippingRepository shippingRepository;
 
-    public Order createOrder(OrderRequest request,String email,Long IdShip) {
+    public OrderDto createOrder(OrderRequest request,String email) {
         User user = userRepository.findByEmail(email).get();
-        ShippingInfo shippingInfo = shippingRepository.findById(IdShip).get();
-        PaymentMethod paymentMethod = paymentRepository.findById(request.getIdPayment()).get();
+        ShippingInfo shippingInfo = ShippingInfo.builder()
+                .shippingEmail(request.getEmail())
+                .shippingName(request.getName())
+                .shippingAddress(request.getAddress())
+                .shippingPhone(request.getPhone())
+                .ward(request.getWard())
+                .district(request.getDistrict())
+                .province(request.getProvince())
+                .build();
+       shippingRepository.save(shippingInfo);
+       PaymentMethod paymentMethod = paymentRepository.findById(request.getIdPayment()).get();
+       System.out.println(shippingInfo);
+
         Order order = Order.builder()
                 .account(user)
                 .shippingInfo(shippingInfo)
                 .paymentMethod(paymentMethod)
                 .note(request.getNote())
                 .state(request.getState())
+
+                .totalOrder(request.getTotalOrder())
                 .build();
-     return orderRepository.save(order);
+        Order save = orderRepository.save(order);
+        return orderDtoMapper.apply(save);
+
+
     }
     public OrderDto getAllOrderById(long id){
         return orderDtoMapper.apply(orderRepository.findById(id).get());
+    }
+
+    public List<OrderDto> getAllOrderByUser(Long idUser){
+        List<Order> orderList = orderRepository.getOrderByUser(idUser);
+        List<OrderDto> orderDtos = orderList.stream().map(orderDtoMapper::apply).collect(Collectors.toList());
+        return orderDtos;
     }
 
 }

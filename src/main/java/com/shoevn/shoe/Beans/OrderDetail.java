@@ -1,6 +1,7 @@
 
 package com.shoevn.shoe.Beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shoevn.shoe.Beans.base.AuditableBase;
 
 import lombok.*;
@@ -78,7 +79,7 @@ public class OrderDetail extends AuditableBase {
     }
 
     public double getTotal() {
-        return getQuantity() * getProduct().getPrice();
+        return total;
     }
 
     public void setTotal(double total) {

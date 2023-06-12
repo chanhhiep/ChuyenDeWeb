@@ -1,5 +1,6 @@
 package com.shoevn.shoe.Beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shoevn.shoe.Beans.base.AuditableBase;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -19,7 +20,7 @@ public class Order extends AuditableBase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", length = 50)
     private long id;
-    @OneToOne(fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private ShippingInfo shippingInfo;
     @OneToOne(fetch = FetchType.LAZY,cascade =CascadeType.REMOVE)
@@ -32,6 +33,9 @@ public class Order extends AuditableBase {
     private String state;
     @Column(name = "note", length = 128)
     private String note;
+    @Column(name = "total_Order")
+    private  double totalOrder;
+
 
     public long getId() {
         return id;

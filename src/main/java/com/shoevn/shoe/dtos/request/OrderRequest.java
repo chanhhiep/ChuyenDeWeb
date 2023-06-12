@@ -13,8 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderRequest {
-    private ShippingInfo idShip;
-    private PaymentMethod idPayment;
-    private User idUser;
+    private Long idPayment;
     private String note;
+    private String state;
+    private String email;
+    private String name;
+    private String phone;
+    private String address;
+    private String ward;
+    private String district;
+    private String province;
+    private double totalOrder;
 }

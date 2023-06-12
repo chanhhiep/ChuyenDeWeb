@@ -41,9 +41,9 @@ public class CategoryAdminController {
     }
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = PATH+"/saveCategory",consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    public String saveCategory(@RequestParam("category") String category, @RequestParam("images") MultipartFile images ){
+    public ResponseEntity saveCategory(@RequestParam("category") String category, @RequestParam("images") MultipartFile images ){
         categoryService.uploadCategory(category,images);
-        return "redirect:/admin/category";
+        return ResponseEntity.ok().build();
     }
     @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping (value=PATH+"/deleteCategory/{id}")

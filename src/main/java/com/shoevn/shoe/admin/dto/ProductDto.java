@@ -12,9 +12,10 @@ public class ProductDto {
     private String description;
     private String quantity;
     private String brand;
-    private List<String> sizes;
+    //private List<String> sizes;
 
-    public ProductDto(String id, String name, String category_id, String price, String discountRate, String description, String quantity, String brand, List<String> sizes) {
+
+    public ProductDto(String id, String name, String category_id, String price, String discountRate, String description, String quantity, String brand) {
         this.id = id;
         this.name = name;
         this.category_id = category_id;
@@ -23,7 +24,6 @@ public class ProductDto {
         this.description = description;
         this.quantity = quantity;
         this.brand = brand;
-        this.sizes = sizes;
     }
 
     public void setName(String name) {
@@ -55,9 +55,6 @@ public class ProductDto {
         this.brand = brand;
     }
 
-    public void setSizes(List<String> sizes) {
-        this.sizes = sizes;
-    }
 
     public String getId() {
         return id;
@@ -97,21 +94,4 @@ public class ProductDto {
         return quantity;
     }
 
-    public List<String> getSizes() {
-        return sizes;
-    }
-
-    @Override
-    public String toString() {
-        return "ProductDto{" +
-                "category_id='" + category_id + '\'' +
-                ", name='" + name + '\'' +
-                ", price='" + price + '\'' +
-                ", discountRate='" + discountRate + '\'' +
-                ", description='" + description + '\'' +
-                ", quantity='" + quantity + '\'' +
-                ", brand='" + brand + '\'' +
-                ", sizes=" + sizes +
-                '}';
-    }
 }

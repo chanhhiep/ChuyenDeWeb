@@ -15,8 +15,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "category")
-@SQLDelete(sql = "UPDATE category SET isDeleted = true WHERE id_category = ?")
-@Where(clause = "is_deleted = false")
 @EqualsAndHashCode(callSuper = true)
 public class Category extends AuditableBase {
     @Id
