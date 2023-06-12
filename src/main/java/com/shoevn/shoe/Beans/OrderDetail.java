@@ -1,6 +1,7 @@
 
 package com.shoevn.shoe.Beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shoevn.shoe.Beans.base.AuditableBase;
 
 import lombok.*;
@@ -20,25 +21,23 @@ public class OrderDetail extends AuditableBase {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", length = 50, nullable = false)
     private long id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID", nullable = false, //
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_ORD_FK"))
     private Order order;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "size_id", nullable = false, //
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id", nullable = false, //
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_PRO_FK"))
-    private Size size;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Product product;
+    private int size;
     @Column(name = "Quanity", nullable = false)
-    private int quanity;
-    @Column(name = "Price", nullable = false)
-    private double price;
+    private int quantity;
+
     @Column(name = "total", nullable = false)
     private double total;
     @Column(name = "note", length = 128)
     private String note;
-
-    public OrderDetail(Order order, Size size, int quantity, double price, double setTotal, String note) {
-    }
 
     public long getId() {
         return id;
@@ -56,21 +55,36 @@ public class OrderDetail extends AuditableBase {
         this.order = order;
     }
 
-
-    public int getQuanity() {
-        return quanity;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setQuanity(int quanity) {
-        this.quanity = quanity;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
-    public double getPrice() {
-        return price;
+    public int getSize() {
+        return size;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public String getNote() {
@@ -80,14 +94,5 @@ public class OrderDetail extends AuditableBase {
     public void setNote(String note) {
         this.note = note;
     }
-
-    public Size getSize() {
-        return size;
-    }
-
-    public void setSize(Size size) {
-        this.size = size;
-    }
-
 }
 

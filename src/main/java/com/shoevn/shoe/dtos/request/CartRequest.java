@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartRequest {
-    private Long size;
-    private Long user;
     private int quantity;
+    private String size;
 }

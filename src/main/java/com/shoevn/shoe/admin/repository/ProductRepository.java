@@ -1,5 +1,6 @@
 package com.shoevn.shoe.admin.repository;
 
+import com.shoevn.shoe.Beans.Order;
 import com.shoevn.shoe.Beans.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,8 +40,8 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     @Query("select p from Product p where p.name like %?1% ")
     public List<Product> search(String keyword);
 
-    @Query("select p from Product p join Size s on s.product.id = p.id where p.id= ?1")
-    public List<Product> getProductBySize(long id);
+    @Query("select  o from Order o join ShippingInfo s on s.id = o.shippingInfo.id where o.id = ?1")
+    public Order getOrderById(long id);
 
     Page<Product> findAll(Pageable pageable);
 }

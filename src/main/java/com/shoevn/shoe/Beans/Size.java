@@ -16,8 +16,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "size")
-@SQLDelete(sql = "UPDATE size SET isDeleted = true WHERE size_id = ?")
-@Where(clause = "is_deleted = false")
 @EqualsAndHashCode(callSuper = true)
 public class Size extends AuditableBase {
 
@@ -30,9 +28,6 @@ public class Size extends AuditableBase {
     private int size_num;
     @Column(name = "size_description",nullable = false)
     private String description;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
 
     public Long getId() {
         return id;
@@ -58,13 +53,6 @@ public class Size extends AuditableBase {
         this.description = description;
     }
 
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
 
 }

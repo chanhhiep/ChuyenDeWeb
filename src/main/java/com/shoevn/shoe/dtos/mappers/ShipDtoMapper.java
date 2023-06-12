@@ -12,7 +12,13 @@ public class ShipDtoMapper implements Function<ShippingInfo, ShipDto> {
 
     @Override
     public ShipDto apply(ShippingInfo shippingInfo) {
-        return new ShipDto(shippingInfo.getId(),shippingInfo.getShippingEmail(),shippingInfo.getShippingName()
-        ,shippingInfo.getShippingPhone(),shippingInfo.getShippingAddress(),shippingInfo.getWard(),shippingInfo.getDistrict(),shippingInfo.getProvince());
+        return new ShipDto(shippingInfo.getId()
+                ,shippingInfo.getShippingEmail()
+                ,shippingInfo.getShippingName()
+                ,shippingInfo.getShippingPhone()
+                ,shippingInfo.getShippingAddress()
+                ,shippingInfo.getWard()
+                ,shippingInfo.getDistrict()
+                ,shippingInfo.getProvince());
     }
 }

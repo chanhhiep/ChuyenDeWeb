@@ -14,18 +14,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "cart")
-@SQLDelete(sql = "UPDATE cart SET isDeleted = true WHERE id = ?")
-@Where(clause = "is_deleted = false")
 @EqualsAndHashCode(callSuper = true)
 public class Cart  extends AuditableBase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
-    private Size size;
+    private Product product;
     @OneToOne
     private User user;
     private int quantity;
+    private String size;
 
 
 }

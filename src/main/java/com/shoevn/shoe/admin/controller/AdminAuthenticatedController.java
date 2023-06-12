@@ -13,7 +13,7 @@ import javax.validation.Valid;
 
 @RestController
 public class AdminAuthenticatedController {
-    /*
+
     private final AuthenticationService service;
     private static final String PATH = "/admin/";
     public AdminAuthenticatedController(AuthenticationService service) {
@@ -30,5 +30,5 @@ public class AdminAuthenticatedController {
             @RequestBody AuthenticationRequest request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
-    }*/
+    }
 }

@@ -3,6 +3,7 @@ package com.shoevn.shoe.client.controller;
 import com.shoevn.shoe.Beans.Product;
 import com.shoevn.shoe.Service.ProductService;
 import com.shoevn.shoe.Service.SizeService;
+import com.shoevn.shoe.dtos.SortProductDto;
 import com.shoevn.shoe.dtos.auth.ProductDTO;
 import com.shoevn.shoe.dtos.auth.SearchDto;
 import lombok.RequiredArgsConstructor;
@@ -50,11 +51,35 @@ public class ProductController {
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/products/{productId}")
     public ResponseEntity<?> info(@PathVariable(value = "productId") long productId){
-        return ResponseEntity.ok(sizeService.getInfoProduct(productId));
+        return ResponseEntity.ok(productService.getInfoPro(productId));
     }
 
     @GetMapping("/product/page")
     public ResponseEntity<?> getAllPageArticle(@RequestParam(defaultValue = "1") int page,@RequestParam(defaultValue = "10") int size) {
         return ResponseEntity.ok(productService.getAllProductPage(page,size));
+    }
+    @PostMapping("/product/sort")
+    public ResponseEntity<?> sortProduct(@RequestBody SortProductDto sortType){
+        return ResponseEntity.ok(productService.sortProducts(sortType));
+    }
+
+    @GetMapping("/product/sort/by-name-asc")
+    public ResponseEntity<?> getProductsByNameAsc(){
+        return ResponseEntity.ok(productService.getProductsByNameAsc());
+    }
+
+    @GetMapping("/product/sort/by-name-desc")
+    public ResponseEntity<?> getProductsByNameDesc(){
+        return ResponseEntity.ok(productService.getProductsByNameDesc());
+    }
+
+    @GetMapping("/product/sort/by-price-asc")
+    public ResponseEntity<?> getProductsByPriceAsc(){
+        return ResponseEntity.ok(productService.getProductsByPriceAsc());
+    }
+
+    @GetMapping("/product/sort/by-price-desc")
+    public ResponseEntity<?> getProductsByPriceDesc(){
+        return ResponseEntity.ok(productService.getProductsByPriceDesc());
     }
 }

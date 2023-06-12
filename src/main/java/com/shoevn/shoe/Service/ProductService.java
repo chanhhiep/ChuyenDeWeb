@@ -5,7 +5,9 @@ import com.shoevn.shoe.Beans.Product;
 
 import com.shoevn.shoe.admin.repository.CategoryRepository;
 import com.shoevn.shoe.admin.repository.ProductRepository;
+import com.shoevn.shoe.admin.repository.SizeRepository;
 import com.shoevn.shoe.dtos.ProductDto;
+import com.shoevn.shoe.dtos.SortProductDto;
 import com.shoevn.shoe.dtos.auth.ProductDTO;
 import com.shoevn.shoe.dtos.auth.SearchDto;
 import com.shoevn.shoe.dtos.mappers.ProductDtoMapper;
@@ -15,9 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +28,8 @@ public class ProductService {
     private ProductDtoMapper mapper;
     @Autowired
     private CategoryRepository categoryRepository;
-
+    @Autowired
+    private SizeRepository sizeRepository;
     public Product createProduct(ProductDTO dto){
         Product product = new Product();
         Category category = categoryRepository.findById(dto.getIdCategory()).get();
@@ -61,10 +62,9 @@ public class ProductService {
         return productDtos;
     }
 
-    public List<ProductDto> getInfoPro(long id){
-        List<Product> list = productRepository.getProductBySize(id);
-        List<ProductDto> productDtos = list.stream().map(mapper::apply).collect(Collectors.toList());
-        return  productDtos;
+    public ProductDto getInfoPro(long id){
+        Product dto = productRepository.findProductById(id);
+        return mapper.apply(dto);
     }
 
     public long getTotalProduct(long id){
@@ -73,7 +73,7 @@ public class ProductService {
     public long getTotalProductByCategory(long id){
         return  productRepository.countProductByIdCaregory(id);
     }
-    public List<Product> sortProducts(String sortType) {
+    public List<Product> sortProducts(SortProductDto sortType) {
         if (sortType.equals("name_asc")) {
             return  productRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
         } else if (sortType.equals("name_desc")) {
@@ -95,5 +95,25 @@ public class ProductService {
         Page<Product> products = productRepository.findAll(PageRequest.of(page,size));
         Page<ProductDto> productDtos = products.map(mapper);
         return productDtos;
+    }
+    public List<Product> getProductsByNameAsc() {
+        List<Product> products = productRepository.findAll();
+        Collections.sort(products, Comparator.comparing(Product::getName));
+        return products;
+    }
+    public List<Product> getProductsByNameDesc() {
+        List<Product> products = productRepository.findAll();
+        Collections.sort(products, Comparator.comparing(Product::getName).reversed());
+        return products;
+    }
+    public List<Product> getProductsByPriceAsc() {
+        List<Product> products = productRepository.findAll();
+        Collections.sort(products, Comparator.comparing(Product::getPrice));
+        return products;
+    }
+    public List<Product> getProductsByPriceDesc() {
+        List<Product> products = productRepository.findAll();
+        Collections.sort(products, Comparator.comparing(Product::getPrice).reversed());
+        return products;
     }
 }

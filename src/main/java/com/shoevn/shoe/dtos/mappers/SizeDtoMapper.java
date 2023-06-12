@@ -15,7 +15,6 @@ public class SizeDtoMapper implements Function<Size, SizeDto> {
     private ProductDtoMapper productDtoMapper;
     @Override
     public SizeDto apply(Size size) {
-        ProductDto productDto = productDtoMapper.apply(size.getProduct());
-        return new SizeDto(size.getId(),size.getSize_num(),productDto);
+        return new SizeDto(size.getId(),size.getSize_num());
     }
 }

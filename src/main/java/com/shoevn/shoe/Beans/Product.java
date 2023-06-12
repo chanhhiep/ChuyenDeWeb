@@ -1,6 +1,7 @@
 package com.shoevn.shoe.Beans;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.shoevn.shoe.Beans.base.AuditableBase;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -17,8 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "products")
-@SQLDelete(sql = "UPDATE products SET isDeleted = true WHERE product_id = ?")
-@Where(clause = "is_deleted = false")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @EqualsAndHashCode(callSuper = true)
 public class Product extends AuditableBase {
     @Id
@@ -28,6 +28,7 @@ public class Product extends AuditableBase {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", nullable = false, //
             foreignKey = @ForeignKey(name = "Category_PROD_FK"))
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Category category;
     @Column(name = "name",length = 255,nullable = false)
     private String name;

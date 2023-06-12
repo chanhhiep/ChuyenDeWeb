@@ -4,6 +4,7 @@ package com.shoevn.shoe.dtos.mappers;
 import com.shoevn.shoe.Beans.OrderDetail;
 import com.shoevn.shoe.dtos.OrderDetailDto;
 import com.shoevn.shoe.dtos.OrderDto;
+import com.shoevn.shoe.dtos.ProductDto;
 import com.shoevn.shoe.dtos.SizeDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,11 @@ public class OrderDetaikDtoMapper implements Function<OrderDetail, OrderDetailDt
     @Autowired
     private OrderDtoMapper orderDtoMapper;
     @Autowired
-    private SizeDtoMapper sizeDtoMapper;
+    private ProductDtoMapper productDtoMapper;
     @Override
     public OrderDetailDto apply(OrderDetail orderDetail) {
         OrderDto order = orderDtoMapper.apply(orderDetail.getOrder());
-       SizeDto size = sizeDtoMapper.apply(orderDetail.getSize());
-        return new OrderDetailDto(orderDetail.getId(),order,size,orderDetail.getQuanity(),orderDetail.getPrice(),orderDetail.getTotal(),orderDetail.getNote());
+        ProductDto product = productDtoMapper.apply(orderDetail.getProduct());
+        return new OrderDetailDto(orderDetail.getId(),order,product,orderDetail.getQuantity(),orderDetail.getSize(),orderDetail.getTotal(),orderDetail.getNote());
     }
 }

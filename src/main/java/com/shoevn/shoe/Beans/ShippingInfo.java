@@ -2,15 +2,20 @@
 package com.shoevn.shoe.Beans;
 
 
-import lombok.Builder;
+import com.shoevn.shoe.Beans.base.AuditableBase;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
+@Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "shipping")
-public class ShippingInfo {
+@EqualsAndHashCode(callSuper = true)
+public class ShippingInfo extends AuditableBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "shipping_id")

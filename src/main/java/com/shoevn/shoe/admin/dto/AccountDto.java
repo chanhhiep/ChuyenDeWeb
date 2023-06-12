@@ -2,24 +2,10 @@ package com.shoevn.shoe.admin.dto;
 
 public class AccountDto {
     private String id;
-    private String username;
-    private String password;
     private String name;
+   // private String password;
     private String email;
     private String phone;
-    private String active;
-    private String role;
-
-    public AccountDto(String id, String username, String password, String name, String email, String phone, String active, String role) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.active = active;
-        this.role = role;
-    }
 
     public String getId() {
         return id;
@@ -27,14 +13,6 @@ public class AccountDto {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getName() {
@@ -59,43 +37,5 @@ public class AccountDto {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getActive() {
-        return active;
-    }
-
-    public void setActive(String active) {
-        this.active = active;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "AccountDto{" +
-                "id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", active='" + active + '\'' +
-                ", role='" + role + '\'' +
-                '}';
     }
 }

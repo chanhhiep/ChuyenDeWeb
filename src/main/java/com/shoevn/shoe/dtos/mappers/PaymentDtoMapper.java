@@ -11,6 +11,6 @@ import java.util.function.Function;
 public class PaymentDtoMapper implements Function<PaymentMethod, PaymentDto> {
     @Override
     public PaymentDto apply(PaymentMethod p) {
-        return new PaymentDto(p.getId(), p.getName(), p.getDescription());
+        return new PaymentDto(p.getId(),p.getName(), p.getDescription());
     }
 }
